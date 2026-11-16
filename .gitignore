@@ -1,5 +1,5 @@
 # ambiente e chaves (nunca compartilhe)
-.venv/
+.venv
 videos/.env
 videos/perfil.json
 
