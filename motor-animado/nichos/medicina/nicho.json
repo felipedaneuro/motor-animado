@@ -1,0 +1,86 @@
+{
+  "_leia": "A edição médica do painel. Os públicos mudam as regras do roteiro; as especialidades dizem o que ler antes de escrever e de desenhar. Caminhos de 'guia' e 'raciocinio' são relativos a esta pasta; os de 'fichas', a referencias/anatomia.",
+  "nome": "medicina",
+  "rotulo": "Edição Médica",
+  "publicos": {
+    "leigo": {
+      "rotulo": "Leigo",
+      "sobre": "Pacientes, famílias e quem não é da saúde. Mecanismo claro, sem conduta nem dose.",
+      "linguagem": "Palavras do dia a dia. O termo técnico só entra como recompensa, numa frase curta e só dele, logo depois de a ideia estar clara.",
+      "profundidade": "Um mecanismo por vídeo, numa cadeia de no máximo três passos: a causa, o que acontece no corpo, o que a pessoa sente.",
+      "regras": [
+        "Explica o mecanismo; não faz diagnóstico, não indica tratamento, remédio nem dose.",
+        "Número só quando muda atitude (tempo, frequência, risco), arredondado e com fonte.",
+        "Nada de susto gratuito: cada alerta vem com o que fazer.",
+        "Caso ou personagem é fictício e dito como tal."
+      ],
+      "etiqueta": "",
+      "fechamento": "O sinal de alerta certo do tema e onde procurar ajuda (na emergência, SAMU 192)."
+    },
+    "saude": {
+      "rotulo": "Estudantes e profissionais de saúde",
+      "sobre": "Medicina, enfermagem, fisioterapia e áreas afins. Terminologia técnica, fisiopatologia completa e o raciocínio.",
+      "linguagem": "Terminologia anatômica e clínica correta (Terminologia Anatômica, nomes das escalas e das diretrizes). Sigla de outra especialidade é explicada na primeira vez.",
+      "profundidade": "Mecanismo fisiopatológico completo, localização anatômica exata, valores de referência e o raciocínio: diferenciais, o exame que separa e o porquê de cada passo.",
+      "regras": [
+        "Conduta, classe de remédio e dose só como estão na diretriz vigente, com a diretriz e o ano em fontes.md e citados num rodapé curto na tela.",
+        "Nenhuma opinião pessoal apresentada como recomendação; onde as diretrizes divergem, diga e ponha em avisos.",
+        "Nível de evidência ou classe de recomendação quando a diretriz der.",
+        "Caso clínico é fictício e dito como tal; nada de paciente real identificável.",
+        "Toda afirmação sobre conduta entra em avisos para a revisão do médico responsável."
+      ],
+      "etiqueta": "Conteúdo para profissionais de saúde",
+      "fechamento": "A referência para estudar (a diretriz ou a revisão principal) ou uma pergunta de desafio."
+    }
+  },
+  "especialidades": {
+    "geral": {
+      "rotulo": "Geral",
+      "sobre": "Saúde em geral, sem guia de especialidade.",
+      "guia": "",
+      "raciocinio": ["raciocinio-clinico.md"],
+      "fichas": [],
+      "estilos": []
+    },
+    "neurologia": {
+      "rotulo": "Neurologia",
+      "sobre": "Epilepsia, cefaleia, Parkinson, demências, esclerose múltipla, neuropatias, junção neuromuscular.",
+      "guia": "especialidades/neurologia.md",
+      "raciocinio": ["raciocinio-clinico.md"],
+      "fichas": ["circulacao-cerebral.md", "medula-espinal.md"],
+      "estilos": ["pixel-duelo-neuro", "atlas-anatomico", "pixel-anatomia-sonda", "med3d-hud-rpg", "vetor-plano-medico"]
+    },
+    "neurocirurgia": {
+      "rotulo": "Neurocirurgia",
+      "sobre": "Hematomas, hipertensão intracraniana, hidrocefalia, tumores, coluna, craniotomia.",
+      "guia": "especialidades/neurocirurgia.md",
+      "raciocinio": ["raciocinio-clinico.md", "raciocinio-cirurgico.md"],
+      "fichas": ["circulacao-cerebral.md", "medula-espinal.md"],
+      "estilos": ["pixel-anatomia-camadas", "pixel-duelo-neuro", "atlas-anatomico", "med3d-primeira-pessoa", "med3d-decisao"]
+    },
+    "neurovascular": {
+      "rotulo": "Neurovascular",
+      "sobre": "AVC isquêmico e hemorrágico, AIT, trombólise, trombectomia, aneurisma, MAV, dissecção, trombose venosa.",
+      "guia": "especialidades/neurovascular.md",
+      "raciocinio": ["raciocinio-clinico.md", "raciocinio-cirurgico.md"],
+      "fichas": ["circulacao-cerebral.md", "vasos.md", "coracao.md"],
+      "estilos": ["pixel-arteria-stent", "saga-64", "pixel-duelo-neuro", "med3d-decisao", "atlas-anatomico"]
+    },
+    "cardiologia": {
+      "rotulo": "Cardiologia",
+      "sobre": "Infarto, insuficiência cardíaca, arritmias, valvopatias, hipertensão, parada e ECG.",
+      "guia": "especialidades/cardiologia.md",
+      "raciocinio": ["raciocinio-clinico.md", "raciocinio-cirurgico.md"],
+      "fichas": ["coracao.md", "vasos.md"],
+      "estilos": ["pixel-duelo-cardio", "pixel-arteria-stent", "med3d-decisao", "atlas-anatomico", "pixel-anatomia-sonda"]
+    },
+    "ortopedia": {
+      "rotulo": "Ortopedia",
+      "sobre": "Fraturas, joelho, ombro, quadril, coluna, osteoporose, artrose, próteses.",
+      "guia": "especialidades/ortopedia.md",
+      "raciocinio": ["raciocinio-clinico.md", "raciocinio-cirurgico.md"],
+      "fichas": ["medula-espinal.md"],
+      "estilos": ["atlas-anatomico", "pixel-anatomia-camadas", "vetor-plano-medico", "realista-corpo", "med3d-decisao"]
+    }
+  }
+}

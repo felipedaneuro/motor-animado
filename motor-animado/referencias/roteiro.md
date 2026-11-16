@@ -3,6 +3,7 @@
 ## Antes de escrever
 - **Fontes**: o que for fato vai para `fontes.md`, com no mínimo duas fontes sérias por afirmação (em saúde: diretrizes, revisões, sociedades médicas, órgãos públicos). O que for inventado (o personagem, a situação) diga que é.
 - **Regras de cuidado** do `perfil.json` (`care_rules`). Em saúde: explica o mecanismo; não faz diagnóstico nem indica tratamento ou dose; fecha com "procure um médico" ou o sinal de alerta certo.
+- **Edição médica** (`nichos/medicina/`): quando o projeto tem público-alvo, as regras daquele público valem sobre as de cima. Para estudantes e profissionais de saúde, conduta e dose entram só como estão na diretriz, com a diretriz citada.
 - **A receita do estilo** (`estilos/<nome>/receita.md`): a fórmula, quantas frases, palavras por minuto.
 
 ## Escrever

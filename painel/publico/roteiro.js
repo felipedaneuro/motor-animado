@@ -105,11 +105,20 @@ function screenCard(p) {
     ${saved.map((phrase, k) => sceneCard(p, phrase, k + 1)).join("")}</div>`;
 }
 
+// o público-alvo e a especialidade do projeto (edição médica); projetos antigos não têm e não mostram nada
+function audienceLine(p) {
+  if (!p.publicoAlvo || !app.niche) return "";
+  const label = (list, id) => list.find((item) => item.id === id)?.rotulo || id;
+  const parts = [label(app.niche.publicos, p.publicoAlvo)];
+  if (p.especialidade && p.especialidade !== "geral") parts.push(label(app.niche.especialidades, p.especialidade));
+  return `<p class="linha">${parts.map((text) => `<span class="etiqueta sugerido">${esc(text)}</span>`).join("")}</p>`;
+}
+
 export function viewScript(adjustBox) {
   const p = app.project;
-  if (!p.roteiro) return `<h1>${esc(p.titulo)}</h1><div class="cartao">${busy() ? "Pesquisando e escrevendo o roteiro. Acompanhe na atividade ao lado." : `O roteiro ainda não foi escrito. <button class="botao" data-action="gerar-roteiro">Gerar roteiro</button>`}</div>`;
+  if (!p.roteiro) return `<h1>${esc(p.titulo)}</h1>${audienceLine(p)}<div class="cartao">${busy() ? "Pesquisando e escrevendo o roteiro. Acompanhe na atividade ao lado." : `O roteiro ainda não foi escrito. <button class="botao" data-action="gerar-roteiro">Gerar roteiro</button>`}</div>`;
   syncScript();
-  return `<h1>${esc(p.titulo)}</h1><p class="suave">${esc(p.resumo || "")}</p>
+  return `<h1>${esc(p.titulo)}</h1>${audienceLine(p)}<p class="suave">${esc(p.resumo || "")}</p>
   ${scriptCard()}${warningsCard(p)}${screenCard(p)}
   <div class="cartao"><details><summary>Fontes conferidas</summary><pre>${esc(p.fontes || "sem fontes ainda")}</pre></details></div>${adjustBox()}`;
 }

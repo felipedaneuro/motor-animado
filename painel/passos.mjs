@@ -223,7 +223,7 @@ export const produce = (id, name, voiceEngine) => job(id, `vídeo pelo motor ${n
   // quando o motor tem fichas de estilo, o painel manda a ficha escolhida junto (estilo = "externo:<motor>:<ficha>")
   const chosen = String(state.estilo || "").split(":")[2] || "";
   const card = chosen && engine.estilos ? engine.estilos(skillPath).find((s) => s.id === chosen) : null;
-  const answer = await ask(id, externalPrompt(engine, output, skillPath, card), { step: "externo", free: true });
+  const answer = await ask(id, externalPrompt(engine, output, skillPath, card, state), { step: "externo", free: true });
   if (!fs.existsSync(path.join(projectDir(id), output))) throw new Error(`o motor não entregou o vídeo: ${answer.trim().split("\n").pop()}`);
   listVideo(id, { file: output, check: await checkVideo(id, output), final: true, motor: engine.rotulo });
 });

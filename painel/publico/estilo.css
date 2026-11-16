@@ -42,6 +42,16 @@ input[type="color"] { padding: 2px; height: 38px; }
 input[type="range"] { padding: 0; }
 :focus-visible { outline: 2px solid var(--acao); outline-offset: 2px; }
 .campos { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.publicos { border: 0; padding: 0; margin: 14px 0 0; }
+.publicos legend { padding: 0; margin-bottom: 8px; }
+.publicos legend small { color: var(--acao); font: 11px var(--mono); margin-left: 6px; }
+.publicos-grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.publico-alvo { display: flex; gap: 10px; align-items: flex-start; background: var(--painel-2); border: 1px solid var(--linha);
+  border-radius: 10px; padding: 12px; cursor: pointer; }
+.publico-alvo input { width: auto; margin: 3px 0 0; accent-color: var(--acao); }
+.publico-alvo b { display: block; }
+.publico-alvo small { color: var(--suave); }
+.publico-alvo:has(input:checked) { border-color: var(--acao); }
 
 .botao { background: var(--acao); color: var(--acao-texto); border: 0; border-radius: 10px; padding: 10px 16px; font: 600 14px var(--corpo); cursor: pointer; }
 .botao:disabled { opacity: 0.45; cursor: default; }

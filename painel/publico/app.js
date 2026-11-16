@@ -39,18 +39,34 @@ function drawActivity() {
 }
 
 // ---------- as telas ----------
+// a edição médica: o público-alvo (obrigatório) e a especialidade, lidos de motor-animado/nichos/medicina/nicho.json
+const audienceCards = () => (app.niche?.publicos || []).map((a) => `<label class="publico-alvo">
+    <input type="radio" name="publicoAlvo" value="${esc(a.id)}"><span><b>${esc(a.rotulo)}</b><small>${esc(a.sobre)}</small></span></label>`).join("");
+const specialtyOptions = () => (app.niche?.especialidades || [])
+  .map((s) => `<option value="${esc(s.id)}" title="${esc(s.sobre)}">${esc(s.rotulo)}</option>`).join("");
+
 const viewIdea = () => `<h1>Qual é a ideia do vídeo?</h1>
   <p class="suave">Escreva uma frase. O painel pesquisa, confere os fatos, escreve o roteiro e sugere o estilo.</p>
   <div class="cartao">
     <label for="frase">A ideia, em uma frase</label>
     <textarea id="frase" placeholder="Ex.: por que quem dorme pouco sente mais fome"></textarea>
+    <fieldset class="publicos"><legend>Para quem é o roteiro? <small>obrigatório</small></legend>
+      <div class="publicos-grade">${audienceCards()}</div></fieldset>
     <div class="campos" style="margin-top:12px">
+      <div><label for="especialidade">Especialidade</label><select id="especialidade">${specialtyOptions()}</select></div>
       <div><label for="objetivo">Objetivo</label><select id="objetivo"><option>saúde</option><option>curiosidade</option><option>educação</option><option>produto</option></select></div>
       <div><label for="duracao">Duração</label><select id="duracao"><option value="30">30 s</option><option value="60" selected>60 s</option><option value="90">90 s</option><option value="120">2 min</option></select></div>
-      <div><label for="publico">Público</label><input id="publico" value="público geral"></div>
+      <div><label for="publico">Detalhe do público (opcional)</label><input id="publico" placeholder="Ex.: residentes de neurologia"></div>
     </div>
     <button class="botao" data-action="criar">Gerar roteiro</button>
   </div>`;
+
+function newProjectBody() {
+  const audience = document.querySelector('input[name="publicoAlvo"]:checked')?.value;
+  if (!audience) throw new Error("Escolha para quem é o roteiro: leigo ou estudantes e profissionais de saúde.");
+  return { frase: $("#frase").value, objetivo: $("#objetivo").value, duracao: $("#duracao").value, publico: $("#publico").value,
+    publicoAlvo: audience, especialidade: $("#especialidade").value };
+}
 
 const viewScript = () => scriptView(adjustBox);
 
@@ -454,7 +470,7 @@ const ACTIONS = {
     if (app.view === "voz" && !app.cost) loadCost();
     draw();
   },
-  criar: async () => { const { id } = await api("projetos", { frase: $("#frase").value, objetivo: $("#objetivo").value, duracao: $("#duracao").value, publico: $("#publico").value }); app.projects = await api("projetos"); await open(id); },
+  criar: async () => { const { id } = await api("projetos", newProjectBody()); app.projects = await api("projetos"); await open(id); },
   "gerar-roteiro": () => api(`projetos/${app.project.id}/gerar-roteiro`, {}),
   ajuste: async () => { const texto = $("#ajuste").value.trim(); if (texto) { await api(`projetos/${app.project.id}/ajuste`, { texto }); $("#ajuste").value = ""; } },
   escolher: (el) => { app.draft.estilo = el.dataset.style; app.preview = null; draw(); },
@@ -612,6 +628,7 @@ document.addEventListener("change", async (event) => {
 });
 
 app.catalog = await api("catalogo");
+app.niche = await api("nicho");
 app.settings = await api("config");
 app.projects = await api("projetos");
 draw();

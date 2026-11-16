@@ -12,6 +12,7 @@ import { MAX_VIDEO_BYTES, checkStyleName, resolveSource, uploadTarget } from "./
 import { MAX_IMAGE_BYTES, phrasesOf, referenceTarget, references, removeReference, reorderPhrases, saveIllustration,
   validPhrase } from "./ilustracoes.mjs";
 import { engineNames, engineSheet, engineStatus } from "./motores.mjs";
+import { nicheOptions, validAudience, validSpecialty } from "./nicho.mjs";
 import { adjust, buildScenes, detail, isRunning, newStyle, prepare, preview, produce, render, revoice, stop, voice,
   writeScript } from "./passos.mjs";
 import { deleteTheme, saveTheme } from "./temas.mjs";
@@ -36,6 +37,14 @@ function trusted(req) {
 
 const json = (res, data, status = 200) => { res.writeHead(status, { "Content-Type": TYPES[".json"] }); res.end(JSON.stringify(data)); };
 const fail = (res, message, status = 400) => json(res, { erro: message }, status);
+
+// o que falta no pedido de projeto novo: a ideia e o público-alvo são obrigatórios; a especialidade, se vier, precisa existir
+function projectProblem(body) {
+  if (!String(body.frase || "").trim()) return "escreva a ideia do vídeo";
+  if (!validAudience(body.publicoAlvo)) return "escolha o público-alvo: leigo ou estudantes e profissionais de saúde";
+  if (body.especialidade && !validSpecialty(body.especialidade)) return "especialidade desconhecida";
+  return "";
+}
 
 function readBody(req) {
   return new Promise((resolve) => {
@@ -255,15 +264,18 @@ async function settings(req, res, parts) {
 
 async function api(req, res, parts, query) {
   if (parts[0] === "catalogo") return json(res, catalog());
+  if (parts[0] === "nicho") return json(res, nicheOptions());
   if (parts[0] === "temas") return themes(req, res, parts[1]);
   if (parts[0] === "config" || parts[0] === "elevenlabs") return settings(req, res, parts);
   if (parts[0] !== "projetos") return fail(res, "rota desconhecida", 404);
   if (parts.length === 1 && req.method === "GET") return json(res, listProjects());
   if (parts.length === 1 && req.method === "POST") {
     const body = await readBody(req);
-    if (!String(body.frase || "").trim()) return fail(res, "escreva a ideia do vídeo");
+    const problem = projectProblem(body);
+    if (problem) return fail(res, problem);
     const state = createProject({ frase: String(body.frase).trim().slice(0, 300), objetivo: body.objetivo || "curiosidade",
-      duracao: Number(body.duracao) || 60, publico: body.publico || "público geral" });
+      duracao: Number(body.duracao) || 60, publico: String(body.publico || "").trim().slice(0, 200),
+      publicoAlvo: body.publicoAlvo, especialidade: body.especialidade || "geral" });
     log(state.id, `projeto criado: ${state.frase}`, "passo");
     writeScript(state.id);
     updateProject(state.id, { ultimoTrabalho: { acao: "gerar-roteiro", corpo: {} } });

@@ -21,12 +21,12 @@ export const slugify = (text) => text.normalize("NFD").replace(/[̀-ͯ]/g, "").t
 // só nomes de pasta simples: nada de "..", barras ou caminhos
 export const validId = (id) => /^[a-z0-9][a-z0-9-]{0,60}$/.test(id) && fs.existsSync(stateFile(id));
 
-export function createProject({ frase, objetivo, duracao, publico }) {
+export function createProject({ frase, objetivo, duracao, publico, publicoAlvo = null, especialidade = null }) {
   const base = slugify(frase) || "video";
   let id = base;
   for (let n = 2; fs.existsSync(projectDir(id)); n++) id = `${base}-${n}`;
   fs.mkdirSync(projectDir(id), { recursive: true });
-  const state = { id, frase, objetivo, duracao, publico, criadoEm: new Date().toISOString(), passo: "ideia", ocupado: null,
+  const state = { id, frase, objetivo, duracao, publico, publicoAlvo, especialidade, criadoEm: new Date().toISOString(), passo: "ideia", ocupado: null,
     estilo: null, ajustes: {}, sugestoes: [], avisos: [], titulo: frase, videos: [] };
   saveProject(state);
   return state;

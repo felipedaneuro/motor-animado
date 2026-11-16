@@ -1,9 +1,10 @@
 // instrucoes.mjs: os pedidos que o painel faz ao Claude em cada passo. Sempre: só arquivos, sem perguntas, sem terminal.
 import fs from "node:fs";
 import path from "node:path";
-import { MOTOR, VIDEOS } from "./projetos.mjs";
+import { MOTOR, VIDEOS, loadProject } from "./projetos.mjs";
 import { catalog, exampleDir } from "./catalogo.mjs";
 import { references } from "./ilustracoes.mjs";
+import { audienceLabel, isMedical, medicalSceneNotes, medicalScriptNotes } from "./nicho.mjs";
 
 const RULES = `Regras desta conversa:
 - Você só escreve e lê arquivos e pesquisa na internet. Não rode as ferramentas do motor (voz, montar, mapa, sons, render, mixar,
@@ -30,17 +31,22 @@ const ILLUSTRATION_GUIDE = `Cada ilustração é uma direção de arte, não um 
    - fundo: o ambiente e a luz (onde a cena acontece, hora do dia, cor e textura do fundo), ou "fundo liso <cor>".
    - objetos: os objetos, personagens e textos de tela, cada um com cor, tamanho e posição; o que não pode faltar.`;
 
+// a regra de saúde do passo de pesquisa: na edição médica quem manda é o público-alvo escolhido
+const healthRule = (state) => (isMedical(state)
+  ? "Em saúde: siga as regras do público-alvo acima (elas valem sobre as regras de cuidado do perfil)."
+  : "Em saúde: explique o mecanismo,\n   não faça diagnóstico nem indique tratamento ou dose, e diga quando procurar ajuda.");
+
 export function scriptPrompt(state) {
   const phrases = Math.round((state.duracao * 2.4) / 14);
   return `${RULES}
 
 Você é o roteirista do painel Motor Animado.
-Tema: "${state.frase}". Objetivo: ${state.objetivo}. Duração alvo: ${state.duracao} s (cerca de ${phrases} frases). Público: ${state.publico}.
-
+Tema: "${state.frase}". Objetivo: ${state.objetivo}. Duração alvo: ${state.duracao} s (cerca de ${phrases} frases). Público: ${audienceLabel(state)}.
+${medicalScriptNotes(state)}
 1. Leia ${MOTOR}/referencias/roteiro.md e ${MOTOR}/SKILL.md (as regras). O perfil do canal (regras de cuidado e pedido final) é este:
 ${profileNotes()}
-2. Confira os fatos na internet: cada número em duas fontes sérias; o que não se confirmar não entra. Em saúde: explique o mecanismo,
-   não faça diagnóstico nem indique tratamento ou dose, e diga quando procurar ajuda. Se o assunto é corpo humano, comece pelo acervo
+2. Confira os fatos na internet: cada número em duas fontes sérias; o que não se confirmar não entra. ${healthRule(state)}
+   Se o assunto é corpo humano, comece pelo acervo
    do motor: ${MOTOR}/referencias/anatomia/README.md (fichas prontas e o mapa das fontes).
 3. Escreva ./fontes.md: uma linha por afirmação, com a fonte e o link; marque o que ficou com uma fonte só.
 4. Escreva ./roteiro.txt: a primeira linha é um comentário que começa com "#"; depois uma frase por linha, cada uma com algo que dê
@@ -77,7 +83,7 @@ Leia antes de escrever:
 - ./roteiro.txt, ./painel-roteiro.json (as ilustrações pedidas: naTela, fundo e objetos de cada frase; a pessoa pode ter
   editado à mão, então siga o que está escrito) e ./voz/tempos.json (as palavras de cada frase)${referenceNotes(state.id)}
 - os arquivos de ./cena/js/estilo e, se precisar de uma peça, ./cena/js/motor (formas.js, mundo.js, mascote.js, anatomia.js)
-
+${medicalSceneNotes(state)}
 Escreva para ESTE roteiro:
 - ./cena/js/plano.js: os tempos (T), a câmera (CAMERA), etiquetas (LABELS), cards (CARDS), destaques (HIGHLIGHTS) e sons (SOUNDS).
   wordStart(i, "palavra") só com palavra que existe na frase i do tempos.json, sem acento e em minúsculas; na dúvida, phraseStart(i).
@@ -119,10 +125,11 @@ A pessoa pediu este ajuste pelo painel (passo atual: ${state.passo}):
 Faça o ajuste nos arquivos certos: ./roteiro.txt e ./fontes.md se for sobre o texto (confira qualquer fato novo e atualize
 ./painel-roteiro.json, incluindo naTela, fundo e objetos de cada frase); ./cena/js/plano.js, cena.js e pecas.js se for sobre a
 imagem (atualize ./painel-cenas.json). Se ./cena/js ainda não existe, o ajuste de imagem vai só para ./painel-roteiro.json.${referenceNotes(state.id)}
+${medicalScriptNotes(state)}
 Termine com uma linha começando com ROTEIRO (se mudou o texto falado), CENA (se mudou só a imagem) ou NADA, e diga o que mudou.`;
 
 // o pedido para um motor de fora (modo livre): a skill do motor faz o vídeo com o roteiro e a voz que o painel já gravou
-export const externalPrompt = (engine, output, skillPath, card = null) => `A pessoa pediu pelo painel Motor Animado um vídeo feito com o motor "${engine.rotulo}".
+export const externalPrompt = (engine, output, skillPath, card = null, state = null) => `A pessoa pediu pelo painel Motor Animado um vídeo feito com o motor "${engine.rotulo}".
 Já está aprovado: não faça perguntas nem peça confirmação. Decida, faça e relate em poucas linhas.
 
 Use a skill ${engine.skill} e siga o fluxo dela, incluindo as conferências que ela pede. Se o seu agente tiver a ferramenta Skill,
@@ -132,7 +139,7 @@ ${card ? `
 Estilo escolhido pela pessoa no painel: **${card.nome}** (ficha ${card.id}). Leia ${skillPath}/${card.ficha} antes de desenhar
 e use essa ficha no vídeo inteiro, do primeiro ao último quadro: um estilo só, uma paleta só. ${card.sobre}
 Da ficha vem o jeito de desenhar, não o conteúdo: a composição e os objetos são deste roteiro, não os do exemplo dela.
-` : ""}
+` : ""}${medicalSceneNotes(state)}
 
 Entradas, nesta pasta (a pasta do vídeo):
 - ./roteiro.txt: uma frase por linha; as marcações entre colchetes são emoção da voz e não entram em texto de tela
@@ -177,6 +184,7 @@ Leia ./roteiro.txt (as frases contam do 1, sem a linha de comentário), ./fontes
 Reescreva só o item da frase ${phrase} em ./painel-roteiro.json → ilustracoes, mantendo o JSON válido e os outros itens iguais.
 ${ILLUSTRATION_GUIDE}
 Se a pessoa já escreveu alguma coisa nesses campos, mantenha a ideia dela e acrescente o detalhe que falta.${referenceNotes(id)}
+${medicalSceneNotes(loadProject(id))}
 
 Termine com a palavra PRONTO numa linha.`;
 
