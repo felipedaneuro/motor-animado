@@ -1,12 +1,11 @@
-// config.mjs: os ajustes do painel (painel/config.json): o modelo do Claude em cada passo e a voz da ElevenLabs.
+// config.mjs: os ajustes do painel (painel/config.json): o agente e o modelo de cada passo e a voz da ElevenLabs.
 // A chave da ElevenLabs NÃO fica aqui: fica só no .env (ver elevenlabs.mjs).
 import fs from "node:fs";
 import path from "node:path";
 import { ROOT } from "./projetos.mjs";
 
 const FILE = path.join(ROOT, "painel", "config.json");
-// o modelo é do agente escolhido: lista pronta no Claude (sonnet = Sonnet 5.5 hoje), texto livre nos outros
-export const MODELS = ["", "sonnet", "opus", "haiku", "fable"];
+// o modelo é do agente escolhido: lista pronta quando o agente tem uma (Claude, Codex, Ollama), texto livre nos outros
 export const VOICE_MODELS = ["eleven_v3", "eleven_multilingual_v2", "eleven_turbo_v2_5", "eleven_flash_v2_5"];
 const STEPS = ["roteiro", "cenas", "ajuste", "externo"];
 const DEFAULTS = { agentes: { roteiro: "claude", cenas: "claude", ajuste: "claude", externo: "claude" },
@@ -22,24 +21,26 @@ export function loadConfig() {
     elevenlabs: { ...DEFAULTS.elevenlabs, ...(saved.elevenlabs || {}) }, gemini: { ...DEFAULTS.gemini, ...(saved.gemini || {}) } };
 }
 
-function cleanAgents(agents = {}, names) {
+// rules: {names, choices(agente) -> ids aceitos ou null, offline: agentes sem internet, needsWeb: passos que pesquisam}
+function cleanAgents(agents = {}, rules) {
   const clean = {};
   for (const step of STEPS) {
     if (!(step in agents)) continue;
-    if (!names.includes(agents[step])) throw new Error(`agente desconhecido para ${step}`);
+    if (!rules.names.includes(agents[step])) throw new Error(`agente desconhecido para ${step}`);
+    if (rules.needsWeb.includes(step) && rules.offline.includes(agents[step])) throw new Error(`o passo ${step} confere fontes na internet: escolha o Claude, o Codex ou o Gemini`);
     clean[step] = agents[step];
   }
   return clean;
 }
 
-// o Claude tem lista fechada de apelidos; nos outros agentes o modelo é o nome que a pessoa escrever
-function cleanModels(models = {}, agents) {
+// com lista de modelos, só vale um da lista; sem lista, o nome que a pessoa escrever (só letras, números e . : _ -)
+function cleanModels(models = {}, agents, rules, saved = {}) {
   const clean = {};
   for (const step of STEPS) {
     if (!(step in models)) continue;
-    const value = String(models[step] || "").trim();
-    if (agents[step] === "claude" && !MODELS.includes(value)) throw new Error(`modelo desconhecido para ${step}`);
-    if (!/^[A-Za-z0-9.:_-]{0,60}$/.test(value)) throw new Error(`nome de modelo inválido para ${step}`);
+    const value = String(models[step] || "").trim(), allowed = rules.choices(agents[step]);
+    if (allowed && !allowed.includes(value) && value !== saved[step]) throw new Error(`modelo desconhecido para ${step}`);
+    if (!/^[A-Za-z0-9.:_/-]{0,80}$/.test(value)) throw new Error(`nome de modelo inválido para ${step}`);
     clean[step] = value;
   }
   return clean;
@@ -59,12 +60,14 @@ function cleanVoice(voice = {}) {
   return clean;
 }
 
-export function saveConfig(changes, agentNames = ["claude"]) {
+const NO_RULES = { names: ["claude"], choices: () => null, offline: [], needsWeb: [] };
+
+export function saveConfig(changes, rules = NO_RULES) {
   const current = loadConfig();
-  const agentes = { ...current.agentes, ...cleanAgents(changes.agentes, agentNames) };
+  const agentes = { ...current.agentes, ...cleanAgents(changes.agentes, rules) };
   const conta = changes.gemini?.conta;
   if (conta && !GEMINI_ACCOUNTS.includes(conta)) throw new Error("modo de conta do Gemini desconhecido");
-  const next = { agentes, modelos: { ...current.modelos, ...cleanModels(changes.modelos, agentes) },
+  const next = { agentes, modelos: { ...current.modelos, ...cleanModels(changes.modelos, agentes, rules, current.modelos) },
     elevenlabs: { ...current.elevenlabs, ...cleanVoice(changes.elevenlabs) },
     gemini: { ...current.gemini, ...(conta ? { conta } : {}) } };
   fs.writeFileSync(FILE, JSON.stringify(next, null, 2) + "\n");

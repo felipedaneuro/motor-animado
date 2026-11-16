@@ -3,15 +3,17 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { loadConfig } from "./config.mjs";
-import { MOTOR, ROOT, log, projectDir } from "./projetos.mjs";
+import { MOTOR, ROOT, log, projectDir, trackChild } from "./projetos.mjs";
 
 const PY = path.join(MOTOR, "ferramentas", "py");
-const ALLOWED = new Set(["voz", "transcrever", "alinhar", "montar", "mapa", "sons", "render", "mixar", "conferir"]);
+const ALLOWED = new Set(["voz", "transcrever", "alinhar", "montar", "mapa", "sons", "render", "mixar", "conferir", "decupar", "novo_estilo"]);
 const CHATTERBOX_SAMPLES = { narrador: "painel/vozes/narrador.wav", narradora: "painel/vozes/narradora.wav" };
 
-export function run(command, args, cwd, onLine = () => {}) {
+// id: o projeto dono do processo (o botão Parar daquele projeto encerra este processo)
+export function run(command, args, cwd, onLine = () => {}, id = null) {
   return new Promise((resolve) => {
     const child = spawn(command, args, { cwd, stdio: ["ignore", "pipe", "pipe"] });
+    trackChild(id, child);
     let output = "";
     const take = (chunk) => {
       output += chunk;
@@ -29,12 +31,12 @@ export async function tool(id, name, args, cwd = projectDir(id)) {
   if (!ALLOWED.has(name)) throw new Error(`ferramenta fora da lista: ${name}`);
   log(id, `${name} ${args.join(" ")}`, "comando");
   const noisy = /Fetching|it\/s\]|^\s*$|\[\d+m/;
-  const result = await run(PY, [`${name}.py`, ...args], cwd, (line) => { if (!noisy.test(line)) log(id, line, "saida"); });
+  const result = await run(PY, [`${name}.py`, ...args], cwd, (line) => { if (!noisy.test(line)) log(id, line, "saida"); }, id);
   if (result.code !== 0) log(id, `${name} falhou (código ${result.code})`, "erro");
   return result;
 }
 
-const must = (result, what) => { if (result.code !== 0) throw new Error(`${what}: ${result.output.trim().split("\n").slice(-3).join(" | ")}`); };
+export const must = (result, what) => { if (result.code !== 0) throw new Error(`${what}: ${result.output.trim().split("\n").slice(-3).join(" | ")}`); };
 
 // voz + transcrição + alinhamento; engine: "mac" | "chatterbox-narrador" | "chatterbox-narradora" | "elevenlabs"
 export async function recordVoice(id, engine) {

@@ -8,6 +8,7 @@ export const VIDEOS = path.join(ROOT, "videos");
 export const MOTOR = path.join(ROOT, "motor-animado");
 
 const listeners = new Map();   // id -> Set de funções que recebem cada evento
+const children = new Map();    // id -> Set dos processos que um trabalho do projeto abriu (para o botão Parar)
 const STEPS = ["ideia", "roteiro", "estilo", "cenas", "voz", "pronto"];
 
 export const projectDir = (id) => path.join(VIDEOS, id);
@@ -65,6 +66,20 @@ export const readJson = (id, file, fallback = null) => {
   try { return JSON.parse(readText(id, file)); } catch { return fallback; }
 };
 export const writeText = (id, file, text) => fs.writeFileSync(path.join(projectDir(id), file), text);
+
+// ---------- processos de um trabalho: o botão Parar encerra todos ----------
+export function trackChild(id, child) {
+  if (!id) return;
+  if (!children.has(id)) children.set(id, new Set());
+  children.get(id).add(child);
+  child.on("close", () => children.get(id)?.delete(child));
+}
+
+export function stopChildren(id) {
+  const running = [...(children.get(id) || [])];
+  running.forEach((child) => child.kill("SIGTERM"));
+  return running.length;
+}
 
 // ---------- atividade ----------
 function emit(id, event) {

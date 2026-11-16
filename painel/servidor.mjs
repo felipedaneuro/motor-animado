@@ -5,11 +5,14 @@ import http from "node:http";
 import path from "node:path";
 import { catalog, styleNames } from "./catalogo.mjs";
 import { canPreview, voiceCost } from "./ferramentas.mjs";
-import { agentNames, agentStatus } from "./agentes.mjs";
-import { MODELS, VOICE_MODELS, loadConfig, saveConfig } from "./config.mjs";
+import { AGENTS, STEPS_NEEDING_WEB, agentNames, agentStatus, modelChoices } from "./agentes.mjs";
+import { VOICE_MODELS, loadConfig, saveConfig } from "./config.mjs";
 import { checkVoice, keyStatus, listVoices, saveKey } from "./elevenlabs.mjs";
-import { engineNames, engineStatus } from "./motores.mjs";
-import { adjust, buildScenes, prepare, preview, produce, render, voice, writeScript } from "./passos.mjs";
+import { MAX_VIDEO_BYTES, checkStyleName, resolveSource, uploadTarget } from "./estilo-video.mjs";
+import { MAX_IMAGE_BYTES, phrasesOf, referenceTarget, references, removeReference, reorderPhrases, saveIllustration,
+  validPhrase } from "./ilustracoes.mjs";
+import { engineNames, engineSheet, engineStatus } from "./motores.mjs";
+import { adjust, buildScenes, detail, isRunning, newStyle, prepare, preview, produce, render, stop, voice, writeScript } from "./passos.mjs";
 import { deleteTheme, saveTheme } from "./temas.mjs";
 import { ROOT, VIDEOS, createProject, listProjects, loadProject, log, readJson, readText, recentActivity, subscribe,
   updateProject, validId, writeText } from "./projetos.mjs";
@@ -17,9 +20,10 @@ import { ROOT, VIDEOS, createProject, listProjects, loadProject, log, readJson, 
 const PORT = Number(process.env.PORTA || process.env.PORT || 4747);
 const PUBLIC = path.join(ROOT, "painel", "publico");
 const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8",
-  ".json": "application/json", ".jpg": "image/jpeg", ".png": "image/png", ".mp4": "video/mp4", ".wav": "audio/wav", ".svg": "image/svg+xml" };
+  ".json": "application/json", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".webp": "image/webp",
+  ".mp4": "video/mp4", ".wav": "audio/wav", ".svg": "image/svg+xml" };
 const VOICES = ["mac", "chatterbox-narrador", "chatterbox-narradora", "elevenlabs"];
-const MEDIA = new Set([".jpg", ".png", ".mp4"]);
+const MEDIA = new Set([".jpg", ".jpeg", ".png", ".webp", ".mp4"]);
 
 // outra página aberta no navegador não pode mandar pedidos ao painel: quem muda algo precisa vir da própria página do painel
 function trusted(req) {
@@ -56,6 +60,7 @@ function projectView(id) {
   const state = loadProject(id);
   return { ...state, roteiro: readText(id, "roteiro.txt"), fontes: readText(id, "fontes.md"),
     ilustracoes: readJson(id, "painel-roteiro.json", {})?.ilustracoes || [], cenas: readJson(id, "painel-cenas.json", []),
+    referencias: references(id), rodando: isRunning(id),
     temMapa: fs.existsSync(path.join(VIDEOS, id, "mapa", "mapa.jpg")), podePrevia: canPreview(state.estilo), atividade: recentActivity(id) };
 }
 
@@ -68,7 +73,36 @@ function events(req, res, id) {
 
 // os botões de um projeto: cada um começa um trabalho e responde na hora (o andamento vem pelos eventos)
 const ACTIONS = {
-  roteiro: (id, body) => { writeText(id, "roteiro.txt", String(body.texto || "")); return { ok: true }; },
+  roteiro: (id, body) => {
+    const text = String(body.texto || "");
+    writeText(id, "roteiro.txt", text);
+    // as frases mudaram de lugar: a ilustração e as referências de cada uma vão junto
+    const origins = Array.isArray(body.origens) ? body.origens.map((n) => (validPhrase(n) ? n : null)) : null;
+    if (origins && origins.length === phrasesOf(text).length) reorderPhrases(id, origins);
+    return { ok: true };
+  },
+  "revisar-aviso": (id, body) => {
+    const done = new Set(loadProject(id).avisosRevisados || []), text = String(body.texto || "");
+    if (body.feito) done.add(text); else done.delete(text);
+    updateProject(id, { avisosRevisados: [...done] });
+    return { ok: true };
+  },
+  ilustracao: (id, body) => ({ item: saveIllustration(id, Number(body.frase), body.campos || {}) }),
+  "referencia-remover": (id, body) => { removeReference(id, Number(body.frase), String(body.arquivo || "")); return { ok: true }; },
+  detalhar: (id, body) => {
+    if (!validPhrase(Number(body.frase))) throw new Error("frase inválida");
+    detail(id, Number(body.frase));
+    return { ok: true };
+  },
+  "estilo-video": (id, body) => {
+    const name = String(body.nome || "").trim();
+    checkStyleName(id, name);
+    newStyle(id, name, resolveSource(id, body), Math.max(0, Math.min(180, Number(body.ate) || 0)));
+    return { ok: true };
+  },
+  parar: (id) => stop(id),
+  "limpar-erro": (id) => { updateProject(id, { erro: null }); return { ok: true }; },
+  retomar: (id, body) => resume(id, body),
   "gerar-roteiro": (id) => { writeScript(id); return { ok: true }; },
   estilo: (id, body) => {
     // "externo:<motor>" ou "externo:<motor>:<ficha do motor>" (o Huashu tem uma ficha por estilo de desenho)
@@ -105,6 +139,62 @@ const ACTIONS = {
   render: (id, body) => { render(id, Boolean(body.final)); return { ok: true }; },
 };
 
+// os botões que começam um trabalho: o último fica guardado para "Continuar" e "Tentar de novo" depois de um erro
+const JOBS = new Set(["gerar-roteiro", "cenas", "ajuste", "voz", "render", "produzir", "preparar-motor", "detalhar", "estilo-video"]);
+
+async function runAction(id, action, body) {
+  const result = await ACTIONS[action](id, body);
+  if (JOBS.has(action)) {
+    const { confirmado, ...corpo } = body;
+    updateProject(id, { ultimoTrabalho: { acao: action, corpo } });
+  }
+  return result;
+}
+
+// modo "continuar": o agente retoma a conversa e é avisado de que parou no meio; "refazer": conversa nova, do zero.
+// A voz paga pede a confirmação de novo (ela vem do botão, nunca do pedido guardado).
+function resume(id, body) {
+  const state = loadProject(id), last = state.ultimoTrabalho;
+  if (!last || !JOBS.has(last.acao)) throw new Error("não há trabalho para repetir");
+  if (body.modo === "refazer") updateProject(id, { sessoes: {}, sessao: null, sessaoLivre: null });
+  else updateProject(id, { retomar: state.erro || "o trabalho foi interrompido" });
+  try {
+    return ACTIONS[last.acao](id, { ...last.corpo, confirmado: Boolean(body.confirmado) });
+  } catch (error) {
+    updateProject(id, { retomar: null });
+    throw error;
+  }
+}
+
+// um arquivo enviado pela página vem cru no corpo do pedido, até o limite de tamanho
+function receiveFile(req, target, limit) {
+  return new Promise((resolve, reject) => {
+    const out = fs.createWriteStream(target);
+    let size = 0;
+    req.on("data", (chunk) => {
+      size += chunk.length;
+      if (size <= limit) return;
+      req.unpipe(out); req.destroy(); out.destroy();
+      fs.rmSync(target, { force: true });   // o pedaço que chegou do envio recusado
+      reject(new Error(`arquivo grande demais (máximo de ${Math.round(limit / 1e6)} MB)`));
+    });
+    out.on("finish", resolve);
+    out.on("error", reject);
+    req.pipe(out);
+  });
+}
+
+// POST /api/projetos/<id>/enviar?tipo=referencia&frase=3&nome=foto.jpg  ou  ?tipo=video&nome=ref.mp4
+async function upload(req, res, id, query) {
+  const kind = query.get("tipo"), name = query.get("nome") || "";
+  const target = kind === "referencia" ? referenceTarget(id, Number(query.get("frase")), name)
+    : kind === "video" ? uploadTarget(id, name) : null;
+  if (!target) return fail(res, "tipo de envio desconhecido");
+  await receiveFile(req, target, kind === "video" ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES);
+  log(id, `arquivo recebido: ${path.basename(target)}`, "info");
+  json(res, { arquivo: path.basename(target) });
+}
+
 // os temas pessoais: POST /api/temas {nome, tema} cria ou atualiza; POST /api/temas/excluir {nome} apaga
 async function themes(req, res, action) {
   if (req.method !== "POST") return fail(res, "ação desconhecida", 404);
@@ -125,14 +215,17 @@ async function themes(req, res, action) {
 }
 
 // os ajustes do painel. A chave da ElevenLabs só entra (POST elevenlabs/chave); a página nunca a recebe de volta.
-const settingsView = () => ({ ...loadConfig(), chave: keyStatus().chave, modelosDisponiveis: MODELS, modelosDeVoz: VOICE_MODELS,
+const settingsView = () => ({ ...loadConfig(), chave: keyStatus().chave, modelosDeVoz: VOICE_MODELS, passosComInternet: STEPS_NEEDING_WEB,
   motores: engineStatus(), agentesDisponiveis: agentStatus() });
+
+const configRules = () => ({ names: agentNames(), choices: modelChoices, needsWeb: STEPS_NEEDING_WEB,
+  offline: agentNames().filter((name) => AGENTS[name].semRoteiro) });
 
 async function settings(req, res, parts) {
   if (req.method === "GET") return json(res, settingsView());
   const body = await readBody(req);
   try {
-    if (parts[0] === "config") saveConfig(body, agentNames());
+    if (parts[0] === "config") saveConfig(body, configRules());
     else if (parts[1] === "chave") saveKey(body.chave);
     else if (parts[1] === "vozes") return json(res, { vozes: await listVoices() });
     else if (parts[1] === "conferir") return json(res, await checkVoice(body.voz));
@@ -141,7 +234,7 @@ async function settings(req, res, parts) {
   } catch (error) { fail(res, error.message); }
 }
 
-async function api(req, res, parts) {
+async function api(req, res, parts, query) {
   if (parts[0] === "catalogo") return json(res, catalog());
   if (parts[0] === "temas") return themes(req, res, parts[1]);
   if (parts[0] === "config" || parts[0] === "elevenlabs") return settings(req, res, parts);
@@ -154,25 +247,31 @@ async function api(req, res, parts) {
       duracao: Number(body.duracao) || 60, publico: body.publico || "público geral" });
     log(state.id, `projeto criado: ${state.frase}`, "passo");
     writeScript(state.id);
+    updateProject(state.id, { ultimoTrabalho: { acao: "gerar-roteiro", corpo: {} } });
     return json(res, { id: state.id });
   }
   const [, id, action] = parts;
   if (!validId(id)) return fail(res, "projeto não encontrado", 404);
   if (!action) return json(res, projectView(id));
   if (action === "eventos") return events(req, res, id);
+  if (action === "enviar" && req.method === "POST") return upload(req, res, id, query).catch((error) => fail(res, error.message));
   if (!ACTIONS[action] || req.method !== "POST") return fail(res, "ação desconhecida", 404);
-  try { json(res, await ACTIONS[action](id, await readBody(req))); } catch (error) { fail(res, error.message); }
+  try { json(res, await runAction(id, action, await readBody(req))); } catch (error) { fail(res, error.message); }
 }
 
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, "http://localhost"), parts = decodeURIComponent(url.pathname).split("/").filter(Boolean);
   if (parts[0] === "api") {
     if (!trusted(req)) return fail(res, "pedido recusado", 403);
-    return api(req, res, parts.slice(1)).catch((error) => fail(res, error.message, 500));
+    return api(req, res, parts.slice(1), url.searchParams).catch((error) => fail(res, error.message, 500));
   }
   if (parts[0] === "arquivos") {   // só mídia de um projeto do painel: nunca o .env, o perfil ou outro arquivo da pasta videos
     if (!validId(parts[1] || "") || !MEDIA.has(path.extname(url.pathname))) return fail(res, "não achei", 404);
     return sendFile(req, res, VIDEOS, parts.slice(1).join("/"));
+  }
+  if (parts[0] === "folhas") {   // a folha de amostras de estilos que vem com a skill de um motor (Anidoodle)
+    const file = engineSheet(path.basename(parts[1] || "", ".jpg"));
+    return file ? sendFile(req, res, path.dirname(file), path.basename(file)) : fail(res, "não achei", 404);
   }
   if (parts[0] === "previas") return sendFile(req, res, path.join(ROOT, "painel", "previas"), parts.slice(1).join("/"));
   if (parts[0] === "cache") return sendFile(req, res, path.join(ROOT, "painel", ".cache"), parts.slice(1).join("/"));

@@ -3,30 +3,58 @@ import { askAgent } from "./agentes.mjs";
 import fs from "node:fs";
 import path from "node:path";
 import { checkVideo, mount, previewFrame, recordVoice, renderVideo, sceneMap, validateScene } from "./ferramentas.mjs";
-import { adjustPrompt, blackPrompt, externalPrompt, fixPrompt, reviewPrompt, scenePrompt, scriptPrompt } from "./instrucoes.mjs";
+import { adjustPrompt, blackPrompt, continuePrompt, detailPrompt, externalPrompt, fixPrompt, reviewPrompt, scenePrompt,
+  scriptPrompt } from "./instrucoes.mjs";
 import { ENGINES, engineSkillPath, linkModules, prepareEngine } from "./motores.mjs";
-import { advance, loadProject, log, projectDir, readJson, updateProject, writeText } from "./projetos.mjs";
+import { styleFromVideo } from "./estilo-video.mjs";
+import { advance, loadProject, log, projectDir, readJson, stopChildren, updateProject, writeText } from "./projetos.mjs";
 
 const MAX_FIXES = 3, MAX_REVIEWS = 2;
+const running = new Set();   // os projetos com um trabalho de verdade rodando neste processo do painel
+export const isRunning = (id) => running.has(id);
 
-// roda um trabalho marcando o projeto como ocupado; erro vira linha no registro, nunca derruba o painel
-export async function job(id, label, work) {
-  if (loadProject(id).ocupado) throw new Error("já existe um trabalho rodando neste projeto");
+// roda um trabalho marcando o projeto como ocupado; erro vira linha no registro, nunca derruba o painel.
+// A checagem de ocupado é síncrona: quem chama recebe o erro na hora, em vez de uma promessa rejeitada sem dono.
+export function job(id, label, work) {
+  if (running.has(id) || loadProject(id).ocupado) throw new Error("já existe um trabalho rodando neste projeto");
+  running.add(id);
   updateProject(id, { ocupado: label, erro: null });
   log(id, `começou: ${label}`, "passo");
+  return runJob(id, label, work);
+}
+
+async function runJob(id, label, work) {
   try {
     await work();
     log(id, `terminou: ${label}`, "passo");
   } catch (error) {
-    log(id, `${label} parou: ${error.message}`, "erro");
-    updateProject(id, { erro: error.message });
+    const message = loadProject(id).parado ? "parado por você" : error.message;
+    log(id, `${label} parou: ${message}`, "erro");
+    updateProject(id, { erro: message });
   } finally {
-    updateProject(id, { ocupado: null });
+    running.delete(id);
+    updateProject(id, { ocupado: null, retomar: null, parado: null });
   }
 }
 
+// o botão Parar: encerra os programas do trabalho; sem nenhum rodando, só destrava o projeto (ficou preso)
+export function stop(id) {
+  if (!loadProject(id).ocupado) return { parados: 0 };
+  updateProject(id, { parado: true });
+  const count = stopChildren(id);
+  if (!count) {
+    running.delete(id);
+    updateProject(id, { ocupado: null, parado: null, erro: "o trabalho estava travado e foi destravado" });
+    log(id, "trabalho destravado", "erro");
+  }
+  return { parados: count };
+}
+
+// "continuar": o primeiro pedido do trabalho repetido avisa o agente que a tentativa anterior parou no meio
 async function ask(id, prompt, options = {}) {
-  const answer = await askAgent(id, prompt, options);
+  const state = loadProject(id);
+  if (state.retomar) updateProject(id, { retomar: null });
+  const answer = await askAgent(id, state.retomar ? continuePrompt(state.retomar) + prompt : prompt, options);
   if (!answer.ok) throw new Error(answer.text || "o agente não respondeu");
   return answer.text;
 }
@@ -110,6 +138,15 @@ export const render = (id, final) => job(id, final ? "render final" : "render de
 });
 
 export const preview = (id, style, adjustments) => previewFrame(id, style, adjustments);
+
+// um estilo novo a partir de um vídeo de referência (decupagem, novo_estilo.py e a receita completada pelo agente)
+export const newStyle = (id, name, source, seconds) => job(id, `estilo novo ${name}`, () => styleFromVideo(id, name, source, seconds));
+
+// reescreve com mais detalhe o que aparece na tela numa frase (ilustração, fundo e objetos)
+export const detail = (id, phrase) => job(id, `detalhar a frase ${phrase}`, async () => {
+  await ask(id, detailPrompt(id, phrase), { step: "ajuste" });
+  absorbScript(id);
+});
 
 // ---------- os outros motores ----------
 export const prepare = (id, name) => job(id, `preparar o motor ${name}`, () => prepareEngine(id, name));

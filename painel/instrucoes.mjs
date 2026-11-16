@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { MOTOR, VIDEOS } from "./projetos.mjs";
 import { catalog, exampleDir } from "./catalogo.mjs";
+import { references } from "./ilustracoes.mjs";
 
 const RULES = `Regras desta conversa:
 - Você só escreve e lê arquivos e pesquisa na internet. Não rode as ferramentas do motor (voz, montar, mapa, sons, render, mixar,
@@ -21,6 +22,13 @@ function profileNotes() {
 
 const styleList = () => catalog().estilos.filter((s) => s.motor === "web").map((s) => `- ${s.nome}: ${s.resumo}`).join("\n");
 const themeList = () => catalog().temas.map((t) => `- ${t.nome}: ${t.sobre}`).join("\n");
+
+// o que cada ilustração precisa dizer para a cena não sair genérica
+const ILLUSTRATION_GUIDE = `Cada ilustração é uma direção de arte, não um tema solto:
+   - naTela: 2 a 4 frases. O assunto principal e o que ele faz, o enquadramento (perto ou longe, de frente, de lado, de cima),
+     onde está na tela, as cores principais e o que se mexe e em que palavra. Nada de "ilustração sobre X".
+   - fundo: o ambiente e a luz (onde a cena acontece, hora do dia, cor e textura do fundo), ou "fundo liso <cor>".
+   - objetos: os objetos, personagens e textos de tela, cada um com cor, tamanho e posição; o que não pode faltar.`;
 
 export function scriptPrompt(state) {
   const phrases = Math.round((state.duracao * 2.4) / 14);
@@ -41,7 +49,8 @@ ${profileNotes()}
    {"titulo": "título curto", "resumo": "uma frase",
     "avisos": ["o que precisa de revisão humana ou ficou com uma fonte só"],
     "sugestoes": [{"estilo": "<nome>", "tema": "<tema>", "motivo": "por que combina"}, 3 itens, o melhor primeiro],
-    "ilustracoes": [{"frase": 1, "naTela": "o que aparece nessa frase"}, um item por frase]}
+    "ilustracoes": [{"frase": 1, "naTela": "...", "fundo": "...", "objetos": "..."}, um item por frase]}
+   ${ILLUSTRATION_GUIDE}
 
 Estilos que o painel monta sozinho:
 ${styleList()}
@@ -65,7 +74,8 @@ Leia antes de escrever:
   desenhá-lo (medida, posição, cor, o que não pode faltar, erros comuns). Sem ficha, escreva uma pela fonte do mapa.
 - ${MOTOR}/estilos/${state.estilo}/receita.md
 - o exemplo do estilo: ${example}/plano.js e ${example}/cena.js
-- ./roteiro.txt, ./painel-roteiro.json (as ilustrações pedidas) e ./voz/tempos.json (as palavras de cada frase)
+- ./roteiro.txt, ./painel-roteiro.json (as ilustrações pedidas: naTela, fundo e objetos de cada frase; a pessoa pode ter
+  editado à mão, então siga o que está escrito) e ./voz/tempos.json (as palavras de cada frase)${referenceNotes(state.id)}
 - os arquivos de ./cena/js/estilo e, se precisar de uma peça, ./cena/js/motor (formas.js, mundo.js, mascote.js, anatomia.js)
 
 Escreva para ESTE roteiro:
@@ -75,7 +85,7 @@ Escreva para ESTE roteiro:
 - ./cena/js/cena.js: o que aparece em cada frase. Uma ideia visual por frase; nada cortado pela borda; nada tampando a legenda.
 - ./cena/js/pecas.js só se precisar de peças novas.
 - Funções com no máximo 40 linhas, sem console.log, tudo função de t (nada de relógio nem sorteio).
-- ./painel-cenas.json: [{"frase": 1, "texto": "a frase", "naTela": "o que aparece"}] (uma por frase).
+- ./painel-cenas.json: [{"frase": 1, "texto": "a frase", "naTela": "o que aparece", "fundo": "...", "objetos": "..."}] (uma por frase).
 
 Termine respondendo com a palavra PRONTO numa linha.`;
 }
@@ -107,7 +117,8 @@ A pessoa pediu este ajuste pelo painel (passo atual: ${state.passo}):
 "${request}"
 
 Faça o ajuste nos arquivos certos: ./roteiro.txt e ./fontes.md se for sobre o texto (confira qualquer fato novo e atualize
-./painel-roteiro.json); ./cena/js/plano.js, cena.js e pecas.js se for sobre a imagem (atualize ./painel-cenas.json).
+./painel-roteiro.json, incluindo naTela, fundo e objetos de cada frase); ./cena/js/plano.js, cena.js e pecas.js se for sobre a
+imagem (atualize ./painel-cenas.json). Se ./cena/js ainda não existe, o ajuste de imagem vai só para ./painel-roteiro.json.${referenceNotes(state.id)}
 Termine com uma linha começando com ROTEIRO (se mudou o texto falado), CENA (se mudou só a imagem) ou NADA, e diga o que mudou.`;
 
 // o pedido para um motor de fora (modo livre): a skill do motor faz o vídeo com o roteiro e a voz que o painel já gravou
@@ -140,3 +151,53 @@ Limites:
 - Nada de deploy, git push ou envio de dados para fora.
 
 Termine com uma linha: PRONTO ${output}  ou  FALHOU <motivo em uma frase>.`;
+
+// as imagens que a pessoa mandou para cada frase: o agente abre e desenha a partir delas
+function referenceNotes(id) {
+  const found = Object.entries(references(id));
+  if (!found.length) return "";
+  const lines = found.map(([phrase, files]) => `  frase ${phrase}: ${files.map((f) => `./referencias/frase-${phrase}/${f}`).join(", ")}`);
+  return `
+- As imagens de referência que a pessoa enviou. Abra cada uma antes de desenhar a frase dela e siga a forma, a proporção, a
+  posição das partes e as cores; traduza para o traço do estilo, sem copiar marca d'água, logotipo ou texto da imagem:
+${lines.join("\n")}`;
+}
+
+// quando a pessoa clica em Continuar depois de um erro: o agente confere o que já fez antes de seguir
+export const continuePrompt = (reason) => `Atenção: a tentativa anterior deste mesmo pedido parou no meio (${String(reason).slice(0, 300)}).
+Antes de qualquer coisa, confira o que já está escrito nos arquivos da pasta e continue de onde parou. Não refaça o que já está
+pronto e certo; termine o que faltou.
+
+`;
+
+export const detailPrompt = (id, phrase) => `${RULES}
+
+A pessoa pediu pelo painel mais detalhe no que aparece na tela da frase ${phrase}.
+Leia ./roteiro.txt (as frases contam do 1, sem a linha de comentário), ./fontes.md e ./painel-roteiro.json.
+Reescreva só o item da frase ${phrase} em ./painel-roteiro.json → ilustracoes, mantendo o JSON válido e os outros itens iguais.
+${ILLUSTRATION_GUIDE}
+Se a pessoa já escreveu alguma coisa nesses campos, mantenha a ideia dela e acrescente o detalhe que falta.${referenceNotes(id)}
+
+Termine com a palavra PRONTO numa linha.`;
+
+// o estilo novo a partir de um vídeo: o painel já decupou e já criou o estilo com os números; o agente olha e completa
+export const newStylePrompt = (name, folder) => `${RULES}
+
+O painel decupou um vídeo de referência e criou o estilo novo "${name}" com os números medidos. Falta o que só o olho vê.
+Trabalhe só dentro de ./${folder} (a cópia do estilo está em ./${folder}/estilo; o painel a publica quando você terminar).
+
+Leia antes:
+- ${MOTOR}/referencias/estilo-novo.md (o passo a passo; aqui você faz as partes 2 e 3, sem rodar ferramenta nenhuma)
+- ${MOTOR}/referencias/cena-web.md e um estilo pronto parecido em ${MOTOR}/estilos/ (receita.md e kit.js) como modelo de capricho
+- ./${folder}/decupagem/${name}/decupagem.md e as folhas: folhas/historia, folhas/ritmo, folhas/corte-* e folhas/movimento-*, e tomadas/
+
+Faça:
+1. Complete cada [OLHAR] da ./${folder}/estilo/receita.md olhando as folhas, com o segundo de cada coisa e a medida
+   ("a peça entra crescendo em 6 quadros, na palavra"), e apague as marcas [OLHAR]. Diga também o que falta no kit.
+2. Escreva em ./${folder}/estilo/kit.js as peças que se repetem em todo vídeo do estilo (o mundo, o personagem, os objetos
+   típicos), com funções de no máximo 40 linhas, sem console.log, tudo função de t.
+3. Ajuste em ./${folder}/estilo/estilo.json só o que o olho mede (luz, sombreamento chapado, modo da etiqueta), sem quebrar o JSON.
+4. Deixe o exemplo (./${folder}/estilo/exemplo) coerente com o kit.
+Da referência vem a fórmula (ritmo, câmera, textos, som, jeito de desenhar); nada de quadro, logotipo ou áudio dela no estilo.
+
+Termine com a palavra PRONTO numa linha.`;

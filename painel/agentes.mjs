@@ -3,11 +3,13 @@
 //   claude  Claude Code        restrito (sem terminal) nos passos normais; terminal liberado só nos outros motores
 //   codex   Codex, do ChatGPT  sandbox workspace-write: escreve e roda comandos dentro da pasta do vídeo
 //   gemini  Gemini CLI         auto_edit nos passos normais, yolo nos outros motores; não retoma a conversa
+//   local   IA local (Ollama)  o próprio Codex com --oss: o modelo roda neste Mac, sem cota e sem busca na internet
 // Para acrescentar outro agente, copie um bloco abaixo: comando, como instalar, os argumentos e como ler a saída.
 import { execFileSync, spawn } from "node:child_process";
+import fs from "node:fs";
 import path from "node:path";
 import { loadConfig } from "./config.mjs";
-import { MOTOR, VIDEOS, loadProject, log, projectDir, updateProject } from "./projetos.mjs";
+import { MOTOR, VIDEOS, loadProject, log, projectDir, trackChild, updateProject } from "./projetos.mjs";
 
 const installed = (command) => { try { execFileSync("which", [command], { stdio: "ignore" }); return true; } catch { return false; } };
 
@@ -63,6 +65,34 @@ function codexArgs({ prompt, session, model, free }) {
   return [...where, ...(model ? ["-m", model] : []), prompt];
 }
 
+// a IA local é o mesmo Codex apontado para o Ollama: o modelo roda neste Mac. Sem retomar a conversa (cada pedido
+// já diz quais arquivos ler), porque o modo --oss não garante a retomada.
+const localArgs = ({ prompt, model }) => ["exec", "--oss", "--local-provider", "ollama", "--skip-git-repo-check",
+  "--sandbox", "workspace-write", ...CODEX_RULES, "--json", ...(model ? ["-m", model] : []), prompt];
+
+// ---------- as listas de modelos ----------
+const CLAUDE_MODELS = [["", "padrão da conta"], ["sonnet", "Sonnet 5.5 (gasta menos cota)"], ["opus", "Opus"],
+  ["haiku", "Haiku (o mais leve)"], ["fable", "Fable"]];
+const CODEX_CACHE = path.join(process.env.HOME || "", ".codex", "models_cache.json");
+
+// os modelos que o próprio Codex mostra na lista dele (o arquivo que ele guarda ao entrar na conta)
+function codexModels() {
+  try {
+    const data = JSON.parse(fs.readFileSync(CODEX_CACHE, "utf8"));
+    const list = (Array.isArray(data) ? data : data.models || []).filter((m) => (m.visibility || "list") === "list");
+    return [["", "padrão da conta"], ...list.map((m) => [m.slug || m.id, m.display_name || m.slug || m.id])];
+  } catch { return null; }
+}
+
+// os modelos já baixados no Ollama (ollama list); vazio quando o Ollama ainda não está instalado
+function ollamaModels() {
+  try {
+    const lines = execFileSync("ollama", ["list"], { encoding: "utf8", timeout: 4000 }).trim().split("\n").slice(1);
+    const names = lines.map((line) => line.split(/\s+/)[0]).filter(Boolean);
+    return names.length ? names.map((name) => [name, name]) : null;
+  } catch { return null; }
+}
+
 function codexItem(item, emit, result) {
   const kind = item.type || "";
   if (kind === "agent_message" || kind === "assistant_message") {
@@ -102,19 +132,34 @@ function geminiLine(event, emit, result) {
 
 export const AGENTS = {
   claude: { rotulo: "Claude Code", comando: "claude", instalar: "npm install -g @anthropic-ai/claude-code", retoma: true,
-    modelos: ["", "sonnet", "opus", "haiku", "fable"], args: claudeArgs, linha: claudeLine,
+    modelos: () => CLAUDE_MODELS, args: claudeArgs, linha: claudeLine,
     nota: "Nos passos normais roda sem terminal: só lê e escreve arquivos na pasta do vídeo e pesquisa na internet." },
   codex: { rotulo: "Codex (ChatGPT)", comando: "codex", instalar: "npm install -g @openai/codex", retoma: true, args: codexArgs, linha: codexLine,
-    nota: "Trabalha com a pasta do vídeo liberada para escrita e comandos (sandbox workspace-write), e nada fora dela. Modelo: deixe vazio ou escreva o nome, ex.: gpt-5.1-codex." },
+    modelos: codexModels,
+    nota: "Trabalha com a pasta do vídeo liberada para escrita e comandos (sandbox workspace-write), e nada fora dela. A lista de modelos vem da sua conta do ChatGPT." },
   gemini: { rotulo: "Gemini CLI", comando: "gemini", instalar: "npm install -g @google/gemini-cli", retoma: false, args: geminiArgs, linha: geminiLine,
     limpaEnv: ["GEMINI_API_KEY", "GOOGLE_API_KEY"],
     nota: "Não retoma a conversa entre os passos (cada pedido já diz quais arquivos ler). Modelo: vazio ou o nome, ex.: gemini-2.5-pro. Entrando com a conta Google, o painel ignora a GEMINI_API_KEY que outros aplicativos deixam no sistema." },
+  local: { rotulo: "IA local (Ollama)", comando: "codex", precisa: ["ollama"], retoma: false, args: localArgs, linha: codexLine,
+    instalar: "brew install ollama  e depois  ollama pull qwen3:14b", modelos: ollamaModels, semRoteiro: true,
+    nota: "Roda no seu Mac, sem gastar cota e sem internet, pelo Codex ligado ao Ollama. Não pesquisa na web, então não escreve o roteiro. Use para rascunhos de cena e correções de ajuste; para a versão final, prefira o Claude ou o GPT. Num Mac de 16 GB, use modelos de até uns 14 bilhões de parâmetros (ex.: qwen3:14b)." },
 };
+// os passos em que um agente sem busca na internet não entra (o roteiro confere as fontes na web)
+export const STEPS_NEEDING_WEB = ["roteiro"];
+
 
 export const agentNames = () => Object.keys(AGENTS);
-export const agentFor = (step) => AGENTS[loadConfig().agentes[step]] ? loadConfig().agentes[step] : "claude";
-export const agentStatus = () => Object.entries(AGENTS).map(([nome, a]) => ({ nome, rotulo: a.rotulo, instalado: installed(a.comando),
-  instalar: a.instalar, modelos: a.modelos || null, retoma: a.retoma, nota: a.nota,
+// o agente do passo; um agente sem busca na internet nunca fica com o roteiro, mesmo num config.json antigo
+export function agentFor(step) {
+  const name = loadConfig().agentes[step];
+  if (!AGENTS[name] || (AGENTS[name].semRoteiro && STEPS_NEEDING_WEB.includes(step))) return "claude";
+  return name;
+}
+const ready = (agent) => installed(agent.comando) && (agent.precisa || []).every(installed);
+// os ids de modelo que o agente aceita, ou null quando o nome é livre (a lista não está disponível)
+export const modelChoices = (name) => AGENTS[name]?.modelos?.()?.map(([id]) => id) || null;
+export const agentStatus = () => Object.entries(AGENTS).map(([nome, a]) => ({ nome, rotulo: a.rotulo, instalado: ready(a),
+  instalar: a.instalar, modelos: a.modelos?.() || null, retoma: a.retoma, nota: a.nota, semRoteiro: Boolean(a.semRoteiro),
   // o agente aceita entrar com a conta em vez da chave de API que esteja no ambiente
   contaOuChave: Boolean(a.limpaEnv), chaveNoAmbiente: (a.limpaEnv || []).filter((name) => process.env[name]) }));
 
@@ -124,7 +169,7 @@ const sessionsOf = (state) => state.sessoes || { "claude:restrito": state.sessao
 // manda um pedido ao agente do passo e devolve {ok, text}. free: o modo com terminal, usado só pelos outros motores.
 export function askAgent(id, prompt, { step = "cenas", free = false } = {}) {
   const config = loadConfig(), name = agentFor(step), agent = AGENTS[name];
-  if (!installed(agent.comando)) return Promise.resolve({ ok: false, text: `${agent.rotulo} não está instalado neste Mac. Instale com: ${agent.instalar}` });
+  if (!ready(agent)) return Promise.resolve({ ok: false, text: `${agent.rotulo} não está instalado neste Mac. Instale com: ${agent.instalar}` });
   const state = loadProject(id), key = `${name}:${free ? "livre" : "restrito"}`;
   const session = agent.retoma ? sessionsOf(state)[key] || null : null;
   const result = { ok: false, text: "", session };
@@ -145,6 +190,7 @@ function agentEnv(agent, config) {
 function runAgent({ id, agent, args, emit, result, key, env }) {
   return new Promise((resolve) => {
     const child = spawn(agent.comando, args, { cwd: projectDir(id), stdio: ["ignore", "pipe", "pipe"], env });
+    trackChild(id, child);
     const take = (line) => {
       if (!line.startsWith("{")) return;
       try { agent.linha(JSON.parse(line), emit, result); } catch { /* linha pela metade ou aviso: não é evento */ }

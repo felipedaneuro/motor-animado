@@ -5,7 +5,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { ROOT, log, projectDir } from "./projetos.mjs";
 import { run } from "./ferramentas.mjs";
-import { huashuStyles } from "./estilos-huashu.mjs";
+import { ANIDOODLE_GROUPS, anidoodleStyles } from "./estilos-anidoodle.mjs";
+import { HUASHU_GROUPS, huashuStyles } from "./estilos-huashu.mjs";
 
 const WORK = path.join(ROOT, "painel", "motores");
 const CLAUDE_HOME = path.join(process.env.HOME || "", ".claude");
@@ -39,7 +40,9 @@ export const ENGINES = {
     ...PLAYWRIGHT, resumo: "Cada quadro desenhado em JavaScript, sem imagens, exportado para MP4, com trilha gerada em código." },
   anidoodle: { rotulo: "Anidoodle", skill: "anidoodle:anidoodle", pasta: "anidoodle",
     instalarSkill: ["/plugin marketplace add https://github.com/alexgreensh/anidoodle.git", "/plugin install anidoodle@alexgreensh-anidoodle"],
-    ...PLAYWRIGHT, resumo: "Desenhos feitos em código, timelapse de desenho e explicativos em 32 estilos. Na primeira vez instala as dependências do filme na pasta do vídeo." },
+    ...PLAYWRIGHT, resumo: "Desenhos feitos em código, timelapse de desenho e explicativos em 32 estilos. Na primeira vez instala as dependências do filme na pasta do vídeo.",
+    estilos: anidoodleStyles, grupos: ANIDOODLE_GROUPS, folha: path.join("assets", "styles.jpg"),
+    escolhaEstilo: "Este motor desenha cada vídeo num dos 32 estilos dele: escolha um antes de produzir." },
   manim: { rotulo: "Manim (estilo 3Blue1Brown)", skill: "manimce-best-practices", pasta: "manimce-best-practices",
     instalarSkill: ["npx skills add adithya-s-k/manim_skill -g -a claude-code"],
     pronto: () => fs.existsSync(path.join(VENV, "manim")), setup: [{ command: path.join(VENV, "pip"), args: ["install", "manim"], cwd: ROOT }],
@@ -48,12 +51,19 @@ export const ENGINES = {
   "huashu-art-motion": { rotulo: "Huashu Art Motion", skill: "huashu-art-motion", pasta: "huashu-art-motion",
     instalarSkill: ["npx skills add alchaincyf/huashu-art-motion -g -a claude-code"],
     pronto: () => hasCommand("uv"), setup: [], precisa: "o programa uv, que o painel não instala (é do sistema): brew install uv",
-    estilos: huashuStyles, escolhaEstilo: "Este motor tem um estilo de desenho por ficha: escolha um antes de produzir.",
+    estilos: huashuStyles, grupos: HUASHU_GROUPS, temNota: true, escolhaEstilo: "Este motor tem um estilo de desenho por ficha: escolha um antes de produzir.",
     resumo: "Animação artística e vídeo explicativo com 36 estilos e revisão de enquadramento." },
 };
 
 export const engineNames = () => Object.keys(ENGINES);
 export const engineSkillPath = (name) => findSkill(ENGINES[name].pasta);
+
+// a folha de amostras que vem com a skill do motor (o painel recorta as miniaturas dela na página)
+export function engineSheet(name) {
+  const engine = ENGINES[name], skill = engine?.folha ? findSkill(engine.pasta) : "";
+  const file = skill ? path.join(skill, engine.folha) : "";
+  return file && fs.existsSync(file) ? file : "";
+}
 
 // pronto = a skill (de outra pessoa, instalada por fora) mais as dependências que o painel sabe instalar
 export function engineStatus() {
@@ -61,7 +71,8 @@ export function engineStatus() {
     const caminho = findSkill(e.pasta);
     return { nome, rotulo: e.rotulo, resumo: e.resumo, temSkill: Boolean(caminho), caminho, instalarSkill: e.instalarSkill,
       temDependencias: e.pronto(), pronto: Boolean(caminho) && e.pronto(), precisa: e.precisa,
-      estilos: e.estilos ? e.estilos(caminho) : [], escolhaEstilo: e.escolhaEstilo || "",
+      estilos: e.estilos ? e.estilos(caminho) : [], escolhaEstilo: e.escolhaEstilo || "", grupos: e.grupos || [],
+      temNota: Boolean(e.temNota), folha: e.folha && caminho && fs.existsSync(path.join(caminho, e.folha)) ? `/folhas/${nome}.jpg` : null,
       podePreparar: e.setup.length > 0, comandos: e.setup.map((s) => `${path.basename(s.command)} ${s.args.join(" ")}`) };
   });
 }
@@ -77,7 +88,7 @@ export async function prepareEngine(id, name) {
   if (!fs.existsSync(manifest)) fs.writeFileSync(manifest, JSON.stringify({ name: "painel-motores", private: true }, null, 2) + "\n");
   for (const step of engine.setup) {
     log(id, `${path.basename(step.command)} ${step.args.join(" ")}`, "comando");
-    const result = await run(step.command, step.args, step.cwd, (line) => log(id, line, "saida"));
+    const result = await run(step.command, step.args, step.cwd, (line) => log(id, line, "saida"), id);
     if (result.code !== 0) throw new Error(`a instalação falhou: ${result.output.trim().split("\n").slice(-3).join(" | ")}`);
   }
 }

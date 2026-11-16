@@ -1,24 +1,14 @@
 // app.js: as telas do painel. O servidor guarda tudo; aqui só se desenha o projeto atual e se mandam os pedidos.
 import { draftFrom, editorView, exportTheme, importFile, redrawSketch, setField as setThemeField } from "/temas.js";
+import { $, api, app, busy, esc, sendFile } from "/comum.js";
+import { SCRIPT_ACTIONS, onScriptChange, onScriptInput, viewScript as scriptView } from "/roteiro.js";
 const STEPS = [["ideia", "Ideia"], ["roteiro", "Roteiro"], ["estilo", "Estilo"], ["cenas", "Cenas"], ["voz", "Voz e render"]];
 const ORDER = ["ideia", "roteiro", "estilo", "cenas", "voz", "pronto"];
 const VOICES = [["mac", "Voz de teste do Mac", "grátis, robótica: serve para conferir o ritmo"],
   ["chatterbox-narrador", "Chatterbox, narrador", "grátis, gerada no Mac, leva alguns minutos"],
   ["chatterbox-narradora", "Chatterbox, narradora", "grátis, gerada no Mac, leva alguns minutos"],
   ["elevenlabs", "ElevenLabs", "paga: o custo aparece antes de gravar"]];
-const app = { catalog: null, projects: [], project: null, view: "ideia", draft: null, stream: null, preview: null, cost: "", editor: null, settings: null, voices: [], voiceNote: "" };
-const $ = (selector) => document.querySelector(selector);
-const esc = (text) => String(text ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-
-async function api(path, body) {
-  const options = body === undefined ? {} : { method: "POST", headers: { "Content-Type": "application/json", "X-Painel": "1" }, body: JSON.stringify(body) };
-  const response = await fetch(`/api/${path}`, options), data = await response.json();
-  if (!response.ok) throw new Error(data.erro || "o painel não respondeu");
-  return data;
-}
-
 const reached = (step) => app.project && ORDER.indexOf(app.project.passo) >= ORDER.indexOf(step);
-const busy = () => Boolean(app.project?.ocupado);
 
 // ---------- os passos na lateral e a atividade ----------
 // cada passo abre quando o anterior terminou: [o passo que precisa estar alcançado para abrir, o passo que o marca como feito]
@@ -62,20 +52,7 @@ const viewIdea = () => `<h1>Qual é a ideia do vídeo?</h1>
     <button class="botao" data-action="criar">Gerar roteiro</button>
   </div>`;
 
-function viewScript() {
-  const p = app.project;
-  if (!p.roteiro) return `<h1>${esc(p.titulo)}</h1><div class="cartao">${busy() ? "Pesquisando e escrevendo o roteiro. Acompanhe na atividade ao lado." : `O roteiro ainda não foi escrito. <button class="botao" data-action="gerar-roteiro">Gerar roteiro</button>`}</div>`;
-  const warnings = (p.avisos || []).map((w) => `<div class="aviso">${esc(w)}</div>`).join("");
-  const rows = (p.ilustracoes || []).map((i) => `<tr><td>${esc(i.frase)}</td><td>${esc(i.naTela)}</td></tr>`).join("");
-  return `<h1>${esc(p.titulo)}</h1><p class="suave">${esc(p.resumo || "")}</p>
-  <div class="cartao"><h2>Roteiro</h2><p class="suave">Uma frase por linha. A marcação entre colchetes é a emoção da voz e não aparece na legenda.</p>
-    <textarea id="roteiro" class="roteiro" ${busy() ? "disabled" : ""}>${esc(p.roteiro)}</textarea>
-    <div class="linha" style="margin-top:12px"><button class="botao fantasma" data-action="salvar-roteiro" ${busy() ? "disabled" : ""}>Salvar o texto</button>
-      <button class="botao" data-action="ir" data-step="estilo" ${busy() ? "disabled" : ""}>Seguir para o estilo</button></div></div>
-  ${warnings ? `<div class="cartao"><h2>Para a sua revisão</h2>${warnings}</div>` : ""}
-  ${rows ? `<div class="cartao"><h2>O que aparece na tela</h2><table><tr><th>Frase</th><th>Ilustração</th></tr>${rows}</table></div>` : ""}
-  <div class="cartao"><details><summary>Fontes conferidas</summary><pre>${esc(p.fontes || "sem fontes ainda")}</pre></details></div>${adjustBox()}`;
-}
+const viewScript = () => scriptView(adjustBox);
 
 const adjustBox = () => `<div class="cartao"><h2>Pedir um ajuste</h2>
   <textarea id="ajuste" placeholder="Ex.: encurte o gancho · na frase 4, mostre um relógio · tire a cena do hospital"></textarea>
@@ -172,9 +149,20 @@ function viewStyle() {
   ${app.editor ? editorView(app.editor, app.catalog) : ""}
   ${chosen ? `<div class="cartao"><h2>Personalizar: ${esc(chosen.nome)}</h2><div class="duas"><div>${customize(chosen)}
     <div class="linha" style="margin-top:16px"><button class="botao" data-action="gerar-cenas" ${busy() ? "disabled" : ""}>Usar este estilo e gerar as cenas</button></div></div>${side}</div></div>` : ""}
+  ${styleFromVideoCard()}
   <div class="cartao"><h2>Outros motores</h2><p class="suave">Fazem o vídeo inteiro com o seu roteiro e a voz do painel, sem o passo das cenas.
     Neles o Claude roda os programas do motor dentro da pasta do vídeo, então gastam mais cota e demoram mais.</p>${others}</div>`;
 }
+
+// um estilo novo do painel a partir de um vídeo de referência (decupagem + novo estilo + a receita completada pela IA)
+const styleFromVideoCard = () => `<div class="cartao"><h2>Criar um estilo a partir de um vídeo</h2>
+  <p class="suave">Envie um vídeo de referência ou cole o link. O painel decupa a câmera, os cortes, a legenda, as cores e o som,
+    cria o estilo com esses números, e a IA completa a receita olhando os quadros. Leva vários minutos; o estilo novo aparece na lista acima.</p>
+  <div class="campos"><div><label for="ev-nome">Nome do estilo novo</label><input id="ev-nome" placeholder="ex.: lousa-neuro" autocomplete="off"></div>
+    <div><label for="ev-ate">Analisar os primeiros (segundos)</label><input id="ev-ate" type="number" min="0" max="180" value="20"><small>0 analisa o vídeo inteiro</small></div></div>
+  <div class="campos"><div><label for="ev-arquivo">Vídeo de referência</label><input id="ev-arquivo" type="file" accept="video/mp4,video/quicktime,video/webm,.m4v"></div>
+    <div><label for="ev-link">ou o link do vídeo</label><input id="ev-link" placeholder="https://..." autocomplete="off"></div></div>
+  <div class="linha"><button class="botao" data-action="estilo-video" ${busy() ? "disabled" : ""}>Decupar e criar o estilo</button> <small id="ev-nota" class="suave"></small></div></div>`;
 
 function engineCard(e) {
   const chosen = app.draft.estilo === `externo:${e.nome}`;
@@ -187,18 +175,21 @@ function engineCard(e) {
   return `<div class="aviso ${chosen ? "escolhido" : ""}"><b>${esc(e.rotulo)}</b>
     ${tag(e.temSkill, "skill instalada", "falta a skill")} ${tag(e.temDependencias, "pronto para rodar", "falta preparar")}
     <br>${esc(e.resumo)}${skill}${deps}
-    <div class="linha" style="margin-top:8px">${prepare}<button class="botao ${chosen ? "" : "fantasma"}" data-action="${e.estilos.length ? "motor-estilos" : "motor-usar"}" data-engine="${e.nome}" ${e.pronto && !busy() ? "" : "disabled"}>${e.estilos.length ? "Escolher um estilo" : "Usar este motor"}</button>
+    <div class="linha" style="margin-top:8px">${prepare}<button class="botao ${chosen ? "" : "fantasma"}" data-action="${e.estilos.length ? "motor-estilos" : "motor-usar"}" data-engine="${e.nome}" ${(e.estilos.length ? e.temSkill : e.pronto) && !busy() ? "" : "disabled"}>${e.estilos.length ? "Escolher um estilo" : "Usar este motor"}</button>
       ${chosen && engineStyleName(e) ? `<small class="suave">estilo escolhido: <b>${esc(engineStyleName(e))}</b></small>` : ""}</div></div>`;
 }
 
-// ---------- a aba de estilos de um motor de fora (o Huashu tem 36 fichas de desenho) ----------
-const GROUPS = [["material", "Jeito de pintar", "Serve para qualquer assunto: é o tratamento por cima do que você quer mostrar."],
-  ["época", "Retrato de um tempo", "Puxa um período ou um artista: bom para linha do tempo, viagem no tempo e homenagem."],
-  ["pesquisa", "Em pesquisa", "A própria skill marca estas fichas como ainda não validadas: o resultado varia."]];
+// ---------- a aba de estilos de um motor de fora (Huashu: 36 fichas; Anidoodle: 32 estilos com amostra) ----------
+// a miniatura do Anidoodle é um recorte da folha de amostras da skill (8 colunas por 4 linhas, legenda embaixo de cada uma)
+function sheetThumb(engine, style) {
+  if (!engine.folha || !style.folha) return "";
+  const x = (style.folha.coluna * 100) / 7, y = (style.folha.linha * 444 * 100) / (1776 - 392);
+  return `<span class="amostra" style="background-image:url('${engine.folha}');background-position:${x}% ${y}%"></span>`;
+}
 
 function engineStyleCard(engine, style) {
   const chosen = app.draft.estilo === `externo:${engine.nome}:${style.id}`;
-  return `<button class="estilo ${chosen ? "escolhido" : ""}" data-action="estilo-motor" data-engine="${engine.nome}" data-style="${style.id}">
+  return `<button class="estilo ${chosen ? "escolhido" : ""}" data-action="estilo-motor" data-engine="${engine.nome}" data-style="${style.id}">${sheetThumb(engine, style)}
     <div><h3>${esc(style.nome)}</h3> <span class="etiqueta">${esc(style.id)}</span>${style.nota ? ` <span class="etiqueta">${style.nota}</span>` : ""}
     <p>${esc(style.sobre)}</p></div></button>`;
 }
@@ -206,7 +197,7 @@ function engineStyleCard(engine, style) {
 function viewEngineStyles() {
   const engine = app.settings.motores.find((e) => e.nome === app.engine);
   if (!engine) { app.view = "estilo"; return viewStyle(); }
-  const grades = GROUPS.map(([grupo, titulo, sobre]) => {
+  const grades = engine.grupos.map(([grupo, titulo, sobre]) => {
     const list = engine.estilos.filter((s) => s.grupo === grupo);
     if (!list.length) return "";
     return `<div class="cartao"><h2>${titulo} <span class="etiqueta">${list.length}</span></h2><p class="suave">${sobre}</p>
@@ -214,7 +205,7 @@ function viewEngineStyles() {
   }).join("");
   const chosen = engine.estilos.find((s) => app.draft.estilo === `externo:${engine.nome}:${s.id}`);
   return `<h1>Estilos do ${esc(engine.rotulo)}</h1>
-  <p class="suave">${esc(engine.escolhaEstilo)} As estrelas são a nota que a própria skill dá ao estilo: ★★★ sai igual à referência, ★ ainda precisa de retoque.</p>
+  <p class="suave">${esc(engine.escolhaEstilo)}${engine.temNota ? " As estrelas são a nota que a própria skill dá ao estilo: ★★★ sai igual à referência, ★ ainda precisa de retoque." : ""}</p>
   <div class="linha"><button class="botao fantasma" data-action="ir" data-step="estilo">Voltar aos estilos do painel</button></div>
   ${grades}
   ${chosen ? `<div class="cartao"><h2>Escolhido: ${esc(chosen.nome)}</h2><p class="suave">O painel vai pedir ao motor a ficha <code>${esc(chosen.ficha)}</code> da skill.</p>
@@ -283,22 +274,28 @@ function viewVoice() {
 }
 
 const STEP_LABELS = [["roteiro", "Roteiro e fontes"], ["cenas", "Cenas e revisão do mapa"], ["ajuste", "Ajustes pedidos"], ["externo", "Outros motores"]];
-const modelName = (m) => ({ "": "padrão da conta", sonnet: "Sonnet 5.5 (gasta menos cota)", opus: "Opus", haiku: "Haiku (o mais leve)", fable: "Fable" }[m] || m);
+// [passo, para que serve a IA local nele]: o roteiro não aparece porque precisa de internet
+const LOCAL_HINT = { cenas: "bom para rascunho", ajuste: "o melhor uso da IA local", externo: "só rascunho" };
 const agentOf = (step) => app.settings.agentesDisponiveis.find((a) => a.nome === app.settings.agentes[step]) || app.settings.agentesDisponiveis[0];
+const agentsFor = (step) => app.settings.agentesDisponiveis.filter((a) => !(a.semRoteiro && app.settings.passosComInternet.includes(step)));
 
-// o campo do modelo depende do agente: lista pronta no Claude, nome escrito à mão nos outros
+// o campo do modelo: lista quando o agente tem uma (Claude, Codex, Ollama com modelos baixados), nome escrito nos outros
 function modelField(step) {
   const agent = agentOf(step), value = app.settings.modelos[step] || "";
-  if (!agent.modelos) return `<input id="mod-${step}" data-model="${step}" value="${esc(value)}" placeholder="vazio: modelo padrão do agente">`;
-  return `<select id="mod-${step}" data-model="${step}">${agent.modelos.map((m) =>
-    `<option value="${m}" ${m === value ? "selected" : ""}>${modelName(m)}</option>`).join("")}</select>`;
+  if (!agent.modelos?.length) {
+    const hint = agent.nome === "local" ? "ex.: qwen3:14b (baixe antes com ollama pull)" : "vazio: modelo padrão do agente";
+    return `<input id="mod-${step}" data-model="${step}" value="${esc(value)}" placeholder="${hint}">`;
+  }
+  const list = value && !agent.modelos.some(([id]) => id === value) ? [[value, `${value} (salvo antes)`], ...agent.modelos] : agent.modelos;
+  return `<select id="mod-${step}" data-model="${step}">${list.map(([id, nome]) =>
+    `<option value="${esc(id)}" ${id === value ? "selected" : ""}>${esc(nome)}</option>`).join("")}</select>`;
 }
 
 function stepRow([step, label]) {
   const agent = agentOf(step);
-  const options = app.settings.agentesDisponiveis.map((a) => `<option value="${a.nome}" ${a.nome === agent.nome ? "selected" : ""}>${esc(a.rotulo)}${a.instalado ? "" : " (não instalado)"}</option>`).join("");
-  return `<tr><td>${label}</td><td><select data-agent="${step}">${options}</select></td><td>${modelField(step)}</td>
-    <td class="suave">${agent.instalado ? "" : `falta instalar: <code>${esc(agent.instalar)}</code>`}</td></tr>`;
+  const options = agentsFor(step).map((a) => `<option value="${a.nome}" ${a.nome === agent.nome ? "selected" : ""}>${esc(a.rotulo)}${a.instalado ? "" : " (não instalado)"}</option>`).join("");
+  const note = !agent.instalado ? `falta instalar: <code>${esc(agent.instalar)}</code>` : agent.nome === "local" ? LOCAL_HINT[step] || "" : "";
+  return `<tr><td>${label}</td><td><select data-agent="${step}">${options}</select></td><td>${modelField(step)}</td><td class="suave">${note}</td></tr>`;
 }
 
 // alguns programas do Mac (o app Gemini, por exemplo) deixam uma chave de API no ambiente do sistema,
@@ -328,7 +325,9 @@ function viewSettings() {
   const saved = app.saved ? `<div class="aviso">${esc(app.saved)}</div>` : "";
   return `<h1>Ajustes do painel</h1>${saved}
   <div class="cartao"><h2>Quem escreve cada passo</h2><p class="suave">Dá para misturar: o roteiro com um agente e as cenas com outro.
-    Cada agente usa a conta dele (o Claude a sua cota do Claude, o Codex a do ChatGPT, e assim por diante).</p>
+    Cada agente usa a conta dele (o Claude a sua cota do Claude, o Codex a do ChatGPT, e assim por diante).
+    O roteiro confere as fontes na internet, então fica com o Claude, o GPT (Codex) ou o Gemini. A IA local, que roda neste Mac,
+    serve para rascunhos de cena e correções de ajuste; para a versão final, prefira o Claude ou o GPT.</p>
     <div class="rolagem"><table><tr><th>Passo</th><th>Agente</th><th>Modelo</th><th></th></tr>${STEP_LABELS.map(stepRow).join("")}</table></div>
     <button class="botao" style="margin-top:12px" data-action="salvar-agentes">Salvar</button></div>
   <div class="cartao"><h2>Os agentes</h2>${agentNotes()}</div>${elevenCard()}`;
@@ -336,10 +335,30 @@ function viewSettings() {
 
 const VIEWS = { ideia: viewIdea, roteiro: viewScript, estilo: viewStyle, "motor-estilos": viewEngineStyles, cenas: viewScenes, voz: viewVoice, ajustes: viewSettings };
 
+// ---------- trabalho rodando, travado ou que parou com erro ----------
+const JOB_NAMES = { "gerar-roteiro": "o roteiro", cenas: "as cenas", ajuste: "o ajuste", voz: "a gravação da voz", render: "o render",
+  produzir: "a produção pelo motor", "preparar-motor": "a preparação do motor", detalhar: "o detalhe da frase", "estilo-video": "o estilo novo" };
+const paidJob = (last) => (last?.acao === "voz" && last.corpo?.motor === "elevenlabs") || (last?.acao === "produzir" && last.corpo?.voz === "elevenlabs");
+
+function statusBox(p) {
+  if (!p) return "";
+  if (p.ocupado) {
+    const stuck = !p.rodando;
+    return `<div class="aviso trabalho"><b>${stuck ? "Parece travado" : "Trabalhando"}:</b> ${esc(p.ocupado)}
+      <button class="botao fantasma pequeno" data-action="parar">${stuck ? "Destravar" : "Parar"}</button></div>`;
+  }
+  if (!p.erro) return "";
+  const last = p.ultimoTrabalho, name = JOB_NAMES[last?.acao] || "o último trabalho";
+  const retry = last ? `<button class="botao pequeno" data-action="retomar" data-modo="continuar">Continuar de onde parou</button>
+    <button class="botao fantasma pequeno" data-action="retomar" data-modo="refazer">Tentar de novo do zero</button>` : "";
+  return `<div class="aviso erro"><b>Parou:</b> ${esc(p.erro)}
+    ${last ? `<br><small class="suave">Continuar refaz ${esc(name)} conferindo o que já ficou pronto; tentar de novo começa uma conversa nova com a IA.</small>` : ""}
+    <div class="linha" style="margin-top:8px">${retry}<button class="botao fantasma pequeno" data-action="limpar-erro">Fechar aviso</button></div></div>`;
+}
+
 function draw() {
-  const error = app.project?.erro ? `<div class="aviso erro">${esc(app.project.erro)}</div>` : "";
   const view = app.view === "ajustes" || app.project ? app.view : "ideia";
-  $("#conteudo").innerHTML = error + VIEWS[view]();
+  $("#conteudo").innerHTML = (view === "ajustes" ? "" : statusBox(app.project)) + VIEWS[view]();
   $("#projetos").innerHTML = `<option value="">Projetos</option>` + app.projects.map((p) => `<option value="${p.id}" ${p.id === app.project?.id ? "selected" : ""}>${esc(p.titulo)}</option>`).join("");
   drawSteps();
   drawActivity();
@@ -349,7 +368,9 @@ function draw() {
 async function refresh(keepFocus = true) {
   if (!app.project) return draw();
   const typing = keepFocus && ["TEXTAREA", "INPUT"].includes(document.activeElement?.tagName);
+  const wasMakingStyle = String(app.project.ocupado || "").startsWith("estilo novo");
   app.project = await api(`projetos/${app.project.id}`);
+  if (wasMakingStyle && !app.project.ocupado) app.catalog = await api("catalogo");   // o estilo novo entra na lista
   app.projects = await api("projetos");
   app.settings = await api("config");
   if (typing) { drawSteps(); drawActivity(); } else draw();
@@ -383,10 +404,14 @@ const saveStyle = () => api(`projetos/${app.project.id}/estilo`, { estilo: app.d
 // ---------- os botões ----------
 const ACTIONS = {
   novo: () => { app.stream?.close(); app.project = null; app.view = "ideia"; draw(); },
-  ir: (el) => { app.view = el.dataset.step; if (app.view === "voz" && !app.cost) loadCost(); draw(); },
+  ir: async (el) => {
+    if (app.view === "roteiro" && app.script?.dirty && window.confirm("Salvar as alterações do roteiro antes de sair desta tela?")) await SCRIPT_ACTIONS["salvar-roteiro"](el, draw, refresh);
+    app.view = el.dataset.step;
+    if (app.view === "voz" && !app.cost) loadCost();
+    draw();
+  },
   criar: async () => { const { id } = await api("projetos", { frase: $("#frase").value, objetivo: $("#objetivo").value, duracao: $("#duracao").value, publico: $("#publico").value }); app.projects = await api("projetos"); await open(id); },
   "gerar-roteiro": () => api(`projetos/${app.project.id}/gerar-roteiro`, {}),
-  "salvar-roteiro": async () => { await api(`projetos/${app.project.id}/roteiro`, { texto: $("#roteiro").value }); await refresh(false); },
   ajuste: async () => { const texto = $("#ajuste").value.trim(); if (texto) { await api(`projetos/${app.project.id}/ajuste`, { texto }); $("#ajuste").value = ""; } },
   escolher: (el) => { app.draft.estilo = el.dataset.style; app.preview = null; draw(); },
   tema: (el) => { app.draft.ajustes.theme = el.dataset.theme; draw(); },
@@ -453,6 +478,21 @@ app.settings = await api("config");
   "motor-estilos": (el) => { app.engine = el.dataset.engine; app.view = "motor-estilos"; draw(); },
   "estilo-motor": (el) => { app.draft.estilo = `externo:${el.dataset.engine}:${el.dataset.style}`; draw(); },
   "motor-seguir": async () => { await saveStyle(); app.view = "voz"; if (!app.cost) loadCost(); await refresh(false); },
+  parar: async () => { if (window.confirm(`Parar "${app.project.ocupado}"? O que já ficou pronto continua salvo.`)) await api(`projetos/${app.project.id}/parar`, {}); },
+  "limpar-erro": () => api(`projetos/${app.project.id}/limpar-erro`, {}),
+  retomar: async (el) => {
+    const pago = paidJob(app.project.ultimoTrabalho);
+    const confirmado = !pago || window.confirm(`Isto grava de novo na ElevenLabs e tem custo. ${app.cost || ""} Seguir?`);
+    if (confirmado) await api(`projetos/${app.project.id}/retomar`, { modo: el.dataset.modo, confirmado: pago });
+  },
+  "estilo-video": async () => {
+    const nome = $("#ev-nome").value.trim().toLowerCase(), link = $("#ev-link").value.trim(), file = $("#ev-arquivo").files[0], ate = Number($("#ev-ate").value) || 0;
+    if (!nome) throw new Error("dê um nome ao estilo novo (letras minúsculas, números e hífen)");
+    if (!file && !link) throw new Error("escolha o vídeo de referência ou cole o link");
+    if (file) $("#ev-nota").textContent = "enviando o vídeo...";
+    const arquivo = file ? await sendFile({ tipo: "video", nome: file.name }, file) : "";
+    await api(`projetos/${app.project.id}/estilo-video`, file ? { nome, arquivo, ate } : { nome, link, ate });
+  },
   produzir: async () => {
     const voz = document.querySelector('input[name="voz"]:checked').value;
     if (voz === "elevenlabs" && !app.settings.chave) throw new Error("grave a chave da ElevenLabs antes");
@@ -469,6 +509,8 @@ async function loadCost() {
   draw();
 }
 
+Object.assign(ACTIONS, Object.fromEntries(Object.entries(SCRIPT_ACTIONS).map(([name, action]) => [name, (el) => action(el, draw, refresh)])));
+
 document.addEventListener("click", async (event) => {
   const el = event.target.closest("[data-action]");
   if (!el || el.disabled) return;
@@ -477,11 +519,13 @@ document.addEventListener("click", async (event) => {
 // o editor de tema: a cor muda o desenho na hora (sem redesenhar a tela, para não perder o seletor de cor aberto)
 document.addEventListener("input", (event) => {
   const data = event.target.dataset || {};
+  if (event.target.tagName !== "SELECT" && onScriptInput(event.target)) return;
   if (!app.editor) return;
   if (data.themeMeta) app.editor[data.themeMeta] = event.target.value;
   if (data.themeField && !data.text) { setThemeField(app.editor, data.themeField, event.target.value); redrawSketch(app.editor); }
 });
 document.addEventListener("change", async (event) => {
+  try { if (await onScriptChange(event.target, draw, refresh)) return; } catch (error) { window.alert(error.message); return; }
   if (event.target.id === "tema-arquivo" && event.target.files[0]) {
     try { app.editor = await importFile(event.target.files[0], app.catalog); draw(); } catch (error) { window.alert(error.message); }
     return;

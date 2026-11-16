@@ -5,6 +5,11 @@
 import fs from "node:fs";
 import path from "node:path";
 
+export const HUASHU_GROUPS = [
+  ["material", "Jeito de pintar", "Serve para qualquer assunto: é o tratamento por cima do que você quer mostrar."],
+  ["época", "Retrato de um tempo", "Puxa um período ou um artista: bom para linha do tempo, viagem no tempo e homenagem."],
+  ["pesquisa", "Em pesquisa", "A própria skill marca estas fichas como ainda não validadas: o resultado varia."]];
+
 const CARDS = path.join("references", "风格配方");
 
 // grupo: "material" cobre qualquer assunto; "época" é retrato de um tempo (bom para linha do tempo e homenagem);
