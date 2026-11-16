@@ -3,6 +3,11 @@
 Um vídeo de saúde bom não lista fatos: ele **pensa como médico em voz alta**. O roteiro segue as etapas abaixo
 (não todas em todo vídeo: escolha as que o tema pede, na ordem) e cada etapa vira um tipo de cena fixo.
 
+## Antes da etapa 1: o gancho
+A primeira frase não é etapa do raciocínio: é o que faz a pessoa ficar. Pode antecipar a etapa mais forte (o momento
+crítico, a pergunta, o achado que surpreende) e o roteiro volta à ordem na frase seguinte. **Frases curtas**: o limite
+de palavras do público vale para todas, e a profundidade vem da sequência, não do tamanho da frase.
+
 ## As etapas
 
 | # | Etapa | A pergunta | O que entra no roteiro |

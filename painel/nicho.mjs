@@ -46,6 +46,9 @@ function audienceBlock(audience) {
   return `Público-alvo: ${audience.rotulo}. Estas regras valem sobre as regras de cuidado do perfil quando as duas divergirem:
 - Linguagem: ${audience.linguagem}
 - Profundidade: ${audience.profundidade}
+- Ritmo: no máximo ${audience.palavras_por_frase} palavras por frase falada (sem contar a emoção entre colchetes). Uma ideia por
+  frase: o que não cabe vira duas frases. A profundidade vem da sequência de frases curtas, não de frases longas.
+- Gancho: ${audience.gancho}
 - Regras:
 ${bullets(audience.regras)}${tag}
 - Fechamento: ${audience.fechamento}`;
@@ -72,6 +75,19 @@ Siga o raciocínio: escolha as etapas que o tema pede, na ordem, e escreva o rot
 No painel-roteiro.json, acrescente o campo "raciocinio" (o formato está no arquivo do raciocínio). Em cada ilustração, o naTela
 dá a estrutura pelo nome anatômico, a vista e o lado do paciente.${styles}
 `;
+}
+
+// as palavras faladas de uma linha do roteiro: sem a emoção entre colchetes
+export const spokenWords = (line) => String(line).replace(/\[[^\]]*\]/g, " ").split(/\s+/).filter((word) => /[\p{L}\p{N}]/u.test(word));
+
+// a conferência que não depende da IA: frases acima do limite do público viram um aviso para revisar
+export function rhythmWarnings(state, phrases) {
+  if (!isMedical(state)) return [];
+  const limit = niche().publicos[state.publicoAlvo].palavras_por_frase;
+  const long = phrases.map((line, k) => [k + 1, spokenWords(line).length]).filter(([, count]) => count > limit);
+  if (!long.length) return [];
+  const list = long.map(([phrase, count]) => `${phrase} (${count})`).join(", ");
+  return [`Frases longas para o ritmo do vídeo (limite de ${limit} palavras): ${list}. Divida cada uma em duas ou peça um ajuste.`];
 }
 
 // o trecho dos pedidos de cena (do painel e dos motores de fora): o que ler e as convenções de desenho

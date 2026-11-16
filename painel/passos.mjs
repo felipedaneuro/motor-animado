@@ -9,7 +9,9 @@ import { adjustPrompt, blackPrompt, continuePrompt, detailPrompt, externalPrompt
 import { ENGINES, engineSkillPath, linkModules, prepareEngine } from "./motores.mjs";
 import { styleFromVideo } from "./estilo-video.mjs";
 import { keepTimings, swapExternalVoice } from "./trocar-voz.mjs";
-import { advance, loadProject, log, projectDir, readJson, stopChildren, updateProject, writeText } from "./projetos.mjs";
+import { advance, loadProject, log, projectDir, readJson, readText, stopChildren, updateProject, writeText } from "./projetos.mjs";
+import { phrasesOf } from "./ilustracoes.mjs";
+import { rhythmWarnings } from "./nicho.mjs";
 
 const MAX_FIXES = 3, MAX_REVIEWS = 2;
 const running = new Set();   // os projetos com um trabalho de verdade rodando neste processo do painel
@@ -87,9 +89,11 @@ export async function ask(id, prompt, options = {}) {
   }
 }
 
+// o que o agente escreveu vai para o projeto; na edição médica o painel ainda confere o tamanho das frases, sem IA
 function absorbScript(id) {
-  const data = readJson(id, "painel-roteiro.json", {});
-  updateProject(id, { titulo: data.titulo || loadProject(id).titulo, resumo: data.resumo || "", avisos: data.avisos || [],
+  const data = readJson(id, "painel-roteiro.json", {}), state = loadProject(id);
+  const rhythm = rhythmWarnings(state, phrasesOf(readText(id, "roteiro.txt")));
+  updateProject(id, { titulo: data.titulo || state.titulo, resumo: data.resumo || "", avisos: [...rhythm, ...(data.avisos || [])],
     sugestoes: data.sugestoes || [] });
 }
 

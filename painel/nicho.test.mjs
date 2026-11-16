@@ -4,12 +4,12 @@ import fs from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { MOTOR } from "./projetos.mjs";
-import { audienceLabel, isMedical, medicalSceneNotes, medicalScriptNotes, niche, nicheOptions, specialtyFiles, validAudience,
-  validSpecialty } from "./nicho.mjs";
+import { audienceLabel, isMedical, medicalSceneNotes, medicalScriptNotes, niche, nicheOptions, rhythmWarnings, specialtyFiles,
+  spokenWords, validAudience, validSpecialty } from "./nicho.mjs";
 import { externalPrompt, scenePrompt, scriptPrompt } from "./instrucoes.mjs";
 
 const REQUESTED = ["neurologia", "neurocirurgia", "neurovascular", "cardiologia", "ortopedia"];
-const AUDIENCE_FIELDS = ["rotulo", "sobre", "linguagem", "profundidade", "regras", "fechamento"];
+const AUDIENCE_FIELDS = ["rotulo", "sobre", "linguagem", "profundidade", "gancho", "regras", "fechamento"];
 const project = (changes = {}) => ({ id: "teste", frase: "o que acontece no AVC", objetivo: "saúde", duracao: 60, publico: "",
   estilo: "atlas-anatomico", ...changes });
 const GENERIC_HEALTH_RULE = "não faça diagnóstico nem indique tratamento ou dose";
@@ -92,4 +92,27 @@ test("a cena e o motor de fora também recebem o guia", () => {
   const engine = { rotulo: "Anidoodle", skill: "anidoodle:anidoodle" };
   assert.ok(externalPrompt(engine, "video.mp4", "/skill", null, state).includes(guide));
   assert.ok(!externalPrompt(engine, "video.mp4", "/skill").includes(guide));
+});
+
+test("cada público tem limite de palavras e o pedido do roteiro cita o limite e o gancho", () => {
+  for (const [id, audience] of Object.entries(niche().publicos)) {
+    assert.ok(Number.isInteger(audience.palavras_por_frase) && audience.palavras_por_frase > 0, id);
+    const prompt = scriptPrompt(project({ publicoAlvo: id, especialidade: "cardiologia" }));
+    assert.ok(prompt.includes(`no máximo ${audience.palavras_por_frase} palavras por frase`), id);
+    assert.ok(prompt.includes(audience.gancho), id);
+  }
+});
+
+test("a emoção entre colchetes não conta como palavra", () => {
+  assert.deepEqual(spokenWords("[serious] Oclusão em M1. Cada minuto conta."), ["Oclusão", "em", "M1.", "Cada", "minuto", "conta."]);
+  assert.equal(spokenWords("[calm] — ").length, 0);
+});
+
+test("frases acima do limite viram um aviso; projeto antigo não recebe aviso", () => {
+  const long = "[focused] A tomografia sem contraste pesquisa hemorragia e a angiotomografia localiza a oclusão arterial proximal";
+  const phrases = ["[serious] Oclusão em M1. Cada minuto conta.", long];
+  const [warning] = rhythmWarnings(project({ publicoAlvo: "saude" }), phrases);
+  assert.match(warning, /limite de 12 palavras\): 2 \(14\)/);
+  assert.deepEqual(rhythmWarnings(project({ publicoAlvo: "saude" }), [phrases[0]]), []);
+  assert.deepEqual(rhythmWarnings(project(), phrases), []);
 });

@@ -3,6 +3,11 @@
 Use quando o tema é um procedimento (cirurgia, intervenção endovascular, punção). O vídeo mostra **por que operar,
 por onde entrar, o que preservar e o que pode dar errado**, na ordem em que o cirurgião pensa.
 
+## Antes da etapa 1: o gancho
+A primeira frase prende antes de explicar: o momento crítico ("Oclusão em M1. Cada minuto conta."), a pergunta ou o
+risco que o procedimento enfrenta. Depois o vídeo segue a ordem abaixo, **uma ideia por frase**, dentro do limite de
+palavras do público: um tempo cirúrgico longo vira duas ou três frases curtas.
+
 ## As etapas
 
 | # | Etapa | A pergunta | O que entra no roteiro |
