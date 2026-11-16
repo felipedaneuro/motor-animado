@@ -3,7 +3,6 @@
 // numa cópia dentro da pasta do vídeo, e o painel devolve a cópia para motor-animado/estilos/<nome>.
 import fs from "node:fs";
 import path from "node:path";
-import { askAgent } from "./agentes.mjs";
 import { styleNames } from "./catalogo.mjs";
 import { must, tool } from "./ferramentas.mjs";
 import { newStylePrompt } from "./instrucoes.mjs";
@@ -63,10 +62,14 @@ function publish(id, name) {
   log(id, `estilo ${name} pronto em motor-animado/estilos/${name}`, "passo");
 }
 
-// o trabalho inteiro (roda dentro de job(), em passos.mjs)
-export async function styleFromVideo(id, name, source, seconds) {
+// o trabalho inteiro (roda dentro de job(), em passos.mjs). ask: o pedido ao agente com a troca automática de cota.
+export async function styleFromVideo(id, name, source, seconds, ask) {
   await decupe(id, name, source, seconds);
-  const answer = await askAgent(id, newStylePrompt(name, `estilo-${name}`), { step: "cenas" });
-  if (!answer.ok) throw new Error(`o estilo foi criado com os números, mas a receita não foi completada: ${answer.text}`);
+  try {
+    await ask(id, newStylePrompt(name, `estilo-${name}`), { step: "cenas" });
+  } catch (error) {
+    error.message = `o estilo foi criado com os números, mas a receita não foi completada: ${error.message}`;
+    throw error;
+  }
   publish(id, name);
 }

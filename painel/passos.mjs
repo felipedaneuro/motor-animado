@@ -1,5 +1,6 @@
 // passos.mjs: o que acontece em cada botão do painel. Um trabalho por vez em cada projeto; tudo vai para o registro de atividade.
-import { askAgent } from "./agentes.mjs";
+import { agentLabel, askAgent, canTakeOver } from "./agentes.mjs";
+import { loadConfig } from "./config.mjs";
 import fs from "node:fs";
 import path from "node:path";
 import { checkVideo, mount, previewFrame, recordVoice, renderVideo, sceneMap, validateScene } from "./ferramentas.mjs";
@@ -7,6 +8,7 @@ import { adjustPrompt, blackPrompt, continuePrompt, detailPrompt, externalPrompt
   scriptPrompt } from "./instrucoes.mjs";
 import { ENGINES, engineSkillPath, linkModules, prepareEngine } from "./motores.mjs";
 import { styleFromVideo } from "./estilo-video.mjs";
+import { keepTimings, swapExternalVoice } from "./trocar-voz.mjs";
 import { advance, loadProject, log, projectDir, readJson, stopChildren, updateProject, writeText } from "./projetos.mjs";
 
 const MAX_FIXES = 3, MAX_REVIEWS = 2;
@@ -18,7 +20,7 @@ export const isRunning = (id) => running.has(id);
 export function job(id, label, work) {
   if (running.has(id) || loadProject(id).ocupado) throw new Error("já existe um trabalho rodando neste projeto");
   running.add(id);
-  updateProject(id, { ocupado: label, erro: null });
+  updateProject(id, { ocupado: label, erro: null, erroAgente: null, trocas: {} });
   log(id, `começou: ${label}`, "passo");
   return runJob(id, label, work);
 }
@@ -30,10 +32,11 @@ async function runJob(id, label, work) {
   } catch (error) {
     const message = loadProject(id).parado ? "parado por você" : error.message;
     log(id, `${label} parou: ${message}`, "erro");
-    updateProject(id, { erro: message });
+    // a cota acabou e nenhum agente pôde assumir: a página oferece trocar o agente do passo e continuar
+    updateProject(id, { erro: message, erroAgente: error.cota ? { passo: error.passo, agente: error.agente } : null });
   } finally {
     running.delete(id);
-    updateProject(id, { ocupado: null, retomar: null, parado: null });
+    updateProject(id, { ocupado: null, retomar: null, parado: null, trocas: {} });
   }
 }
 
@@ -50,13 +53,38 @@ export function stop(id) {
   return { parados: count };
 }
 
-// "continuar": o primeiro pedido do trabalho repetido avisa o agente que a tentativa anterior parou no meio
-async function ask(id, prompt, options = {}) {
-  const state = loadProject(id);
+// ---------- a troca automática de agente quando a cota acaba ----------
+const FALLBACK_ORDER = ["claude", "codex", "gemini", "local"];
+const LOCAL_STEPS = ["cenas", "ajuste"];   // a IA local só assume rascunho de cena e ajuste, nunca roteiro nem produção
+
+function nextAgent(step, tried) {
+  const preference = loadConfig().reserva;
+  if (!preference) return null;
+  const order = preference === "auto" ? FALLBACK_ORDER : [preference];
+  return order.find((name) => !tried.has(name) && canTakeOver(name, step) && (name !== "local" || LOCAL_STEPS.includes(step))) || null;
+}
+
+function agentError(answer, step) {
+  return Object.assign(new Error(answer.text || "o agente não respondeu"), { cota: Boolean(answer.cota), passo: step, agente: answer.agente });
+}
+
+// manda o pedido; se a cota do agente acabar, o próximo assume (e fica com o passo até o fim deste trabalho).
+// "continuar": o primeiro pedido do trabalho repetido avisa o agente que a tentativa anterior parou no meio.
+export async function ask(id, prompt, options = {}) {
+  const state = loadProject(id), step = options.step || "cenas", tried = new Set();
   if (state.retomar) updateProject(id, { retomar: null });
-  const answer = await askAgent(id, state.retomar ? continuePrompt(state.retomar) + prompt : prompt, options);
-  if (!answer.ok) throw new Error(answer.text || "o agente não respondeu");
-  return answer.text;
+  let text = state.retomar ? continuePrompt(state.retomar) + prompt : prompt, agent = state.trocas?.[step] || null;
+  for (;;) {
+    const answer = await askAgent(id, text, { ...options, step, agent });
+    if (answer.ok) return answer.text;
+    tried.add(answer.agente);
+    const next = answer.cota && !loadProject(id).parado ? nextAgent(step, tried) : null;
+    if (!next) throw agentError(answer, step);
+    log(id, `${agentLabel(answer.agente)} chegou ao limite de uso: o trabalho segue com o ${agentLabel(next)}`, "passo");
+    updateProject(id, { trocas: { ...(loadProject(id).trocas || {}), [step]: next } });
+    agent = next;
+    text = continuePrompt(`o ${agentLabel(answer.agente)} chegou ao limite de uso no meio do trabalho; você assume daqui`) + prompt;
+  }
 }
 
 function absorbScript(id) {
@@ -121,26 +149,48 @@ export const adjust = (id, request) => job(id, "ajuste pedido", async () => {
   }
 });
 
-export const voice = (id, engine) => job(id, `voz (${engine})`, async () => {
-  const state = loadProject(id);
+// grava a voz, remonta a cena com os tempos novos e confere se ela ainda desenha
+async function recordAndFit(id, engine) {
   await recordVoice(id, engine);
-  await mount(id, state.estilo);
+  await mount(id, loadProject(id).estilo);
   if (!(await untilItDraws(id))) throw new Error("a cena não fechou com os tempos da voz nova; peça um ajuste");
   updateProject(id, { vozFinal: engine });
+}
+
+// guarda o vídeo na lista do projeto, com os tempos da voz que ele usou (a troca de voz precisa deles)
+function listVideo(id, entry) {
+  keepTimings(id, entry.file);
+  const state = loadProject(id);
+  updateProject(id, { videos: [...(state.videos || []), { ...entry, quando: new Date().toISOString(), voz: state.vozFinal || "teste do Mac" }] });
+  advance(id, "pronto");
+}
+
+export const voice = (id, engine) => job(id, `voz (${engine})`, async () => {
+  await recordAndFit(id, engine);
   advance(id, "voz");
 });
 
-export const render = (id, final) => job(id, final ? "render final" : "render de rascunho", async () => {
-  const result = await renderVideo(id, final);
-  const state = loadProject(id);
-  updateProject(id, { videos: [...(state.videos || []), { ...result, quando: new Date().toISOString(), voz: state.vozFinal || "teste do Mac" }] });
-  advance(id, "pronto");
+export const render = (id, final) => job(id, final ? "render final" : "render de rascunho", async () => listVideo(id, await renderVideo(id, final)));
+
+// trocar só a voz de um vídeo pronto. Estilos do painel: grava, remonta e renderiza de novo (a cena acompanha os
+// tempos sozinha, sem a IA). Outros motores: estica cada frase do vídeo pronto até a duração dela na voz nova.
+// file vazio: gravar a voz escolhida e renderizar (o botão de render quando a voz marcada não é a gravada).
+export const revoice = (id, engine, file, final) => job(id, `trocar a voz (${engine})`, async () => {
+  const video = file ? (loadProject(id).videos || []).find((v) => v.file === file) : null;
+  if (file && !video) throw new Error("vídeo não encontrado neste projeto");
+  if (video?.motor) {
+    const entry = await swapExternalVoice(id, video, engine);
+    updateProject(id, { vozFinal: engine });
+    return listVideo(id, entry);
+  }
+  await recordAndFit(id, engine);
+  listVideo(id, await renderVideo(id, video ? Boolean(video.final) : final));
 });
 
 export const preview = (id, style, adjustments) => previewFrame(id, style, adjustments);
 
 // um estilo novo a partir de um vídeo de referência (decupagem, novo_estilo.py e a receita completada pelo agente)
-export const newStyle = (id, name, source, seconds) => job(id, `estilo novo ${name}`, () => styleFromVideo(id, name, source, seconds));
+export const newStyle = (id, name, source, seconds) => job(id, `estilo novo ${name}`, () => styleFromVideo(id, name, source, seconds, ask));
 
 // reescreve com mais detalhe o que aparece na tela numa frase (ilustração, fundo e objetos)
 export const detail = (id, phrase) => job(id, `detalhar a frase ${phrase}`, async () => {
@@ -175,8 +225,5 @@ export const produce = (id, name, voiceEngine) => job(id, `vídeo pelo motor ${n
   const card = chosen && engine.estilos ? engine.estilos(skillPath).find((s) => s.id === chosen) : null;
   const answer = await ask(id, externalPrompt(engine, output, skillPath, card), { step: "externo", free: true });
   if (!fs.existsSync(path.join(projectDir(id), output))) throw new Error(`o motor não entregou o vídeo: ${answer.trim().split("\n").pop()}`);
-  const check = await checkVideo(id, output);
-  const now = loadProject(id);
-  updateProject(id, { videos: [...(now.videos || []), { file: output, check, final: true, motor: engine.rotulo, quando: new Date().toISOString(), voz: now.vozFinal || "teste do Mac" }] });
-  advance(id, "pronto");
+  listVideo(id, { file: output, check: await checkVideo(id, output), final: true, motor: engine.rotulo });
 });

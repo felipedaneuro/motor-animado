@@ -16,12 +16,15 @@ const installed = (command) => { try { execFileSync("which", [command], { stdio:
 // ruído que os agentes escrevem no stderr e não ajuda ninguém (avisos de terminal, rastros de pilha, relatórios)
 const NOISE = /^\s*at |256-color|Ripgrep is not available|Full report available at|^\[Routing\]|DeprecationWarning|ExperimentalWarning|^[{}\]]|^"|^\s*$|ERROR rmcp|rmcp::transport|Reading additional input from stdin|^\d{4}-\d\d-\d\dT[\d:.]+Z\s+(ERROR|WARN)/;
 
+// a cota da conta acabou (limite da sessão, do dia ou de créditos): o painel pode seguir com outro agente
+const QUOTA = /usage limit|hit your limit|limit reached|quota|rate.?limit|\b429\b|insufficient.?credit|out of credits|limite de uso/i;
+
 // erros comuns traduzidos para uma linha que diz o que fazer
 const KNOWN = [
   [/API.?KEY.?INVALID|API key not valid/i, (a) => `${a.rotulo}: a chave de API não é válida. Rode "${a.comando}" no terminal e entre na sua conta, ou corrija a chave no ambiente.`],
   [/Please set an Auth method|no auth method|select an auth/i, (a) => `${a.rotulo}: falta escolher como entrar. Rode "${a.comando}" no terminal e faça o login uma vez.`],
   [/not logged in|unauthorized|401|please sign in|login required/i, (a) => `${a.rotulo}: a conta não está conectada. Rode "${a.comando}" no terminal e entre na sua conta.`],
-  [/usage limit|quota|rate.?limit|429|insufficient.?credit/i, (a) => `${a.rotulo}: o limite de uso da conta acabou. Espere a cota voltar ou troque de agente em Ajustes.`],
+  [QUOTA, (a) => `${a.rotulo}: o limite de uso da conta acabou. Espere a cota voltar ou siga com outro agente.`],
 ];
 const translate = (text, agent) => (KNOWN.find(([pattern]) => pattern.test(text)) || [])[1]?.(agent) || "";
 const short = (file) => (file ? path.basename(String(file)) : "");
@@ -158,6 +161,9 @@ export function agentFor(step) {
 const ready = (agent) => installed(agent.comando) && (agent.precisa || []).every(installed);
 // os ids de modelo que o agente aceita, ou null quando o nome é livre (a lista não está disponível)
 export const modelChoices = (name) => AGENTS[name]?.modelos?.()?.map(([id]) => id) || null;
+// um agente que pode assumir o passo: instalado e, no roteiro, com busca na internet
+export const canTakeOver = (name, step) => Boolean(AGENTS[name]) && ready(AGENTS[name]) && !(AGENTS[name].semRoteiro && STEPS_NEEDING_WEB.includes(step));
+export const agentLabel = (name) => AGENTS[name]?.rotulo || name;
 export const agentStatus = () => Object.entries(AGENTS).map(([nome, a]) => ({ nome, rotulo: a.rotulo, instalado: ready(a),
   instalar: a.instalar, modelos: a.modelos?.() || null, retoma: a.retoma, nota: a.nota, semRoteiro: Boolean(a.semRoteiro),
   // o agente aceita entrar com a conta em vez da chave de API que esteja no ambiente
@@ -167,15 +173,17 @@ export const agentStatus = () => Object.entries(AGENTS).map(([nome, a]) => ({ no
 const sessionsOf = (state) => state.sessoes || { "claude:restrito": state.sessao, "claude:livre": state.sessaoLivre };
 
 // manda um pedido ao agente do passo e devolve {ok, text}. free: o modo com terminal, usado só pelos outros motores.
-export function askAgent(id, prompt, { step = "cenas", free = false } = {}) {
-  const config = loadConfig(), name = agentFor(step), agent = AGENTS[name];
+// agent: um agente no lugar do configurado para o passo (a troca automática quando a cota acaba)
+export function askAgent(id, prompt, { step = "cenas", free = false, agent: chosen = null } = {}) {
+  const config = loadConfig(), name = AGENTS[chosen] ? chosen : agentFor(step), agent = AGENTS[name];
+  const model = name === agentFor(step) ? config.modelos[step] || "" : "";
   if (!ready(agent)) return Promise.resolve({ ok: false, text: `${agent.rotulo} não está instalado neste Mac. Instale com: ${agent.instalar}` });
   const state = loadProject(id), key = `${name}:${free ? "livre" : "restrito"}`;
   const session = agent.retoma ? sessionsOf(state)[key] || null : null;
-  const result = { ok: false, text: "", session };
+  const result = { ok: false, text: "", session, agente: name };
   const emit = (text, kind) => log(id, text, kind);
-  log(id, `${agent.rotulo}${config.modelos[step] ? ` (${config.modelos[step]})` : ""} trabalhando...`, "passo");
-  return runAgent({ id, agent, args: agent.args({ prompt, session, model: config.modelos[step] || "", free }), emit, result, key,
+  log(id, `${agent.rotulo}${model ? ` (${model})` : ""} trabalhando...`, "passo");
+  return runAgent({ id, agent, args: agent.args({ prompt, session, model, free }), emit, result, key,
     env: agentEnv(agent, config) });
 }
 
@@ -218,6 +226,7 @@ function runAgent({ id, agent, args, emit, result, key, env }) {
       if (result.session) updateProject(id, { sessoes: { ...sessionsOf(loadProject(id)), [key]: result.session } });
       // sem evento final (formato de saída mudou?): vale a saída limpa com alguma resposta
       if (!result.final) Object.assign(result, { ok: code === 0 && Boolean(result.text.trim()), text: result.text || `o ${agent.rotulo} saiu com erro (código ${code})` });
+      if (!result.ok) result.cota = QUOTA.test(`${result.text} ${aviso}`);
       if (!result.ok) result.text = translate(result.text, agent) || aviso || clip(result.text, 300);
       resolve(result);
     });

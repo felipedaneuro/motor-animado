@@ -224,9 +224,29 @@ function viewScenes() {
   ${rows ? `<div class="cartao"><table><tr><th>Frase</th><th>Fala</th><th>Na tela</th></tr>${rows}</table></div>` : ""}${adjustBox()}`;
 }
 
-function videoCard(v, id) {
+// o nome da voz para a tela ("mac" e vazio são a voz de teste)
+// os vídeos antigos guardam a voz de teste como "teste do Mac"
+const voiceId = (engine) => (!engine || engine === "teste do Mac" ? "mac" : engine);
+const voiceName = (engine) => (VOICES.find(([id]) => id === voiceId(engine)) || [null, engine])[1];
+const chosenVoice = () => document.querySelector('input[name="voz"]:checked')?.value || "mac";
+
+// só o vídeo mais novo troca de voz: nos estilos do painel a troca renderiza a cena atual de novo
+function voiceSwap(v) {
+  const options = VOICES.filter(([engine]) => engine !== voiceId(v.voz))
+    .map(([engine, name]) => `<option value="${engine}">${name}</option>`).join("");
+  const how = v.motor ? "Estica cada frase do vídeo até o ritmo da voz nova; a trilha do motor sai e fica só a narração."
+    : "Grava a voz, ajusta a cena aos tempos novos e renderiza de novo, sem usar a IA.";
+  return `<div class="troca-voz"><label for="troca-${esc(v.file)}">Trocar só a voz</label>
+    <div class="linha"><select id="troca-${esc(v.file)}" data-troca-voz="${esc(v.file)}">${options}</select>
+      <button class="botao fantasma pequeno" data-action="trocar-voz" data-file="${esc(v.file)}" ${busy() ? "disabled" : ""}>Gerar com esta voz</button></div>
+    <small class="suave">${how}</small></div>`;
+}
+
+function videoCard(v, id, latest) {
   return `<div><video controls preload="metadata" src="/arquivos/${id}/${v.file}"></video>
-    <p><b>${esc(v.file)}</b><br><small>${v.motor ? esc(v.motor) : v.final ? "render final" : "rascunho"} · voz: ${esc(v.voz)}</small></p><pre>${esc(v.check)}</pre></div>`;
+    <p><b>${esc(v.file)}</b><br><small>${v.motor ? esc(v.motor) : v.final ? "render final" : "rascunho"} · voz: ${esc(voiceName(v.voz))}</small></p>
+    <a class="botao pequeno salvar-video" href="/arquivos/${id}/${encodeURIComponent(v.file)}?baixar=1" download>Salvar o vídeo</a>
+    ${latest ? voiceSwap(v) : ""}<pre>${esc(v.check)}</pre></div>`;
 }
 
 function elevenCard() {
@@ -260,15 +280,16 @@ function engineStyleName(engine) {
 
 function viewVoice() {
   const p = app.project, engine = externalEngine(), options = VOICES.map(([id, name, note]) => `<label class="aviso" style="display:block;cursor:pointer"><input type="radio" name="voz" value="${id}" style="width:auto" ${id === (p.vozFinal || "mac") ? "checked" : ""}> <b>${name}</b> <span class="suave">${note}</span></label>`).join("");
-  const videos = (p.videos || []).slice().reverse().map((v) => videoCard(v, p.id)).join("");
+  const videos = (p.videos || []).slice().reverse().map((v, k) => videoCard(v, p.id, k === 0)).join("");
+  const recorded = voiceName(p.vozFinal);
   const record = engine ? "" : `<div class="linha" style="margin-top:12px"><button class="botao fantasma" data-action="voz" ${busy() ? "disabled" : ""}>Gravar com a voz escolhida</button></div>`;
   const make = engine ? `<div class="cartao"><h2>Produzir com ${esc(engine.rotulo)}</h2><p class="suave">O painel grava a voz escolhida acima e o motor faz o vídeo inteiro. Pode levar vários minutos.</p>
       <div class="linha"><button class="botao" data-action="produzir" ${busy() || !engine.pronto ? "disabled" : ""}>Produzir o vídeo</button></div></div>`
     : `<div class="cartao"><h2>Render</h2><p class="suave">O painel gera os sons, renderiza, mixa em −14 LUFS e confere cortes, quadros pretos e pisca.</p>
-    <div class="linha"><button class="botao" data-action="render" data-final="" ${busy() ? "disabled" : ""}>Renderizar rascunho</button>
-      <button class="botao fantasma" data-action="render" data-final="1" ${busy() ? "disabled" : ""}>Render final (mais lento)</button></div></div>`;
+    <div class="linha"><button class="botao" data-action="render" data-final="" ${busy() ? "disabled" : ""}>Renderizar rascunho · voz: ${esc(recorded)}</button>
+      <button class="botao fantasma" data-action="render" data-final="1" ${busy() ? "disabled" : ""}>Render final (mais lento) · voz: ${esc(recorded)}</button></div></div>`;
   return `<h1>Voz e ${engine ? "produção" : "render"}</h1>
-  <div class="cartao"><h2>Voz</h2><p class="suave">Voz atual: <b>${esc(p.vozFinal || "teste do Mac")}</b>. ${esc(app.cost)}</p>${options}${record}</div>
+  <div class="cartao"><h2>Voz</h2><p class="suave">Voz gravada: <b>${esc(recorded)}</b>. ${esc(app.cost)}</p>${options}${record}</div>
   ${elevenCard()}${make}
   ${videos ? `<div class="cartao"><h2>Vídeos deste projeto</h2><div class="videos">${videos}</div></div>` : ""}${adjustBox()}`;
 }
@@ -321,6 +342,16 @@ function agentNotes() {
     ${a.instalado ? "" : `<br><small>Para instalar, rode no terminal: <code>${esc(a.instalar)}</code> e entre na sua conta pelo próprio programa.</small>`}</div>`).join("");
 }
 
+// quem assume quando a cota do agente acaba no meio de um trabalho
+function fallbackField() {
+  const value = app.settings.reserva ?? "auto";
+  const choices = [["auto", "o próximo agente instalado (Claude, Codex, Gemini; a IA local só em cenas e ajustes)"],
+    ...app.settings.agentesDisponiveis.map((a) => [a.nome, `sempre o ${a.rotulo}`]), ["", "ninguém: parar e me perguntar"]];
+  return `<div class="campos" style="margin-top:14px"><div><label for="reserva">Quando a cota de um agente acabar no meio do trabalho, seguir com</label>
+    <select id="reserva" data-reserva="1">${choices.map(([v, label]) => `<option value="${v}" ${v === value ? "selected" : ""}>${esc(label)}</option>`).join("")}</select>
+    <small>O trabalho continua de onde parou, com o outro agente conferindo o que já ficou pronto.</small></div></div>`;
+}
+
 function viewSettings() {
   const saved = app.saved ? `<div class="aviso">${esc(app.saved)}</div>` : "";
   return `<h1>Ajustes do painel</h1>${saved}
@@ -329,6 +360,7 @@ function viewSettings() {
     O roteiro confere as fontes na internet, então fica com o Claude, o GPT (Codex) ou o Gemini. A IA local, que roda neste Mac,
     serve para rascunhos de cena e correções de ajuste; para a versão final, prefira o Claude ou o GPT.</p>
     <div class="rolagem"><table><tr><th>Passo</th><th>Agente</th><th>Modelo</th><th></th></tr>${STEP_LABELS.map(stepRow).join("")}</table></div>
+    ${fallbackField()}
     <button class="botao" style="margin-top:12px" data-action="salvar-agentes">Salvar</button></div>
   <div class="cartao"><h2>Os agentes</h2>${agentNotes()}</div>${elevenCard()}`;
 }
@@ -337,8 +369,20 @@ const VIEWS = { ideia: viewIdea, roteiro: viewScript, estilo: viewStyle, "motor-
 
 // ---------- trabalho rodando, travado ou que parou com erro ----------
 const JOB_NAMES = { "gerar-roteiro": "o roteiro", cenas: "as cenas", ajuste: "o ajuste", voz: "a gravação da voz", render: "o render",
-  produzir: "a produção pelo motor", "preparar-motor": "a preparação do motor", detalhar: "o detalhe da frase", "estilo-video": "o estilo novo" };
-const paidJob = (last) => (last?.acao === "voz" && last.corpo?.motor === "elevenlabs") || (last?.acao === "produzir" && last.corpo?.voz === "elevenlabs");
+  produzir: "a produção pelo motor", "preparar-motor": "a preparação do motor", detalhar: "o detalhe da frase", "estilo-video": "o estilo novo",
+  "trocar-voz": "a troca de voz" };
+const paidJob = (last) => (["voz", "trocar-voz"].includes(last?.acao) && last.corpo?.motor === "elevenlabs") || (last?.acao === "produzir" && last.corpo?.voz === "elevenlabs");
+
+// a cota acabou e nenhum agente assumiu sozinho: escolher quem fica com o passo e continuar
+function agentSwitch(p) {
+  const step = p.erroAgente?.passo;
+  const options = (app.settings.agentesDisponiveis || []).filter((a) => a.instalado && a.nome !== p.erroAgente.agente
+    && !(a.semRoteiro && app.settings.passosComInternet.includes(step))).map((a) => `<option value="${a.nome}">${esc(a.rotulo)}</option>`).join("");
+  if (!options) return `<br><small class="suave">Nenhum outro agente instalado pode assumir este passo: espere a cota voltar.</small>`;
+  return `<div class="linha" style="margin-top:8px"><label for="agente-novo" style="margin:0">Seguir com</label>
+    <select id="agente-novo" style="width:auto">${options}</select>
+    <button class="botao pequeno" data-action="trocar-agente">Trocar o agente e continuar</button></div>`;
+}
 
 function statusBox(p) {
   if (!p) return "";
@@ -351,7 +395,7 @@ function statusBox(p) {
   const last = p.ultimoTrabalho, name = JOB_NAMES[last?.acao] || "o último trabalho";
   const retry = last ? `<button class="botao pequeno" data-action="retomar" data-modo="continuar">Continuar de onde parou</button>
     <button class="botao fantasma pequeno" data-action="retomar" data-modo="refazer">Tentar de novo do zero</button>` : "";
-  return `<div class="aviso erro"><b>Parou:</b> ${esc(p.erro)}
+  return `<div class="aviso erro"><b>Parou:</b> ${esc(p.erro)}${p.erroAgente ? agentSwitch(p) : ""}
     ${last ? `<br><small class="suave">Continuar refaz ${esc(name)} conferindo o que já ficou pronto; tentar de novo começa uma conversa nova com a IA.</small>` : ""}
     <div class="linha" style="margin-top:8px">${retry}<button class="botao fantasma pequeno" data-action="limpar-erro">Fechar aviso</button></div></div>`;
 }
@@ -424,7 +468,20 @@ const ACTIONS = {
     const confirmado = motor !== "elevenlabs" || window.confirm(`Gravar na ElevenLabs? ${app.cost || "O custo aparece na atividade."}`);
     if (confirmado) await api(`projetos/${app.project.id}/voz`, { motor, confirmado });
   },
-  render: (el) => api(`projetos/${app.project.id}/render`, { final: Boolean(el.dataset.final) }),
+  render: async (el) => {
+    const final = Boolean(el.dataset.final), wanted = chosenVoice(), recorded = app.project.vozFinal || "mac";
+    if (wanted === recorded || (wanted === "mac" && !app.project.vozFinal)) return api(`projetos/${app.project.id}/render`, { final });
+    if (window.confirm(`A voz marcada é "${voiceName(wanted)}", mas a gravada é "${voiceName(recorded)}".\n\nOK: gravar "${voiceName(wanted)}" e renderizar com ela.\nCancelar: escolher de novo.`)) {
+      return revoiceRequest(wanted, "", final);
+    }
+    if (window.confirm(`Renderizar assim mesmo com a voz gravada, "${voiceName(recorded)}"?`)) return api(`projetos/${app.project.id}/render`, { final });
+  },
+  "trocar-voz": (el) => revoiceRequest(document.querySelector(`[data-troca-voz="${CSS.escape(el.dataset.file)}"]`).value, el.dataset.file, false),
+  "trocar-agente": async () => {
+    const agente = $("#agente-novo").value, pago = paidJob(app.project.ultimoTrabalho);
+    const confirmado = !pago || window.confirm(`Isto grava de novo na ElevenLabs e tem custo. ${app.cost || ""} Seguir?`);
+    if (confirmado) await api(`projetos/${app.project.id}/trocar-agente`, { agente, confirmado: pago });
+  },
   "tema-novo": () => { app.editor = draftFrom(app.catalog, currentTheme()); draw(); },
   "tema-editar": () => {
     const name = currentTheme(), own = app.catalog.temas.find((t) => t.nome === name)?.meu;
@@ -454,7 +511,7 @@ app.settings = await api("config");
   "salvar-agentes": async () => {
     const agentes = Object.fromEntries([...document.querySelectorAll("[data-agent]")].map((el) => [el.dataset.agent, el.value]));
     const modelos = Object.fromEntries([...document.querySelectorAll("[data-model]")].map((el) => [el.dataset.model, el.value.trim()]));
-    app.settings = await api("config", { agentes, modelos });
+    app.settings = await api("config", { agentes, modelos, reserva: $("#reserva").value });
     app.saved = "ajustes salvos";
     draw();
   },
@@ -500,6 +557,13 @@ app.settings = await api("config");
     if (confirmado) await api(`projetos/${app.project.id}/produzir`, { motor: externalParts().motor, voz, confirmado });
   },
 };
+
+// a voz paga pede a confirmação com o custo antes de gravar
+async function revoiceRequest(motor, arquivo, final) {
+  if (motor === "elevenlabs" && !app.settings.chave) throw new Error("grave a chave da ElevenLabs antes (no cartão ElevenLabs)");
+  const confirmado = motor !== "elevenlabs" || window.confirm(`Gravar na ElevenLabs? ${app.cost || "O custo aparece na atividade."}`);
+  if (confirmado) await api(`projetos/${app.project.id}/trocar-voz`, { motor, arquivo, final, confirmado });
+}
 
 const currentTheme = () => app.draft.ajustes.theme || app.catalog.estilos.find((s) => s.nome === app.draft.estilo)?.tema || "natural";
 

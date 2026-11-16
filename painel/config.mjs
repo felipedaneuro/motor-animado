@@ -12,13 +12,16 @@ const DEFAULTS = { agentes: { roteiro: "claude", cenas: "claude", ajuste: "claud
   modelos: { roteiro: "sonnet", cenas: "", ajuste: "", externo: "" }, elevenlabs: { voz: "", modelo: "eleven_v3" },
   // "google": entra com a conta e ignora a GEMINI_API_KEY do sistema (apps como o Gemini.app põem a sua lá);
   // "chave": usa a chave que estiver no ambiente
-  gemini: { conta: "google" } };
+  gemini: { conta: "google" },
+  // quem assume sozinho quando a cota do agente do passo acaba: "auto" (o próximo instalado), um agente fixo ou "" (parar)
+  reserva: "auto" };
 export const GEMINI_ACCOUNTS = ["google", "chave"];
 
 export function loadConfig() {
   const saved = fs.existsSync(FILE) ? JSON.parse(fs.readFileSync(FILE, "utf8")) : {};
   return { agentes: { ...DEFAULTS.agentes, ...(saved.agentes || {}) }, modelos: { ...DEFAULTS.modelos, ...(saved.modelos || {}) },
-    elevenlabs: { ...DEFAULTS.elevenlabs, ...(saved.elevenlabs || {}) }, gemini: { ...DEFAULTS.gemini, ...(saved.gemini || {}) } };
+    elevenlabs: { ...DEFAULTS.elevenlabs, ...(saved.elevenlabs || {}) }, gemini: { ...DEFAULTS.gemini, ...(saved.gemini || {}) },
+    reserva: typeof saved.reserva === "string" ? saved.reserva : DEFAULTS.reserva };
 }
 
 // rules: {names, choices(agente) -> ids aceitos ou null, offline: agentes sem internet, needsWeb: passos que pesquisam}
@@ -67,9 +70,10 @@ export function saveConfig(changes, rules = NO_RULES) {
   const agentes = { ...current.agentes, ...cleanAgents(changes.agentes, rules) };
   const conta = changes.gemini?.conta;
   if (conta && !GEMINI_ACCOUNTS.includes(conta)) throw new Error("modo de conta do Gemini desconhecido");
+  if ("reserva" in changes && !["", "auto"].includes(changes.reserva) && !rules.names.includes(changes.reserva)) throw new Error("agente reserva desconhecido");
   const next = { agentes, modelos: { ...current.modelos, ...cleanModels(changes.modelos, agentes, rules, current.modelos) },
     elevenlabs: { ...current.elevenlabs, ...cleanVoice(changes.elevenlabs) },
-    gemini: { ...current.gemini, ...(conta ? { conta } : {}) } };
+    gemini: { ...current.gemini, ...(conta ? { conta } : {}) }, reserva: "reserva" in changes ? changes.reserva : current.reserva };
   fs.writeFileSync(FILE, JSON.stringify(next, null, 2) + "\n");
   return next;
 }

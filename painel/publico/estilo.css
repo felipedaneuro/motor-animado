@@ -153,3 +153,6 @@ table select, table input { min-width: 150px; }
 
 /* ---------- miniatura recortada da folha de amostras de um motor (Anidoodle: 8 x 4) ---------- */
 .estilo .amostra { display: block; width: 100%; aspect-ratio: 400 / 392; background-repeat: no-repeat; background-size: 800% 453.06%; }
+.troca-voz { margin: 8px 0; padding: 10px; border: 1px solid var(--linha); border-radius: 10px; background: var(--painel-2); }
+.troca-voz select { width: auto; max-width: 100%; }
+.salvar-video { display: inline-block; margin: 0 0 8px; text-decoration: none; }

@@ -5,14 +5,15 @@ import http from "node:http";
 import path from "node:path";
 import { catalog, styleNames } from "./catalogo.mjs";
 import { canPreview, voiceCost } from "./ferramentas.mjs";
-import { AGENTS, STEPS_NEEDING_WEB, agentNames, agentStatus, modelChoices } from "./agentes.mjs";
+import { AGENTS, STEPS_NEEDING_WEB, agentNames, agentStatus, canTakeOver, modelChoices } from "./agentes.mjs";
 import { VOICE_MODELS, loadConfig, saveConfig } from "./config.mjs";
 import { checkVoice, keyStatus, listVoices, saveKey } from "./elevenlabs.mjs";
 import { MAX_VIDEO_BYTES, checkStyleName, resolveSource, uploadTarget } from "./estilo-video.mjs";
 import { MAX_IMAGE_BYTES, phrasesOf, referenceTarget, references, removeReference, reorderPhrases, saveIllustration,
   validPhrase } from "./ilustracoes.mjs";
 import { engineNames, engineSheet, engineStatus } from "./motores.mjs";
-import { adjust, buildScenes, detail, isRunning, newStyle, prepare, preview, produce, render, stop, voice, writeScript } from "./passos.mjs";
+import { adjust, buildScenes, detail, isRunning, newStyle, prepare, preview, produce, render, revoice, stop, voice,
+  writeScript } from "./passos.mjs";
 import { deleteTheme, saveTheme } from "./temas.mjs";
 import { ROOT, VIDEOS, createProject, listProjects, loadProject, log, readJson, readText, recentActivity, subscribe,
   updateProject, validId, writeText } from "./projetos.mjs";
@@ -45,12 +46,14 @@ function readBody(req) {
 }
 
 // um arquivo de dentro de base (nunca de fora), com suporte a trechos (o player de vídeo pede por partes)
-function sendFile(req, res, base, relative) {
+// download: o nome com que o navegador salva o arquivo (o botão "Salvar o vídeo"); vazio, o navegador só mostra
+function sendFile(req, res, base, relative, download = "") {
   const full = path.resolve(base, relative);
   if (!full.startsWith(base + path.sep) || !fs.existsSync(full) || !fs.statSync(full).isFile()) return fail(res, "não achei", 404);
   const size = fs.statSync(full).size, type = TYPES[path.extname(full)] || "application/octet-stream";
   const range = /bytes=(\d*)-(\d*)/.exec(req.headers.range || "");
-  if (!range) { res.writeHead(200, { "Content-Type": type, "Content-Length": size, "Cache-Control": "no-store" }); return fs.createReadStream(full).pipe(res); }
+  const saveAs = download ? { "Content-Disposition": `attachment; filename="${download.replace(/[^\w.-]+/g, "-")}"` } : {};
+  if (!range) { res.writeHead(200, { "Content-Type": type, "Content-Length": size, "Cache-Control": "no-store", ...saveAs }); return fs.createReadStream(full).pipe(res); }
   const start = Number(range[1] || 0), end = range[2] ? Number(range[2]) : size - 1;
   res.writeHead(206, { "Content-Type": type, "Content-Range": `bytes ${start}-${end}/${size}`, "Accept-Ranges": "bytes", "Content-Length": end - start + 1 });
   fs.createReadStream(full, { start, end }).pipe(res);
@@ -137,10 +140,26 @@ const ACTIONS = {
     return { ok: true };
   },
   render: (id, body) => { render(id, Boolean(body.final)); return { ok: true }; },
+  "trocar-voz": (id, body) => {
+    if (!VOICES.includes(body.motor)) throw new Error("voz desconhecida");
+    if (body.motor === "elevenlabs" && !body.confirmado) throw new Error("a voz paga precisa da sua confirmação");
+    revoice(id, body.motor, String(body.arquivo || ""), Boolean(body.final));
+    return { ok: true };
+  },
+  // a cota acabou e nenhum agente assumiu sozinho: a pessoa escolhe quem fica com o passo e o trabalho continua
+  "trocar-agente": (id, body) => {
+    const { erroAgente } = loadProject(id), step = erroAgente?.passo;
+    if (!step) throw new Error("não há passo esperando outro agente");
+    if (!canTakeOver(body.agente, step)) throw new Error("esse agente não está instalado ou não pode fazer este passo");
+    saveConfig({ agentes: { [step]: body.agente }, modelos: { [step]: "" } }, configRules());
+    log(id, `o passo ${step} agora é do ${AGENTS[body.agente].rotulo}`, "passo");
+    return resume(id, { modo: "continuar", confirmado: body.confirmado });
+  },
 };
 
 // os botões que começam um trabalho: o último fica guardado para "Continuar" e "Tentar de novo" depois de um erro
-const JOBS = new Set(["gerar-roteiro", "cenas", "ajuste", "voz", "render", "produzir", "preparar-motor", "detalhar", "estilo-video"]);
+const JOBS = new Set(["gerar-roteiro", "cenas", "ajuste", "voz", "render", "produzir", "preparar-motor", "detalhar", "estilo-video",
+  "trocar-voz"]);
 
 async function runAction(id, action, body) {
   const result = await ACTIONS[action](id, body);
@@ -267,7 +286,8 @@ const server = http.createServer((req, res) => {
   }
   if (parts[0] === "arquivos") {   // só mídia de um projeto do painel: nunca o .env, o perfil ou outro arquivo da pasta videos
     if (!validId(parts[1] || "") || !MEDIA.has(path.extname(url.pathname))) return fail(res, "não achei", 404);
-    return sendFile(req, res, VIDEOS, parts.slice(1).join("/"));
+    const download = url.searchParams.has("baixar") ? `${parts[1]}-${path.basename(url.pathname)}` : "";
+    return sendFile(req, res, VIDEOS, parts.slice(1).join("/"), download);
   }
   if (parts[0] === "folhas") {   // a folha de amostras de estilos que vem com a skill de um motor (Anidoodle)
     const file = engineSheet(path.basename(parts[1] || "", ".jpg"));
