@@ -1,0 +1,28 @@
+{
+  "name": "jarvis-hud",
+  "extends": "lowpoly-drone",
+  "engine": "web",
+  "summary": "Exame holográfico com cara de visor de câmera (estilo 'Jarvis'): hologramas azuis de partículas e linhas num laboratório escuro, HUD com REC e cronômetro, seção, barra de progresso, medidor vertical, linhas de terminal, título de duas linhas que se escreve palavra por palavra e etiquetas que acompanham os objetos em 3D.",
+  "reference": "modelos/Jarvis Edição completa- corta silêncios, punch-in, legenda com tracking, HUDs, motion 3D.mp4 (6 s, muda; decupagem em decupagem/jarvis-hud)",
+  "stage": {
+    "background": "#071023", "background_bottom": "#0b1a36", "fog": [16, 60],
+    "hemisphere": ["#9fc8ff", "#0a1630", 1.1], "sun": ["#cfe4ff", 1.2],
+    "shadows": false, "flat_shading": false, "fov": 42
+  },
+  "camera": {"approach_seconds": 1.3, "fly_seconds": 1.4, "fly_arc": 0.6, "easing": "smooth", "idle_sway": 0.03, "cuts": "none"},
+  "captions": {
+    "words_per_caption": 2, "top_px": 1330, "font_px": 82, "font": "Montserrat",
+    "color": "#ffffff", "stroke": "#0a1a33", "stroke_px": 8, "highlight": "#8fd3ff", "uppercase": true
+  },
+  "label": {"mode": "top", "top_px": 230, "font_px": 80, "background": "#0d2244", "color": "#e8f6ff"},
+  "cards": {"top_px": 1500, "font_px": 50, "background": "#0d2244", "color": "#e8f6ff"},
+  "hud": {"blue": "#8fd3ff", "lime": "#c6ff3d", "alert": "#ff5a4a", "ink": "#e8f6ff", "panel": "rgba(8, 22, 48, 0.82)"},
+  "sound": {
+    "whoosh": {"approach": 0.16, "fly": 0.24},
+    "pop": {"label": 0.3, "card": 0.3},
+    "music": {"chords": [[73.4, 110.0, 146.8], [65.4, 98.0, 130.8], [58.3, 87.3, 116.5], [61.7, 92.5, 123.5]], "block_seconds": 3.2},
+    "mix": {"effects": 0.35, "music": 0.08},
+    "lufs": -14
+  },
+  "finish": "clean"
+}

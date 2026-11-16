@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motor Animado · Painel</title>
+  <link rel="stylesheet" href="/estilo.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca"><span class="selo">▶</span> Motor Animado <small>painel</small></div>
+    <div class="topo-acoes">
+      <select id="projetos" aria-label="Projeto"></select>
+      <button class="botao fantasma" data-action="ajustes">Ajustes</button>
+      <button class="botao fantasma" data-action="novo">+ Novo vídeo</button>
+    </div>
+  </header>
+  <div class="tela">
+    <nav class="passos" id="passos" aria-label="Passos"></nav>
+    <main id="conteudo" class="conteudo"></main>
+    <aside class="atividade">
+      <h2>Atividade</h2>
+      <div id="ocupado" class="ocupado" hidden></div>
+      <ol id="registro" class="registro"></ol>
+    </aside>
+  </div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

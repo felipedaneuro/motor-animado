@@ -1,0 +1,42 @@
+# ambiente e chaves (nunca compartilhe)
+.venv/
+videos/.env
+videos/perfil.json
+
+# os seus projetos de vídeo
+videos/*/
+
+# material pesado baixado pelo baixar-extras.sh
+motor-animado/decupagem/*/referencia/
+motor-animado/decupagem/*/quadros6/
+motor-animado/decupagem/*/folhas/
+motor-animado/decupagem/*/tomadas/*.png
+motor-animado/decupagem/*/tomadas/*.jpg
+
+# gerados
+motor-animado/.bin/
+motor-animado/.venv
+painel/config.json
+painel/.cache/
+painel/motores/
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+
+# reforço de segurança e sobras de build (nunca versionar)
+.env
+.env.*
+!.env.exemplo
+*.pem
+*.key
+*.p12
+*.keystore
+credenciais*.json
+dist/
+build/
+saida/
+cache/
+.runtime/
+.cache/
+*.log

@@ -1,0 +1,422 @@
+{
+ "duration": 29.92,
+ "phrases": [
+  {
+   "text": "Oi! Eu sou o Doutor Cérebro, e hoje eu vou te contar três segredos pra eu funcionar melhor.",
+   "start": 0.0,
+   "end": 6.0,
+   "words": [
+    {
+     "word": "Oi!",
+     "start": 0.0,
+     "end": 0.24
+    },
+    {
+     "word": "Eu",
+     "start": 0.5,
+     "end": 0.7
+    },
+    {
+     "word": "sou",
+     "start": 0.7,
+     "end": 0.94
+    },
+    {
+     "word": "o",
+     "start": 0.94,
+     "end": 1.16
+    },
+    {
+     "word": "Doutor",
+     "start": 1.16,
+     "end": 1.64
+    },
+    {
+     "word": "Cérebro,",
+     "start": 1.64,
+     "end": 2.1
+    },
+    {
+     "word": "e",
+     "start": 2.22,
+     "end": 2.42
+    },
+    {
+     "word": "hoje",
+     "start": 2.42,
+     "end": 2.68
+    },
+    {
+     "word": "eu",
+     "start": 2.68,
+     "end": 2.86
+    },
+    {
+     "word": "vou",
+     "start": 2.86,
+     "end": 3.1
+    },
+    {
+     "word": "te",
+     "start": 3.1,
+     "end": 3.26
+    },
+    {
+     "word": "contar",
+     "start": 3.26,
+     "end": 3.68
+    },
+    {
+     "word": "três",
+     "start": 3.68,
+     "end": 4.0
+    },
+    {
+     "word": "segredos",
+     "start": 4.0,
+     "end": 4.66
+    },
+    {
+     "word": "pra",
+     "start": 4.66,
+     "end": 4.84
+    },
+    {
+     "word": "eu",
+     "start": 4.84,
+     "end": 5.02
+    },
+    {
+     "word": "funcionar",
+     "start": 5.02,
+     "end": 5.64
+    },
+    {
+     "word": "melhor.",
+     "start": 5.64,
+     "end": 6.0
+    }
+   ]
+  },
+  {
+   "text": "Primeiro: água. Quando falta água, eu fico lento e a cabeça dói.",
+   "start": 6.34,
+   "end": 11.14,
+   "words": [
+    {
+     "word": "Primeiro:",
+     "start": 6.34,
+     "end": 6.8
+    },
+    {
+     "word": "água.",
+     "start": 7.02,
+     "end": 7.36
+    },
+    {
+     "word": "Quando",
+     "start": 7.68,
+     "end": 7.96
+    },
+    {
+     "word": "falta",
+     "start": 7.96,
+     "end": 8.42
+    },
+    {
+     "word": "água,",
+     "start": 8.42,
+     "end": 8.78
+    },
+    {
+     "word": "eu",
+     "start": 8.98,
+     "end": 9.24
+    },
+    {
+     "word": "fico",
+     "start": 9.24,
+     "end": 9.6
+    },
+    {
+     "word": "lento",
+     "start": 9.6,
+     "end": 9.94
+    },
+    {
+     "word": "e",
+     "start": 9.94,
+     "end": 10.1
+    },
+    {
+     "word": "a",
+     "start": 10.1,
+     "end": 10.24
+    },
+    {
+     "word": "cabeça",
+     "start": 10.24,
+     "end": 10.68
+    },
+    {
+     "word": "dói.",
+     "start": 10.68,
+     "end": 11.14
+    }
+   ]
+  },
+  {
+   "text": "Segundo: sono. É dormindo que eu faço a faxina e guardo o que você aprendeu.",
+   "start": 11.44,
+   "end": 16.8,
+   "words": [
+    {
+     "word": "Segundo:",
+     "start": 11.44,
+     "end": 11.86
+    },
+    {
+     "word": "sono.",
+     "start": 12.16,
+     "end": 12.52
+    },
+    {
+     "word": "É",
+     "start": 12.8,
+     "end": 12.98
+    },
+    {
+     "word": "dormindo",
+     "start": 12.98,
+     "end": 13.42
+    },
+    {
+     "word": "que",
+     "start": 13.42,
+     "end": 13.62
+    },
+    {
+     "word": "eu",
+     "start": 13.62,
+     "end": 13.8
+    },
+    {
+     "word": "faço",
+     "start": 13.8,
+     "end": 14.16
+    },
+    {
+     "word": "a",
+     "start": 14.16,
+     "end": 14.38
+    },
+    {
+     "word": "faxina",
+     "start": 14.38,
+     "end": 14.84
+    },
+    {
+     "word": "e",
+     "start": 14.84,
+     "end": 15.1
+    },
+    {
+     "word": "guardo",
+     "start": 15.1,
+     "end": 15.5
+    },
+    {
+     "word": "o",
+     "start": 15.5,
+     "end": 15.66
+    },
+    {
+     "word": "que",
+     "start": 15.66,
+     "end": 15.78
+    },
+    {
+     "word": "você",
+     "start": 15.78,
+     "end": 16.16
+    },
+    {
+     "word": "aprendeu.",
+     "start": 16.16,
+     "end": 16.8
+    }
+   ]
+  },
+  {
+   "text": "Terceiro: movimento. Uma caminhada leva mais sangue e oxigênio até mim.",
+   "start": 17.06,
+   "end": 22.04,
+   "words": [
+    {
+     "word": "Terceiro:",
+     "start": 17.06,
+     "end": 17.6
+    },
+    {
+     "word": "movimento.",
+     "start": 17.86,
+     "end": 18.32
+    },
+    {
+     "word": "Uma",
+     "start": 18.78,
+     "end": 19.02
+    },
+    {
+     "word": "caminhada",
+     "start": 19.02,
+     "end": 19.68
+    },
+    {
+     "word": "leva",
+     "start": 19.68,
+     "end": 20.06
+    },
+    {
+     "word": "mais",
+     "start": 20.06,
+     "end": 20.38
+    },
+    {
+     "word": "sangue",
+     "start": 20.38,
+     "end": 20.74
+    },
+    {
+     "word": "e",
+     "start": 20.74,
+     "end": 20.88
+    },
+    {
+     "word": "oxigênio",
+     "start": 20.88,
+     "end": 21.52
+    },
+    {
+     "word": "até",
+     "start": 21.52,
+     "end": 21.8
+    },
+    {
+     "word": "mim.",
+     "start": 21.8,
+     "end": 22.04
+    }
+   ]
+  },
+  {
+   "text": "Água, sono e movimento: o trio que me deixa afiado.",
+   "start": 22.32,
+   "end": 26.18,
+   "words": [
+    {
+     "word": "Água,",
+     "start": 22.32,
+     "end": 22.68
+    },
+    {
+     "word": "sono",
+     "start": 23.06,
+     "end": 23.34
+    },
+    {
+     "word": "e",
+     "start": 23.34,
+     "end": 23.52
+    },
+    {
+     "word": "movimento:",
+     "start": 23.52,
+     "end": 24.1
+    },
+    {
+     "word": "o",
+     "start": 24.1,
+     "end": 24.37
+    },
+    {
+     "word": "trio",
+     "start": 24.37,
+     "end": 24.64
+    },
+    {
+     "word": "que",
+     "start": 24.64,
+     "end": 24.98
+    },
+    {
+     "word": "me",
+     "start": 24.98,
+     "end": 25.18
+    },
+    {
+     "word": "deixa",
+     "start": 25.18,
+     "end": 25.58
+    },
+    {
+     "word": "afiado.",
+     "start": 25.58,
+     "end": 26.18
+    }
+   ]
+  },
+  {
+   "text": "Comente CÉREBRO e siga o canal pra mais dicas.",
+   "start": 26.38,
+   "end": 29.42,
+   "words": [
+    {
+     "word": "Comente",
+     "start": 26.38,
+     "end": 26.96
+    },
+    {
+     "word": "CÉREBRO",
+     "start": 26.96,
+     "end": 27.54
+    },
+    {
+     "word": "e",
+     "start": 27.54,
+     "end": 27.72
+    },
+    {
+     "word": "siga",
+     "start": 27.72,
+     "end": 27.92
+    },
+    {
+     "word": "o",
+     "start": 27.92,
+     "end": 28.06
+    },
+    {
+     "word": "canal",
+     "start": 28.06,
+     "end": 28.4
+    },
+    {
+     "word": "pra",
+     "start": 28.4,
+     "end": 28.68
+    },
+    {
+     "word": "mais",
+     "start": 28.68,
+     "end": 28.98
+    },
+    {
+     "word": "dicas.",
+     "start": 28.98,
+     "end": 29.42
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,253 @@
+{
+  "name": "med3d-decisao",
+  "engine": "web",
+  "summary": "Cena 3D com interface de decisão por cima: o paciente no fundo, cartões de conduta e sinais vitais na frente, um passo de cada vez, como numa simulação clínica.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#cc9ea0",
+    "background_bottom": "#3d8a87",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.02,
+    "cuts": "measured",
+    "braking_seconds": 0.13,
+    "longest_still_seconds": 4.97,
+    "measured_curve": "referencia-curva.json"
+  },
+  "clinic": {
+    "look": "palito",
+    "parede": "",
+    "roupa": ""
+  },
+  "captions": {
+    "words_per_caption": 3,
+    "top_px": 1136,
+    "font_px": 41,
+    "font": "Montserrat",
+    "color": "#fde7f0",
+    "stroke": "#2d60dd",
+    "stroke_px": 8,
+    "highlight": "#ffd21f",
+    "uppercase": false
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 307,
+    "font_px": 72,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 52,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.22,
+      "fly": 0.22
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          146.8,
+          174.6,
+          220.0
+        ],
+        [
+          116.5,
+          146.8,
+          174.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          130.8,
+          164.8,
+          196.0
+        ]
+      ],
+      "block_seconds": 2.8
+    },
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#fafbfa",
+    "#5d6c6c",
+    "#687776",
+    "#413c40",
+    "#417f7d",
+    "#8c8584",
+    "#a7afb0",
+    "#b0b0af"
+  ],
+  "reference": {
+    "source": "modelos/recortes/med3d-decisao.mp4",
+    "duration": 25.03,
+    "cuts": [
+      3.0,
+      8.5,
+      9.567,
+      10.0,
+      14.467,
+      17.533,
+      20.0
+    ],
+    "moves": [
+      {
+        "t": 0.03,
+        "profile": "expo_out",
+        "direction": "out"
+      },
+      {
+        "t": 0.3,
+        "profile": "linear",
+        "direction": "side"
+      },
+      {
+        "t": 0.67,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 1.2,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 1.83,
+        "profile": "linear",
+        "direction": "in"
+      },
+      {
+        "t": 2.13,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 2.63,
+        "profile": "ease_in",
+        "direction": "in"
+      },
+      {
+        "t": 7.57,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 8.4,
+        "profile": "linear",
+        "direction": "side"
+      },
+      {
+        "t": 8.97,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 10.03,
+        "profile": "linear",
+        "direction": "side"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 0.0,
+        "end": 1.4,
+        "words": 5
+      },
+      {
+        "start": 1.74,
+        "end": 3.36,
+        "words": 4
+      },
+      {
+        "start": 3.66,
+        "end": 4.5,
+        "words": 2
+      },
+      {
+        "start": 4.82,
+        "end": 6.22,
+        "words": 5
+      },
+      {
+        "start": 6.68,
+        "end": 9.5,
+        "words": 7
+      },
+      {
+        "start": 9.98,
+        "end": 11.0,
+        "words": 2
+      },
+      {
+        "start": 11.18,
+        "end": 11.82,
+        "words": 3
+      },
+      {
+        "start": 14.1,
+        "end": 16.12,
+        "words": 6
+      },
+      {
+        "start": 16.44,
+        "end": 17.12,
+        "words": 2
+      },
+      {
+        "start": 17.82,
+        "end": 19.96,
+        "words": 8
+      },
+      {
+        "start": 22.4,
+        "end": 23.56,
+        "words": 4
+      },
+      {
+        "start": 23.7,
+        "end": 24.64,
+        "words": 6
+      }
+    ],
+    "words_per_minute": 131
+  }
+}

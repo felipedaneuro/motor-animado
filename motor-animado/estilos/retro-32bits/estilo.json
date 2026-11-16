@@ -1,0 +1,183 @@
+{
+  "name": "retro-32bits",
+  "engine": "web",
+  "summary": "Estilo próprio em pixel art da era 32 bits: apresentador em busto de pixel art (o retrato fixo das caixas de diálogo antigas) e cenário desenhado em pixel em camadas — céu, serra, mata, moita e chão —, com a paleta do tema, imagem em baixa resolução ampliada com pixel visível e cor de 15 bits com pontilhado. Também vai por cima de outro estilo com {\"extends\": \"<estilo>\"}.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "theme": "natural",
+  "stage": {
+    "background": "#a8d4f0",
+    "background_bottom": "#eaf2e8",
+    "fog": [
+      22,
+      80
+    ],
+    "hemisphere": [
+      "#ffffff",
+      "#8a9a70",
+      1.35
+    ],
+    "sun": [
+      "#fff2dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "retro": {
+    "internal": [
+      270,
+      480
+    ],
+    "upscale": "nearest",
+    "color_bits": 5,
+    "dither": 0.8,
+    "blur": 0.0,
+    "vertex_snap": null,
+    "smooth_normals": true,
+    "outline": "#16182a"
+  },
+  "camera": {
+    "approach_seconds": 0.8,
+    "fly_seconds": 1.6,
+    "fly_arc": 0.8,
+    "easing": "smooth",
+    "idle_sway": 0.03,
+    "cuts": "none"
+  },
+  "captions": {
+    "words_per_caption": 1,
+    "top_px": 1290,
+    "font_px": 60,
+    "font": "Press Start 2P",
+    "font_query": "Press+Start+2P",
+    "color": "#ffffff",
+    "stroke": "#16182a",
+    "stroke_px": 12,
+    "highlight": "#ffd21f",
+    "uppercase": true
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 210,
+    "font_px": 54,
+    "background": "#ffd21f",
+    "color": "#16182a"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 34,
+    "background": "#ffffff",
+    "color": "#16182a"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.22,
+      "fly": 0.3
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          261.6,
+          329.6,
+          392.0
+        ],
+        [
+          220.0,
+          261.6,
+          329.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          196.0,
+          246.9,
+          293.7
+        ]
+      ],
+      "block_seconds": 2.4
+    },
+    "mix": {
+      "effects": 0.38,
+      "music": 0.08
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "overlay": {
+    "stage": {
+      "flat_shading": false,
+      "fog": [
+        16,
+        70
+      ]
+    },
+    "captions": {
+      "font": "Press Start 2P",
+      "font_query": "Press+Start+2P",
+      "font_px": 60,
+      "stroke_px": 12,
+      "uppercase": true
+    },
+    "label": {
+      "font_px": 54
+    },
+    "cards": {
+      "font_px": 34
+    },
+    "retro": {
+      "internal": [
+        270,
+        480
+      ],
+      "upscale": "nearest",
+      "color_bits": 5,
+      "dither": 0.8,
+      "blur": 0.0,
+      "vertex_snap": null,
+      "smooth_normals": true,
+      "outline": "#16182a"
+    },
+    "bust": {
+      "hairStyle": "black-power",
+      "hair": "#2a1d18",
+      "skin": "#e0a173",
+      "cloth": "#23202b",
+      "band": "#f2efe6",
+      "accent": "#e9b53c",
+      "portrait": 360,
+      "bottom": 110,
+      "nome": ""
+    },
+    "pixel_world": {
+      "scenery": ""
+    }
+  },
+  "bust": {
+    "hairStyle": "black-power",
+    "hair": "#2a1d18",
+    "skin": "#e0a173",
+    "cloth": "#23202b",
+    "band": "#f2efe6",
+    "accent": "#e9b53c",
+    "portrait": 360,
+    "bottom": 110,
+    "nome": ""
+  },
+  "pixel_world": {
+    "scenery": ""
+  }
+}

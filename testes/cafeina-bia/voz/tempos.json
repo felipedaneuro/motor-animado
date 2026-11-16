@@ -1,0 +1,447 @@
+{
+ "duration": 32.33,
+ "phrases": [
+  {
+   "text": "Se você fosse uma molécula de cafeína, sua vida começava no café da Bia às sete da manhã.",
+   "start": 0.0,
+   "end": 6.22,
+   "words": [
+    {
+     "word": "Se",
+     "start": 0.0,
+     "end": 0.18
+    },
+    {
+     "word": "você",
+     "start": 0.18,
+     "end": 0.54
+    },
+    {
+     "word": "fosse",
+     "start": 0.54,
+     "end": 0.94
+    },
+    {
+     "word": "uma",
+     "start": 0.94,
+     "end": 1.16
+    },
+    {
+     "word": "molécula",
+     "start": 1.16,
+     "end": 1.82
+    },
+    {
+     "word": "de",
+     "start": 1.82,
+     "end": 2.02
+    },
+    {
+     "word": "cafeína,",
+     "start": 2.02,
+     "end": 2.62
+    },
+    {
+     "word": "sua",
+     "start": 2.9,
+     "end": 3.18
+    },
+    {
+     "word": "vida",
+     "start": 3.18,
+     "end": 3.5
+    },
+    {
+     "word": "começava",
+     "start": 3.5,
+     "end": 4.26
+    },
+    {
+     "word": "no",
+     "start": 4.26,
+     "end": 4.44
+    },
+    {
+     "word": "café",
+     "start": 4.44,
+     "end": 4.78
+    },
+    {
+     "word": "da",
+     "start": 4.78,
+     "end": 5.0
+    },
+    {
+     "word": "Bia",
+     "start": 5.0,
+     "end": 5.24
+    },
+    {
+     "word": "às",
+     "start": 5.24,
+     "end": 5.4
+    },
+    {
+     "word": "sete",
+     "start": 5.4,
+     "end": 5.66
+    },
+    {
+     "word": "da",
+     "start": 5.66,
+     "end": 5.84
+    },
+    {
+     "word": "manhã.",
+     "start": 5.84,
+     "end": 6.22
+    }
+   ]
+  },
+  {
+   "text": "Ela toma um gole, e você desce pelo estômago direto pro sangue.",
+   "start": 6.46,
+   "end": 10.66,
+   "words": [
+    {
+     "word": "Ela",
+     "start": 6.46,
+     "end": 6.74
+    },
+    {
+     "word": "toma",
+     "start": 6.74,
+     "end": 7.08
+    },
+    {
+     "word": "um",
+     "start": 7.08,
+     "end": 7.3
+    },
+    {
+     "word": "gole,",
+     "start": 7.3,
+     "end": 7.58
+    },
+    {
+     "word": "e",
+     "start": 7.7,
+     "end": 7.9
+    },
+    {
+     "word": "você",
+     "start": 7.9,
+     "end": 8.24
+    },
+    {
+     "word": "desce",
+     "start": 8.24,
+     "end": 8.66
+    },
+    {
+     "word": "pelo",
+     "start": 8.66,
+     "end": 8.92
+    },
+    {
+     "word": "estômago",
+     "start": 8.92,
+     "end": 9.5
+    },
+    {
+     "word": "direto",
+     "start": 9.5,
+     "end": 9.96
+    },
+    {
+     "word": "pro",
+     "start": 9.96,
+     "end": 10.22
+    },
+    {
+     "word": "sangue.",
+     "start": 10.22,
+     "end": 10.66
+    }
+   ]
+  },
+  {
+   "text": "Em vinte minutos você chega no cérebro e encaixa no receptor de adenosina.",
+   "start": 10.88,
+   "end": 15.98,
+   "words": [
+    {
+     "word": "Em",
+     "start": 10.88,
+     "end": 11.06
+    },
+    {
+     "word": "vinte",
+     "start": 11.06,
+     "end": 11.44
+    },
+    {
+     "word": "minutos",
+     "start": 11.44,
+     "end": 11.9
+    },
+    {
+     "word": "você",
+     "start": 11.9,
+     "end": 12.38
+    },
+    {
+     "word": "chega",
+     "start": 12.38,
+     "end": 12.8
+    },
+    {
+     "word": "no",
+     "start": 12.8,
+     "end": 13.0
+    },
+    {
+     "word": "cérebro",
+     "start": 13.0,
+     "end": 13.52
+    },
+    {
+     "word": "e",
+     "start": 13.52,
+     "end": 13.68
+    },
+    {
+     "word": "encaixa",
+     "start": 13.68,
+     "end": 14.18
+    },
+    {
+     "word": "no",
+     "start": 14.18,
+     "end": 14.36
+    },
+    {
+     "word": "receptor",
+     "start": 14.36,
+     "end": 14.92
+    },
+    {
+     "word": "de",
+     "start": 14.92,
+     "end": 15.26
+    },
+    {
+     "word": "adenosina.",
+     "start": 15.26,
+     "end": 15.98
+    }
+   ]
+  },
+  {
+   "text": "Esse é o bloqueio da adenosina: o sinal de cansaço fica sem lugar pra sentar.",
+   "start": 16.28,
+   "end": 21.74,
+   "words": [
+    {
+     "word": "Esse",
+     "start": 16.28,
+     "end": 16.56
+    },
+    {
+     "word": "é",
+     "start": 16.56,
+     "end": 16.7
+    },
+    {
+     "word": "o",
+     "start": 16.7,
+     "end": 16.8
+    },
+    {
+     "word": "bloqueio",
+     "start": 16.8,
+     "end": 17.34
+    },
+    {
+     "word": "da",
+     "start": 17.34,
+     "end": 17.5
+    },
+    {
+     "word": "adenosina:",
+     "start": 17.5,
+     "end": 18.28
+    },
+    {
+     "word": "o",
+     "start": 18.28,
+     "end": 18.66
+    },
+    {
+     "word": "sinal",
+     "start": 18.66,
+     "end": 19.06
+    },
+    {
+     "word": "de",
+     "start": 19.06,
+     "end": 19.28
+    },
+    {
+     "word": "cansaço",
+     "start": 19.28,
+     "end": 19.92
+    },
+    {
+     "word": "fica",
+     "start": 19.92,
+     "end": 20.28
+    },
+    {
+     "word": "sem",
+     "start": 20.28,
+     "end": 20.54
+    },
+    {
+     "word": "lugar",
+     "start": 20.54,
+     "end": 20.88
+    },
+    {
+     "word": "pra",
+     "start": 20.88,
+     "end": 21.14
+    },
+    {
+     "word": "sentar.",
+     "start": 21.14,
+     "end": 21.74
+    }
+   ]
+  },
+  {
+   "text": "Mas exagerou? Coração acelerado, mão tremendo e a noite sem dormir.",
+   "start": 21.9,
+   "end": 26.6,
+   "words": [
+    {
+     "word": "Mas",
+     "start": 21.9,
+     "end": 22.16
+    },
+    {
+     "word": "exagerou?",
+     "start": 22.16,
+     "end": 22.84
+    },
+    {
+     "word": "Coração",
+     "start": 23.06,
+     "end": 23.6
+    },
+    {
+     "word": "acelerado,",
+     "start": 23.6,
+     "end": 24.4
+    },
+    {
+     "word": "mão",
+     "start": 24.4,
+     "end": 24.84
+    },
+    {
+     "word": "tremendo",
+     "start": 24.84,
+     "end": 25.42
+    },
+    {
+     "word": "e",
+     "start": 25.42,
+     "end": 25.56
+    },
+    {
+     "word": "a",
+     "start": 25.56,
+     "end": 25.68
+    },
+    {
+     "word": "noite",
+     "start": 25.68,
+     "end": 25.96
+    },
+    {
+     "word": "sem",
+     "start": 25.96,
+     "end": 26.24
+    },
+    {
+     "word": "dormir.",
+     "start": 26.24,
+     "end": 26.6
+    }
+   ]
+  },
+  {
+   "text": "Parabéns! Você desmontou a cafeína. Comente CAFÉ e segue o canal.",
+   "start": 27.14,
+   "end": 31.9,
+   "words": [
+    {
+     "word": "Parabéns!",
+     "start": 27.14,
+     "end": 27.7
+    },
+    {
+     "word": "Você",
+     "start": 27.94,
+     "end": 28.38
+    },
+    {
+     "word": "desmontou",
+     "start": 28.38,
+     "end": 29.06
+    },
+    {
+     "word": "a",
+     "start": 29.06,
+     "end": 29.2
+    },
+    {
+     "word": "cafeína.",
+     "start": 29.2,
+     "end": 29.78
+    },
+    {
+     "word": "Comente",
+     "start": 30.0,
+     "end": 30.58
+    },
+    {
+     "word": "CAFÉ",
+     "start": 30.58,
+     "end": 30.94
+    },
+    {
+     "word": "e",
+     "start": 30.94,
+     "end": 31.18
+    },
+    {
+     "word": "segue",
+     "start": 31.18,
+     "end": 31.46
+    },
+    {
+     "word": "o",
+     "start": 31.46,
+     "end": 31.62
+    },
+    {
+     "word": "canal.",
+     "start": 31.62,
+     "end": 31.9
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,65 @@
+/* textos por cima da cena: legenda, etiqueta e cards. As cores e tamanhos vêm do estilo.json (variáveis no #video). */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#video { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+#tela { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.caption {
+  position: absolute; left: 40px; right: 40px; top: var(--caption-top); text-align: center;
+  font-size: var(--caption-size); font-weight: 900; line-height: 1.05; letter-spacing: 1px;
+  text-transform: var(--caption-transform); color: var(--caption-color);
+  -webkit-text-stroke: var(--caption-stroke-width) var(--caption-stroke); paint-order: stroke fill;
+  text-shadow: 0 10px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 60%; opacity: 0;
+}
+.caption em { font-style: normal; color: var(--caption-highlight); }
+
+.label {
+  position: absolute; left: 50%; top: var(--label-top); transform-origin: 50% 0; opacity: 0;
+  background: var(--label-background); color: var(--label-color); border: 8px solid #111; border-radius: 26px;
+  padding: 14px 40px 12px; text-align: center; white-space: nowrap; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.5);
+}
+.label.anchored { left: 0; top: 0; transform-origin: 50% 50%; }
+/* etiqueta só de texto (estilo palito): letra amarela com contorno grosso, sem caixa */
+.label.text-only { background: none; border: none; box-shadow: none; padding: 0; color: var(--label-color);
+  -webkit-text-stroke: calc(var(--label-size) * 0.2) var(--label-stroke); paint-order: stroke fill; }
+.label b { display: block; font-size: var(--label-size); font-weight: 900; line-height: 1; }
+.label i { display: block; font-style: normal; font-size: calc(var(--label-size) * 0.5); font-weight: 800; margin-top: 6px; }
+
+.card {
+  position: absolute; transform-origin: 50% 100%; opacity: 0;
+  background: var(--card-background); color: var(--card-color); border: 7px solid #111; border-radius: 30px;
+  padding: 14px 30px; display: flex; align-items: center; gap: 16px; white-space: nowrap;
+  font-size: var(--card-size); font-weight: 900; box-shadow: 0 12px 0 rgba(0, 0, 0, 0.45);
+}
+.card span { font-size: calc(var(--card-size) * 1.25); }
+
+/* card.media: print/meme/infográfico real (c.image) num balão, com legenda opcional embaixo */
+.card.media { flex-direction: column; gap: 10px; background: #ffffff; padding: 18px; white-space: normal; max-width: 760px; }
+.card.media img { display: block; max-width: 700px; max-height: 620px; border-radius: 10px; }
+.card.media .legenda { font-size: calc(var(--card-size) * 0.55); text-align: center; line-height: 1.2; }
+
+/* card.full: recorte jornalístico em tela cheia (corte seco pra manchete, print, tweet, infográfico) */
+.card.full {
+  left: 0; top: 0; width: 1080px; height: 1920px; border: none; border-radius: 0; background: #000;
+  display: flex; align-items: center; justify-content: center; padding: 0; box-shadow: none; transform-origin: 50% 50%;
+}
+.card.full img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.card.full .legenda {
+  position: absolute; left: 60px; right: 60px; bottom: 110px; text-align: left; white-space: normal;
+  font-size: calc(var(--card-size) * 0.6); background: rgba(0, 0, 0, 0.6); padding: 14px 24px; border-radius: 12px;
+}
+
+/* ticker: a chamada fixa embaixo (chyron), com uma tarja colorida (tag) e o texto correndo */
+.ticker {
+  position: absolute; left: 0; right: 0; bottom: var(--ticker-bottom); height: var(--ticker-height);
+  display: flex; align-items: stretch; opacity: 0;
+}
+.ticker .tag {
+  flex: none; display: flex; align-items: center; padding: 0 30px; white-space: nowrap;
+  background: var(--ticker-tag-background); color: var(--ticker-tag-color); font-weight: 900; font-size: calc(var(--ticker-size) * 0.8);
+}
+.ticker .texto {
+  flex: 1; overflow: hidden; background: var(--ticker-background); color: var(--ticker-color);
+  display: flex; align-items: center;
+}
+.ticker .texto span { display: inline-block; padding-left: 40px; white-space: nowrap; font-size: var(--ticker-size); font-weight: 800; }

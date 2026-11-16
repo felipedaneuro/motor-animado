@@ -1,0 +1,122 @@
+{
+  "name": "pixel-duelo-neuro",
+  "engine": "web",
+  "summary": "O duelo de dois painéis em pixel art aplicado à cabeça: dois cortes de crânio lado a lado, em azul e vermelho, cada um com a sua etiqueta de origem e de velocidade, sobre fundo riscado escuro.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#08080a",
+    "background_bottom": "#070f1c",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "smooth",
+    "idle_sway": 0.02,
+    "cuts": "none",
+    "braking_seconds": 0.07,
+    "longest_still_seconds": 14.97,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 1,
+    "top_px": 1328,
+    "font_px": 56,
+    "font": "Press Start 2P",
+    "color": "#e3674f",
+    "stroke": "#07080d",
+    "stroke_px": 8,
+    "highlight": "#9885e2",
+    "uppercase": true,
+    "font_query": "Press+Start+2P"
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 170,
+    "font_px": 40,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 1460,
+    "font_px": 34,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": null,
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#0b0e1a",
+    "#8c8193",
+    "#d9d2e3",
+    "#78444f",
+    "#9c82e5"
+  ],
+  "reference": {
+    "source": "modelos/recortes/pixel-duelo-neuro.mp4",
+    "duration": 25.03,
+    "cuts": [],
+    "moves": [
+      {
+        "t": 5.37,
+        "profile": "smooth",
+        "direction": "in"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 3.06,
+        "end": 4.7,
+        "words": 2
+      }
+    ],
+    "words_per_minute": 73
+  },
+  "retro": {
+    "internal": [
+      270,
+      480
+    ],
+    "upscale": "nearest",
+    "color_bits": 5,
+    "dither": 0.7,
+    "blur": 0.0,
+    "vertex_snap": null,
+    "smooth_normals": true,
+    "outline": "#0a0a14"
+  }
+}

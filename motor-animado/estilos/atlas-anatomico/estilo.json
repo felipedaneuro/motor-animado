@@ -1,0 +1,169 @@
+{
+  "name": "atlas-anatomico",
+  "engine": "web",
+  "summary": "Ilustração anatômica de atlas sobre fundo azul-petróleo: a estrutura no centro, girando devagar, com etiquetas claras presas por linha de chamada ao ponto exato dela. Legenda de 2 ou 3 palavras no alto, em minúsculas, com a palavra-chave em azul-claro. Fala rápida, câmera quase sempre parada, sem corte.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#151f29",
+    "background_bottom": "#1e2930",
+    "fog": null,
+    "hemisphere": [
+      "#cfe6f5",
+      "#1a2630",
+      1.15
+    ],
+    "sun": [
+      "#ffffff",
+      1.6
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 34
+  },
+  "camera": {
+    "approach_seconds": 0.33,
+    "fly_seconds": 0.66,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.015,
+    "cuts": "none",
+    "braking_seconds": 0.2,
+    "longest_still_seconds": 10.63,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 3,
+    "top_px": 303,
+    "font_px": 62,
+    "font": "Inter",
+    "color": "#92eafa",
+    "stroke": "#171f29",
+    "stroke_px": 10,
+    "highlight": "#f2f5f9",
+    "uppercase": false,
+    "font_query": "Inter:wght@600"
+  },
+  "label": {
+    "mode": "callout",
+    "top_px": 420,
+    "font_px": 34,
+    "background": "#f4f8fb",
+    "color": "#16222c"
+  },
+  "cards": {
+    "top_px": 1500,
+    "font_px": 36,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          146.8,
+          174.6,
+          220.0
+        ],
+        [
+          116.5,
+          146.8,
+          174.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          130.8,
+          164.8,
+          196.0
+        ]
+      ],
+      "block_seconds": 2.8
+    },
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#1c2831",
+    "#31414f",
+    "#090d10",
+    "#eccabf",
+    "#d8ae6a",
+    "#3c3634",
+    "#a090d3",
+    "#312a1f"
+  ],
+  "reference": {
+    "source": "modelos/recortes/atlas-medula.mp4",
+    "duration": 25.03,
+    "cuts": [
+      20.0,
+      21.0
+    ],
+    "moves": [
+      {
+        "t": 2.63,
+        "profile": "smooth",
+        "direction": "in"
+      },
+      {
+        "t": 3.07,
+        "profile": "expo_out",
+        "direction": "in"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 0.0,
+        "end": 2.5,
+        "words": 9
+      },
+      {
+        "start": 2.62,
+        "end": 7.52,
+        "words": 15
+      },
+      {
+        "start": 7.68,
+        "end": 9.1,
+        "words": 5
+      },
+      {
+        "start": 9.2,
+        "end": 10.74,
+        "words": 8
+      },
+      {
+        "start": 10.86,
+        "end": 15.74,
+        "words": 15
+      },
+      {
+        "start": 15.9,
+        "end": 19.86,
+        "words": 12
+      }
+    ],
+    "words_per_minute": 193
+  }
+}

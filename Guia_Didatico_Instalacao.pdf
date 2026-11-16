@@ -1,0 +1,509 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R] /Count 2 >>
+endobj
+
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier-Bold /Encoding /WinAnsiEncoding >>
+endobj
+
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 7 0 R >>
+endobj
+
+7 0 obj
+<< /Length 7000 >>
+stream
+% ================= PAGE 1 =================
+0.043 0.165 0.290 rg
+36 720 523.28 88 re f
+1.000 0.420 0.361 rg
+36 720 6 88 re f
+0.118 0.227 0.373 rg
+54 784 252 15 re f
+
+1.000 0.620 0.540 rg
+BT /F2 7.8 Tf 62 789 Td (GUIA DID\301TICO PASSO A PASSO  |  PARA QUALQUER PESSOA) Tj ET
+
+1.000 1.000 1.000 rg
+BT /F2 18.0 Tf 54 762 Td (Como Instalar o Motor Animado & Painel) Tj ET
+
+0.820 0.860 0.910 rg
+BT /F1 9.5 Tf 54 744 Td (Manual visual simplificado para Mac com chip Apple \(M1, M2, M3, M4 ou mais novo\).) Tj ET
+BT /F1 9.2 Tf 54 730 Td (Tempo total: 10 a 20 minutos na 1\252 vez \(quase tudo aguardando downloads autom\341ticos\).) Tj ET
+
+0.969 0.976 0.988 rg
+0.796 0.835 0.882 RG 0.8 w
+36 636 523.28 72 re B
+0.043 0.165 0.290 rg
+BT /F2 8.8 Tf 48 693 Td (ANTES DE COME\307AR  \267  ENTENDA EM 30 SEGUNDOS) Tj ET
+
+0.020 0.588 0.412 rg
+BT /F2 9.0 Tf 48 677 Td (\267) Tj ET
+BT /F2 9.0 Tf 48 662 Td (\267) Tj ET
+BT /F2 9.0 Tf 48 647 Td (\267) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 9.0 Tf 58 677 Td (O que \351 o Terminal?) Tj ET
+0.200 0.250 0.330 rg
+BT /F1 9.0 Tf 152 677 Td (\311 um aplicativo que j\341 vem no seu Mac onde voc\352 cola comandos curtos para instalar ferramentas.) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 9.0 Tf 58 662 Td (Como usar os comandos:) Tj ET
+0.200 0.250 0.330 rg
+BT /F1 9.0 Tf 172 662 Td (Copie o texto das caixas escuras \(Command+C\), cole no Terminal \(Command+V\) e aperte Enter.) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 9.0 Tf 58 647 Td (Instala\347\343o 100% segura:) Tj ET
+0.200 0.250 0.330 rg
+BT /F1 9.0 Tf 172 647 Td (Nada \351 instalado no seu Mac sem avisar; quando faltar algo, o comando exato aparece na tela.) Tj ET
+
+% ---------------- PASSO 1 ----------------
+0.043 0.165 0.290 rg
+36 604 58 20 re f
+1.000 1.000 1.000 rg
+BT /F2 8.5 Tf 46 611 Td (PASSO 1) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 12.5 Tf 102 609 Td (Abrir o Terminal dentro da pasta do projeto) Tj ET
+0.390 0.450 0.550 rg
+BT /F1 9.0 Tf 36 591 Td (Voc\352 n\343o precisa digitar o endere\347o da pasta \340 m\343o \227 basta arrastar a pasta para dentro do Terminal.) Tj ET
+
+1.000 0.420 0.361 rg
+BT /F2 9.2 Tf 38 574 Td (1.) Tj ET
+BT /F2 9.2 Tf 38 559 Td (2.) Tj ET
+BT /F2 9.2 Tf 38 544 Td (3.) Tj ET
+BT /F2 9.2 Tf 38 529 Td (4.) Tj ET
+
+0.120 0.160 0.230 rg
+BT /F1 9.2 Tf 52 574 Td (Abra o aplicativo ) Tj ET
+BT /F2 9.2 Tf 126 574 Td (Terminal) Tj ET
+BT /F1 9.2 Tf 166 574 Td (: v\341 em ) Tj ET
+BT /F2 9.2 Tf 200 574 Td (Aplicativos -> Utilit\341rios -> Terminal) Tj ET
+BT /F1 9.2 Tf 364 574 Td ( \(ou aperte Command + Espa\347o e digite Terminal\).) Tj ET
+
+BT /F1 9.2 Tf 52 559 Td (Na janela do Terminal, digite ) Tj ET
+0.910 0.940 0.970 rg 177 556 22 12 re f
+0.060 0.090 0.160 rg
+BT /F3 9.0 Tf 180 559 Td (cd ) Tj ET
+0.120 0.160 0.230 rg
+BT /F1 9.2 Tf 203 559 Td (\(as letras ) Tj ET
+BT /F2 9.2 Tf 245 559 Td (cd) Tj ET
+BT /F1 9.2 Tf 258 559 Td ( seguidas de ) Tj ET
+BT /F2 9.2 Tf 315 559 Td (um espa\347o em branco) Tj ET
+BT /F1 9.2 Tf 415 559 Td ( \227 n\343o aperte Enter ainda\).) Tj ET
+
+BT /F1 9.2 Tf 52 544 Td (No Finder, clique e ) Tj ET
+BT /F2 9.2 Tf 136 544 Td (arraste a pasta ) Tj ET
+0.910 0.940 0.970 rg 206 541 116 12 re f
+0.060 0.090 0.160 rg
+BT /F3 8.8 Tf 209 544 Td (motor-animado-painel) Tj ET
+0.120 0.160 0.230 rg
+BT /F1 9.2 Tf 326 544 Td (para dentro da janela do Terminal \(o caminho surge sozinho\).) Tj ET
+
+BT /F1 9.2 Tf 52 529 Td (Aperte a tecla ) Tj ET
+BT /F2 9.2 Tf 114 529 Td (Enter) Tj ET
+BT /F1 9.2 Tf 139 529 Td (. Pronto: o Terminal j\341 est\341 operando dentro da pasta certa!) Tj ET
+
+% ---------------- PASSO 2 ----------------
+0.043 0.165 0.290 rg
+36 495 58 20 re f
+1.000 1.000 1.000 rg
+BT /F2 8.5 Tf 46 502 Td (PASSO 2) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 12.5 Tf 102 500 Td (Conferir \(ou instalar\) o Homebrew) Tj ET
+0.390 0.450 0.550 rg
+BT /F1 9.0 Tf 36 482 Td (O Homebrew instala gratuitamente os programas auxiliares que o motor de anima\347\343o utiliza. Confira se j\341 tem:) Tj ET
+
+0.060 0.090 0.160 rg
+36 454 523.28 22 re f
+0.950 0.970 0.990 rg
+BT /F3 9.2 Tf 48 462 Td (brew --version) Tj ET
+
+0.020 0.588 0.412 rg
+BT /F2 9.0 Tf 38 439 Td (OK) Tj ET
+0.120 0.160 0.230 rg
+BT /F2 9.0 Tf 56 439 Td (Se aparecer um n\372mero de vers\343o ) Tj ET
+BT /F1 9.0 Tf 208 439 Td (\(ex.: Homebrew 4.x.x\): ele j\341 est\341 instalado! Pule direto para o Passo 3.) Tj ET
+
+0.851 0.467 0.024 rg
+BT /F2 9.0 Tf 38 424 Td (->) Tj ET
+0.120 0.160 0.230 rg
+BT /F2 9.0 Tf 56 424 Td (Se der erro: ) Tj ET
+BT /F1 9.0 Tf 112 424 Td (acesse o site oficial sobre o gerenciador ) Tj ET
+0.060 0.090 0.160 rg
+BT /F2 9.0 Tf 274 424 Td (\(brew.sh\)) Tj ET
+0.120 0.160 0.230 rg
+BT /F1 9.0 Tf 315 424 Td (, copie o comando da p\341gina, cole no Terminal e d\352 Enter.) Tj ET
+
+0.937 0.965 1.000 rg
+36 382 523.28 34 re f
+0.145 0.388 0.922 rg
+36 382 4 34 re f
+0.118 0.251 0.686 rg
+BT /F2 8.8 Tf 48 405 Td (Dica importante sobre a senha no Terminal:) Tj ET
+0.120 0.160 0.230 rg
+BT /F1 8.8 Tf 48 391 Td (Se o Terminal pedir a senha do seu Mac \(Password:\), ) Tj ET
+BT /F2 8.8 Tf 268 391 Td (n\343o aparecem bolinhas nem asteriscos ao digitar.) Tj ET
+BT /F1 8.8 Tf 480 391 Td ( Digite e d\352 Enter.) Tj ET
+
+% ---------------- PASSO 3 ----------------
+0.043 0.165 0.290 rg
+36 350 58 20 re f
+1.000 1.000 1.000 rg
+BT /F2 8.5 Tf 46 357 Td (PASSO 3) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 12.5 Tf 102 355 Td (Rodar o instalador autom\341tico da skill) Tj ET
+0.390 0.450 0.550 rg
+BT /F1 9.0 Tf 36 337 Td (Ele confere o que falta e configura o ambiente dentro da pasta sem instalar nada no sistema sem avisar.) Tj ET
+
+0.060 0.090 0.160 rg
+36 309 523.28 22 re f
+0.950 0.970 0.990 rg
+BT /F3 9.2 Tf 48 317 Td (bash instalar.sh) Tj ET
+
+0.120 0.160 0.230 rg
+BT /F1 9.0 Tf 36 294 Td (Se ele pedir algum programa \(ex.: ) Tj ET
+BT /F3 8.6 Tf 176 294 Td (brew install ...) Tj ET
+BT /F1 9.0 Tf 258 294 Td (\), rode o comando indicado e depois rode ) Tj ET
+BT /F3 8.6 Tf 430 294 Td (bash instalar.sh) Tj ET
+BT /F1 9.0 Tf 518 294 Td ( de novo.) Tj ET
+
+0.043 0.165 0.290 rg
+BT /F2 9.5 Tf 36 276 Td (O que o instalador faz por conta pr\363pria dentro desta pasta:) Tj ET
+
+1.000 0.420 0.361 rg
+BT /F2 9.0 Tf 38 262 Td (\267) Tj ET
+BT /F2 9.0 Tf 38 249 Td (\267) Tj ET
+BT /F2 9.0 Tf 38 236 Td (\267) Tj ET
+BT /F2 9.0 Tf 38 223 Td (\267) Tj ET
+
+0.120 0.160 0.230 rg
+BT /F1 8.9 Tf 48 262 Td (Cria o ambiente Python isolado em ) Tj ET
+BT /F3 8.6 Tf 193 262 Td (.venv) Tj ET
+BT /F1 8.9 Tf 223 262 Td ( e instala as bibliotecas listadas em ) Tj ET
+BT /F3 8.6 Tf 370 262 Td (motor-animado/requirements.txt) Tj ET
+BT /F1 8.9 Tf 534 262 Td (;) Tj ET
+
+BT /F1 8.9 Tf 48 249 Td (Liga a skill a esse ambiente Python e compila o leitor nativo de imagens do macOS \(usado para estudar refer\352ncias\);) Tj ET
+BT /F1 8.9 Tf 48 236 Td (Cria o arquivo ) Tj ET
+BT /F3 8.6 Tf 109 236 Td (videos/perfil.json) Tj ET
+BT /F1 8.9 Tf 209 236 Td ( a partir do exemplo \(se ainda n\343o existir\);) Tj ET
+BT /F1 8.9 Tf 48 223 Td (Roda um diagn\363stico completo e mostra na tela tudo o que j\341 est\341 pronto.) Tj ET
+
+% Table: Os programas e para que servem
+0.043 0.165 0.290 rg
+36 195 523.28 18 re f
+1.000 1.000 1.000 rg
+BT /F2 8.5 Tf 44 201 Td (Programa) Tj ET
+BT /F2 8.5 Tf 190 201 Td (Para que serve dentro do Motor Animado) Tj ET
+
+1.000 1.000 1.000 rg 0.880 0.910 0.940 RG 0.5 w 36 178 523.28 17 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 184 Td (Node 18+) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 190 184 Td (Desenha os quadros \(frames\) do v\355deo e roda o servidor do painel.) Tj ET
+
+0.969 0.976 0.988 rg 0.880 0.910 0.940 RG 0.5 w 36 161 523.28 17 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 167 Td (Python 3.11+) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 190 167 Td (Voz, transcri\347\343o, efeitos sonoros, mixagem de \341udio e confer\352ncia.) Tj ET
+
+1.000 1.000 1.000 rg 0.880 0.910 0.940 RG 0.5 w 36 144 523.28 17 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 150 Td (ffmpeg-full) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 190 150 Td (Junta imagem e som e queima a legenda \(a vers\343o -full tem o suporte a legenda necess\341rio\).) Tj ET
+
+0.969 0.976 0.988 rg 0.880 0.910 0.940 RG 0.5 w 36 127 523.28 17 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 133 Td (yt-dlp) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 190 133 Td (Baixa um v\355deo de refer\352ncia quando voc\352 quiser criar um estilo novo a partir dele.) Tj ET
+
+1.000 1.000 1.000 rg 0.880 0.910 0.940 RG 0.5 w 36 110 523.28 17 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 116 Td (Xcode Command Line Tools) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 190 116 Td (Compila o leitor de imagens do Mac \(comando: ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.2 Tf 375 116 Td (xcode-select --install) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 496 116 Td (\).) Tj ET
+
+0.925 0.992 0.961 rg
+36 52 523.28 48 re f
+0.020 0.588 0.412 rg
+36 52 4 48 re f
+0.024 0.373 0.275 rg
+BT /F2 8.8 Tf 48 88 Td (Material de estudo das refer\352ncias \(Opcional \267 cerca de 380 MB\)) Tj ET
+0.120 0.160 0.230 rg
+BT /F1 8.6 Tf 48 75 Td (No fim, ele pergunta se voc\352 quer baixar os v\355deos originais das refer\352ncias \(~380 MB\). D\341 para pular e fazer depois:) Tj ET
+0.060 0.090 0.160 rg
+BT /F3 8.2 Tf 48 61 Td (bash baixar-extras.sh --listar) Tj ET
+0.200 0.250 0.330 rg
+BT /F1 8.4 Tf 212 61 Td (\(mostra o que falta\)  ou  ) Tj ET
+0.060 0.090 0.160 rg
+BT /F3 8.2 Tf 314 61 Td (bash baixar-extras.sh) Tj ET
+0.200 0.250 0.330 rg
+BT /F1 8.4 Tf 430 61 Td (\(baixa e refaz o estudo\).) Tj ET
+
+0.880 0.910 0.940 RG 0.6 w
+36 36 m 559.28 36 l S
+0.580 0.640 0.720 rg
+BT /F1 8.0 Tf 36 23 Td (Baseado em INSTALACAO.md  |  Motor Animado & Painel \(macOS Apple Silicon M1+\)) Tj ET
+0.390 0.450 0.550 rg
+BT /F2 8.5 Tf 508 23 Td (P\341gina 1 de 2) Tj ET
+endstream
+endobj
+
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 9 0 R >>
+endobj
+
+9 0 obj
+<< /Length 7400 >>
+stream
+% ================= PAGE 2 =================
+0.390 0.450 0.550 rg
+BT /F2 8.5 Tf 36 812 Td (Motor Animado & Painel  \267  Guia Did\341tico de Instala\347\343o Passo a Passo \(Mac M1+\)) Tj ET
+0.880 0.910 0.940 RG 0.75 w
+36 804 m 559.28 804 l S
+
+% ---------------- PASSO 4 ----------------
+0.043 0.165 0.290 rg
+36 774 58 20 re f
+1.000 1.000 1.000 rg
+BT /F2 8.5 Tf 46 781 Td (PASSO 4) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 12.5 Tf 102 779 Td (Instalar e entrar em um Agente de IA) Tj ET
+0.390 0.450 0.550 rg
+BT /F1 9.0 Tf 36 762 Td (O painel n\343o pensa sozinho: ele conversa com um agente de IA que voc\352 j\341 tenha. Escolha pelo menos um, instale e entre na conta.) Tj ET
+
+0.043 0.165 0.290 rg
+36 738 523.28 18 re f
+1.000 1.000 1.000 rg
+BT /F2 8.5 Tf 44 744 Td (Agente de IA) Tj ET
+BT /F2 8.5 Tf 145 744 Td (1\272 \267 Comando para instalar no Terminal) Tj ET
+BT /F2 8.5 Tf 375 744 Td (2\272 \267 Como entrar na sua conta) Tj ET
+
+1.000 1.000 1.000 rg 0.880 0.910 0.940 RG 0.5 w 36 720 523.28 18 re B
+0.060 0.090 0.160 rg BT /F2 8.6 Tf 44 726 Td (Claude Code) Tj ET
+BT /F3 8.2 Tf 145 726 Td (npm install -g @anthropic-ai/claude-code) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 375 726 Td (Rode ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.2 Tf 400 726 Td (claude) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 436 726 Td ( e siga as instru\347\365es.) Tj ET
+
+0.969 0.976 0.988 rg 0.880 0.910 0.940 RG 0.5 w 36 702 523.28 18 re B
+0.060 0.090 0.160 rg BT /F2 8.6 Tf 44 708 Td (Codex \(ChatGPT\)) Tj ET
+BT /F3 8.2 Tf 145 708 Td (npm install -g @openai/codex) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 375 708 Td (Rode ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.2 Tf 400 708 Td (codex) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 431 708 Td ( e entre com a conta ChatGPT.) Tj ET
+
+1.000 1.000 1.000 rg 0.880 0.910 0.940 RG 0.5 w 36 684 523.28 18 re B
+0.060 0.090 0.160 rg BT /F2 8.6 Tf 44 690 Td (Gemini CLI) Tj ET
+BT /F3 8.2 Tf 145 690 Td (npm install -g @google/gemini-cli) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 375 690 Td (Rode ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.2 Tf 400 690 Td (gemini) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.5 Tf 436 690 Td ( e entre com a conta Google.) Tj ET
+
+0.120 0.160 0.230 rg
+BT /F1 8.8 Tf 36 670 Td (Depois, no painel, v\341 em ) Tj ET
+BT /F2 8.8 Tf 141 670 Td (Ajustes) Tj ET
+BT /F1 8.8 Tf 175 670 Td ( e escolha qual agente escreve cada passo \(d\341 para misturar agentes diferentes\).) Tj ET
+
+1.000 0.984 0.922 rg
+36 620 523.28 43 re f
+0.851 0.467 0.024 rg
+36 620 4 43 re f
+0.573 0.251 0.055 rg
+BT /F2 8.6 Tf 48 652 Td (Aten\347\343o ao usar o Gemini CLI \(evitando o erro "API key not valid"\):) Tj ET
+0.200 0.250 0.330 rg
+BT /F1 8.3 Tf 48 639 Td (Outros apps do Google no Mac \(app Gemini, Antigravity\) deixam uma chave no ambiente do sistema que o ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.0 Tf 454 639 Td (gemini) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.3 Tf 486 639 Td ( usa antes da conta.) Tj ET
+BT /F1 8.3 Tf 48 627 Td (Por padr\343o, o painel ) Tj ET
+0.060 0.090 0.160 rg BT /F2 8.3 Tf 130 627 Td (ignora essa chave) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.3 Tf 205 627 Td ( e usa sua conta logada. Para usar uma chave v\341lida, mude em ) Tj ET
+0.060 0.090 0.160 rg BT /F2 8.3 Tf 453 627 Td (Ajustes -> Os agentes) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.3 Tf 541 627 Td (.) Tj ET
+
+% ---------------- PASSO 4B ----------------
+0.280 0.330 0.410 rg
+36 590 105 20 re f
+1.000 1.000 1.000 rg
+BT /F2 8.2 Tf 44 597 Td (PASSO 4B \267 OPCIONAL) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 12.5 Tf 149 595 Td (Outros motores de anima\347\343o \(Skills de terceiros\)) Tj ET
+0.390 0.450 0.550 rg
+BT /F1 8.8 Tf 36 578 Td (Al\351m dos 9 estilos nativos, voc\352 pode instalar motores extras \(no Claude Code digite dentro do ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.4 Tf 419 578 Td (claude) Tj ET
+0.390 0.450 0.550 rg BT /F1 8.8 Tf 451 578 Td ( ou no Terminal\):) Tj ET
+
+0.043 0.165 0.290 rg
+36 555 523.28 17 re f
+1.000 1.000 1.000 rg
+BT /F2 8.4 Tf 44 561 Td (Motor / Estilo) Tj ET
+BT /F2 8.4 Tf 195 561 Td (Comandos de instala\347\343o) Tj ET
+
+1.000 1.000 1.000 rg 0.880 0.910 0.940 RG 0.5 w 36 527 523.28 28 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 544 Td (Anidoodle) Tj ET
+0.390 0.450 0.550 rg BT /F1 8.0 Tf 44 533 Td (Timelapse e explicativos \(32 estilos\)) Tj ET
+0.060 0.090 0.160 rg BT /F3 7.8 Tf 195 544 Td (/plugin marketplace add alexgreensh/anidoodle) Tj ET
+BT /F3 7.8 Tf 195 533 Td (/plugin install anidoodle@alexgreensh-anidoodle) Tj ET
+
+0.969 0.976 0.988 rg 0.880 0.910 0.940 RG 0.5 w 36 499 523.28 28 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 516 Td (Anima\347\343o em canvas) Tj ET
+0.390 0.450 0.550 rg BT /F1 8.0 Tf 44 505 Td (Quadros em JavaScript, sem imagens) Tj ET
+0.060 0.090 0.160 rg BT /F3 7.8 Tf 195 516 Td (/plugin marketplace add iart-ai/javascript-animation-skills) Tj ET
+BT /F3 7.8 Tf 195 505 Td (/plugin install javascript-animation-skills@javascript-animation-skills) Tj ET
+
+1.000 1.000 1.000 rg 0.880 0.910 0.940 RG 0.5 w 36 471 523.28 28 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 488 Td (Manim) Tj ET
+0.390 0.450 0.550 rg BT /F1 8.0 Tf 44 477 Td (Gr\341ficos e f\363rmulas estilo 3Blue1Brown) Tj ET
+0.060 0.090 0.160 rg BT /F3 7.8 Tf 195 488 Td (npx skills add adithya-s-k/manim_skill -g -a claude-code) Tj ET
+0.200 0.250 0.330 rg BT /F1 8.0 Tf 195 477 Td (Antes do bot\343o Preparar, rode: ) Tj ET
+0.060 0.090 0.160 rg BT /F3 7.8 Tf 315 477 Td (brew install pkg-config cairo pango) Tj ET
+
+0.969 0.976 0.988 rg 0.880 0.910 0.940 RG 0.5 w 36 443 523.28 28 re B
+0.060 0.090 0.160 rg BT /F2 8.5 Tf 44 460 Td (Huashu Art Motion ) Tj ET
+0.390 0.450 0.550 rg BT /F1 8.0 Tf 123 460 Td (\(36 estilos\)) Tj ET
+0.060 0.090 0.160 rg BT /F3 7.8 Tf 195 460 Td (npx skills add alchaincyf/huashu-art-motion -g -a claude-code) Tj ET
+0.060 0.090 0.160 rg BT /F2 8.2 Tf 44 449 Td (Guia Motion Design ) Tj ET
+0.390 0.450 0.550 rg BT /F1 7.8 Tf 126 449 Td (\(complemento\)) Tj ET
+0.060 0.090 0.160 rg BT /F3 7.8 Tf 195 449 Td (npx skills add LottieFiles/motion-design-skill -g -a claude-code) Tj ET
+
+0.120 0.160 0.230 rg
+BT /F1 8.6 Tf 36 430 Td (Depois de instalar, v\341 no passo ) Tj ET
+BT /F2 8.6 Tf 163 430 Td (Estilo) Tj ET
+BT /F1 8.6 Tf 189 430 Td ( \(no fim da p\341gina do painel\) e clique em ) Tj ET
+BT /F2 8.6 Tf 353 430 Td (Preparar) Tj ET
+BT /F1 8.6 Tf 391 430 Td ( para instalar as depend\352ncias locais.) Tj ET
+
+% ---------------- PASSO 5 ----------------
+0.043 0.165 0.290 rg
+36 398 58 20 re f
+1.000 1.000 1.000 rg
+BT /F2 8.5 Tf 46 405 Td (PASSO 5) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 12.5 Tf 102 403 Td (Abrir o Painel e come\347ar a usar) Tj ET
+
+0.060 0.090 0.160 rg
+36 370 523.28 21 re f
+0.950 0.970 0.990 rg
+BT /F3 9.2 Tf 48 377 Td (node painel/servidor.mjs) Tj ET
+
+1.000 0.420 0.361 rg
+BT /F2 9.0 Tf 38 355 Td (1.) Tj ET
+BT /F2 9.0 Tf 38 341 Td (2.) Tj ET
+
+0.120 0.160 0.230 rg
+BT /F1 9.0 Tf 52 355 Td (Abra seu navegador no endere\347o local ) Tj ET
+0.145 0.388 0.922 rg BT /F3 9.0 Tf 206 355 Td (127.0.0.1:4747) Tj ET
+0.120 0.160 0.230 rg BT /F1 9.0 Tf 294 355 Td (. Para fechar, volte ao Terminal e aperte ) Tj ET
+0.060 0.090 0.160 rg BT /F2 9.0 Tf 462 355 Td (Control + C) Tj ET
+0.120 0.160 0.230 rg BT /F1 9.0 Tf 513 355 Td (.) Tj ET
+
+BT /F2 9.0 Tf 52 341 Td (Atalho com 2 cliques no Finder: ) Tj ET
+BT /F1 9.0 Tf 192 341 Td (abra ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.6 Tf 214 341 Td (abrir-painel.command) Tj ET
+0.120 0.160 0.230 rg BT /F1 9.0 Tf 327 341 Td (. Se o macOS recusar na 1\252 vez: bot\343o direito -> ) Tj ET
+BT /F2 9.0 Tf 526 341 Td (Abrir) Tj ET
+BT /F1 9.0 Tf 548 341 Td (.) Tj ET
+
+% ---------------- PASSO 6 ----------------
+0.280 0.330 0.410 rg
+36 310 105 20 re f
+1.000 1.000 1.000 rg
+BT /F2 8.2 Tf 44 317 Td (PASSO 6 \267 OPCIONAL) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 12.5 Tf 149 315 Td (Voz profissional da ElevenLabs) Tj ET
+0.390 0.450 0.550 rg
+BT /F1 8.8 Tf 36 298 Td (As vozes gr\341tis \(voz do Mac e Chatterbox\) j\341 funcionam sem configurar nada. Para a voz profissional da ElevenLabs:) Tj ET
+
+1.000 0.420 0.361 rg
+BT /F2 9.0 Tf 38 283 Td (1.) Tj ET
+BT /F2 9.0 Tf 38 269 Td (2.) Tj ET
+BT /F2 9.0 Tf 38 255 Td (3.) Tj ET
+
+0.120 0.160 0.230 rg
+BT /F1 8.9 Tf 52 283 Td (Crie sua chave no portal ) Tj ET
+0.060 0.090 0.160 rg BT /F2 8.9 Tf 155 283 Td (elevenlabs.io) Tj ET
+0.120 0.160 0.230 rg BT /F1 8.9 Tf 212 283 Td ( \(menu ) Tj ET
+BT /F2 8.9 Tf 243 283 Td (Perfil -> API Keys) Tj ET
+BT /F1 8.9 Tf 321 283 Td (\).) Tj ET
+
+BT /F1 8.9 Tf 52 269 Td (No painel, v\341 em ) Tj ET
+BT /F2 8.9 Tf 123 269 Td (Ajustes -> ElevenLabs) Tj ET
+BT /F1 8.9 Tf 219 269 Td (, cole a chave, clique em ) Tj ET
+BT /F2 8.9 Tf 322 269 Td (Gravar chave) Tj ET
+BT /F1 8.9 Tf 380 269 Td ( e depois em ) Tj ET
+BT /F2 8.9 Tf 436 269 Td (Buscar minhas vozes) Tj ET
+BT /F1 8.9 Tf 527 269 Td (.) Tj ET
+
+BT /F1 8.9 Tf 52 255 Td (Escolha a voz e salve. A chave vai direto para ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.5 Tf 241 255 Td (videos/.env) Tj ET
+0.120 0.160 0.230 rg BT /F1 8.9 Tf 303 255 Td ( \(leitura s\363 para voc\352\) e nunca mais aparece na tela.) Tj ET
+
+% ---------------- EXTRAS: DIAGNOSTICO & MIGRACAO ----------------
+0.043 0.165 0.290 rg
+36 222 85 20 re f
+1.000 1.000 1.000 rg
+BT /F2 8.2 Tf 45 229 Td (UTILIDADES) Tj ET
+
+0.060 0.090 0.160 rg
+BT /F2 12.5 Tf 129 227 Td (Conferir se est\341 tudo certo & Levar para outro computador) Tj ET
+
+0.280 0.330 0.410 rg
+BT /F2 8.8 Tf 36 208 Td (1. Conferir se est\341 tudo certo \(lista o que est\341 pronto e mostra o comando exato de cada corre\347\343o\):) Tj ET
+
+0.060 0.090 0.160 rg
+36 183 523.28 20 re f
+0.950 0.970 0.990 rg
+BT /F3 9.0 Tf 48 190 Td (motor-animado/ferramentas/py diagnostico.py) Tj ET
+
+0.280 0.330 0.410 rg
+BT /F2 8.8 Tf 36 165 Td (2. Levar para outro Mac \(copia a pasta sem .venv, sem videos/.env e sem seus projetos\):) Tj ET
+
+0.060 0.090 0.160 rg
+36 132 523.28 28 re f
+0.950 0.970 0.990 rg
+BT /F3 8.0 Tf 46 148 Td (rsync -a --exclude .venv --exclude videos/.env --exclude "videos/*/" --) Tj ET
+BT /F3 8.0 Tf 46 137 Td (  motor-animado-painel/ /Volumes/Pendrive/motor-animado-painel/) Tj ET
+
+0.120 0.160 0.230 rg
+BT /F1 8.8 Tf 36 116 Td (No computador novo, basta repetir do ) Tj ET
+BT /F2 8.8 Tf 191 116 Td (Passo 1) Tj ET
+BT /F1 8.8 Tf 225 116 Td (. O arquivo ) Tj ET
+0.060 0.090 0.160 rg BT /F3 8.4 Tf 274 116 Td (.gitignore) Tj ET
+0.120 0.160 0.230 rg BT /F1 8.8 Tf 331 116 Td ( j\341 protege tudo caso voc\352 use git.) Tj ET
+
+0.925 0.992 0.961 rg
+0.020 0.588 0.412 RG 0.8 w
+36 52 523.28 50 re B
+0.024 0.373 0.275 rg
+BT /F2 9.0 Tf 48 88 Td (RESUMO R\301PIDO DOS COMANDOS PRINCIPAIS \(CHECKLIST\)) Tj ET
+0.060 0.090 0.160 rg
+BT /F3 8.2 Tf 48 73 Td (1\) cd <arraste-a-pasta>      2\) brew --version            3\) bash instalar.sh) Tj ET
+BT /F3 8.2 Tf 48 59 Td (4\) npm i -g <agente-ia>      5\) node painel/servidor.mjs  6\) Abrir 127.0.0.1:4747) Tj ET
+
+0.880 0.910 0.940 RG 0.6 w
+36 36 m 559.28 36 l S
+0.580 0.640 0.720 rg
+BT /F1 8.0 Tf 36 23 Td (Baseado em INSTALACAO.md  |  Motor Animado & Painel \(macOS Apple Silicon M1+\)) Tj ET
+0.390 0.450 0.550 rg
+BT /F2 8.5 Tf 508 23 Td (P\341gina 2 de 2) Tj ET
+endstream
+endobj
+
+trailer
+<< /Root 1 0 R /Size 10 >>
+%%EOF

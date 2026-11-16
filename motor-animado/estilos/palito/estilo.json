@@ -1,0 +1,42 @@
+{
+  "name": "palito",
+  "engine": "web",
+  "summary": "Personagem plano desenhado em 2D (cabeça redonda, corpo de palito, roupa de cor forte) num mundo 3D ensolarado de formas simples e cores saturadas; a câmera nunca para: sai rápido, freia aos poucos e emenda num deslize lento.",
+  "sync": "voice",
+  "format": {"width": 1080, "height": 1920, "fps_final": 30, "resolution_final": "portrait"},
+  "stage": {
+    "background": "#9fd3f5",
+    "background_bottom": "#e6edf4",
+    "fog": [30, 120],
+    "hemisphere": ["#ffffff", "#9a8f80", 1.2],
+    "sun": ["#fff0dc", 2.4],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {"approach_seconds": 0.6, "fly_seconds": 1.4, "fly_arc": 0.4, "easing": "expoOut", "idle_sway": 0.03, "glide": 0.08,
+             "cuts": "measured", "braking_seconds": 0.47, "longest_still_seconds": 0.5},
+  "captions": {
+    "words_per_caption": 1, "top_px": 1266, "font_px": 74, "font": "Montserrat",
+    "color": "#ffffff", "stroke": "#15161a", "stroke_px": 12, "highlight": "#ffd21f", "uppercase": false
+  },
+  "label": {"mode": "anchored", "variant": "text", "top_px": 210, "font_px": 44, "background": "none", "color": "#ffd21f", "stroke": "#3a2208"},
+  "cards": {"top_px": 470, "font_px": 52, "background": "#ffffff", "color": "#111111"},
+  "sound": {
+    "whoosh": {"approach": 0.3, "fly": 0.3},
+    "pop": {"label": 0.5, "card": 0.35},
+    "music": {"chords": [[261.6, 329.6, 392.0], [220.0, 261.6, 329.6], [174.6, 220.0, 261.6], [196.0, 246.9, 293.7]], "block_seconds": 2.4},
+    "mix": {"effects": 0.4, "music": 0.12},
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": ["#e6edf4", "#ff7a1a", "#d8342b", "#3b6fd8", "#f2c14e"],
+  "reference": {
+    "source": "short de 15 s no estilo palito, medido quadro a quadro na skill estilo-palito",
+    "duration": 15.0,
+    "cuts": [2.4, 3.6, 9.9, 10.5, 14.2],
+    "moves": [],
+    "phrases": [],
+    "words_per_minute": null
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "name": "saga-64",
+  "extends": "retro-64bits",
+  "engine": "web",
+  "summary": "Saga de sobrevivência em capítulos com cara de jogo da era 64 bits: formas macias e redondas, plataformas de fase, barra de vida, cronômetro, telas de capítulo, missão com caixinhas, inventário e chefão; o corpo vira o mapa do jogo.",
+  "stage": {
+    "background": "#120c26",
+    "fog": [
+      14,
+      70
+    ],
+    "hemisphere": [
+      "#cfd8ff",
+      "#2a2050",
+      1.35
+    ],
+    "sun": [
+      "#fff2e0",
+      2.1
+    ],
+    "flat_shading": false,
+    "detail_boost": 1
+  },
+  "retro": {
+    "internal": [
+      360,
+      640
+    ],
+    "blur": 1.0,
+    "upscale": "linear",
+    "color_bits": 5,
+    "dither": 0.35,
+    "smooth_normals": true,
+    "outline": null
+  },
+  "captions": {
+    "top_px": 1330,
+    "font_px": 96,
+    "highlight": "#7dff8a"
+  },
+  "label": {
+    "top_px": 330,
+    "background": "#7dff8a",
+    "color": "#0c0a1e"
+  },
+  "cards": {
+    "top_px": 470
+  },
+  "sound": {
+    "music": {
+      "chords": [
+        [
+          110.0,
+          164.8,
+          220.0
+        ],
+        [
+          98.0,
+          146.8,
+          196.0
+        ],
+        [
+          87.3,
+          130.8,
+          174.6
+        ],
+        [
+          103.8,
+          155.6,
+          207.7
+        ]
+      ],
+      "block_seconds": 2.4
+    },
+    "mix": {
+      "effects": 0.4,
+      "music": 0.08
+    }
+  }
+}

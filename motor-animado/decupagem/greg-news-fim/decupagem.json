@@ -1,0 +1,221 @@
+{
+ "name": "greg-news-fim",
+ "source": "/tmp/greg-news-trechos/fim.mp4",
+ "duration": 15.02,
+ "fps": 23.976023976023978,
+ "post": {
+  "view_count": null,
+  "like_count": null,
+  "comment_count": null,
+  "uploader": null,
+  "title": null
+ },
+ "speech": {
+  "duration": 15.02,
+  "phrases": [
+   {
+    "text": "Thank you.",
+    "start": 0.0,
+    "end": 8.22,
+    "words": [
+     {
+      "word": "Thank",
+      "start": 0.0,
+      "end": 0.5
+     },
+     {
+      "word": "you.",
+      "start": 0.5,
+      "end": 8.22
+     }
+    ]
+   }
+  ]
+ },
+ "camera": {
+  "frames": 359,
+  "fps": 23.976023976023978,
+  "duration": 14.97,
+  "cuts": [],
+  "cuts_per_minute": 0.0,
+  "moves": [
+   {
+    "t": 0.58,
+    "frames": 25,
+    "zoom": 1.007,
+    "direction": "side",
+    "profile": "expo_out",
+    "braking_frames": 24
+   },
+   {
+    "t": 3.75,
+    "frames": 11,
+    "zoom": 0.987,
+    "direction": "side",
+    "profile": "expo_out",
+    "braking_frames": 10
+   },
+   {
+    "t": 4.55,
+    "frames": 7,
+    "zoom": 1.008,
+    "direction": "side",
+    "profile": "smooth",
+    "braking_frames": 2
+   },
+   {
+    "t": 5.13,
+    "frames": 14,
+    "zoom": 1.015,
+    "direction": "side",
+    "profile": "smooth",
+    "braking_frames": 9
+   },
+   {
+    "t": 11.14,
+    "frames": 18,
+    "zoom": 1.026,
+    "direction": "side",
+    "profile": "expo_out",
+    "braking_frames": 17
+   },
+   {
+    "t": 12.14,
+    "frames": 8,
+    "zoom": 1.014,
+    "direction": "side",
+    "profile": "expo_out",
+    "braking_frames": 7
+   },
+   {
+    "t": 13.64,
+    "frames": 32,
+    "zoom": 0.935,
+    "direction": "out",
+    "profile": "expo_out",
+    "braking_frames": 30
+   }
+  ],
+  "moves_per_minute": 28.0,
+  "share_pct": {
+   "still": 36,
+   "slow": 59,
+   "fast": 4
+  },
+  "median_move_frames": 14,
+  "profiles": {
+   "expo_out": 5,
+   "smooth": 2,
+   "linear": 0,
+   "ease_in": 0
+  },
+  "dominant_profile": "expo_out",
+  "median_braking_frames": 10,
+  "longest_still_seconds": 1.33
+ },
+ "shots": [
+  {
+   "index": 1,
+   "start": 0.0,
+   "end": 15.02,
+   "palette": [
+    {
+     "color": "#22436b",
+     "share": 0.26
+    },
+    {
+     "color": "#1a2020",
+     "share": 0.225
+    },
+    {
+     "color": "#795828",
+     "share": 0.223
+    },
+    {
+     "color": "#4c3115",
+     "share": 0.196
+    },
+    {
+     "color": "#c3a979",
+     "share": 0.096
+    }
+   ],
+   "gradient": {
+    "top": "#1e2d57",
+    "bottom": "#6c482e"
+   },
+   "brightness": 0.385,
+   "saturation": 0.633,
+   "frames": [
+    "tomada01-inicio.jpg",
+    "tomada01-meio.jpg",
+    "tomada01-fim.jpg"
+   ],
+   "focus_center": [
+    0.53,
+    0.59
+   ],
+   "person_height": 0.75,
+   "has_faces": true
+  }
+ ],
+ "palette": [
+  {
+   "color": "#22436b",
+   "share": 0.26
+  },
+  {
+   "color": "#1a2020",
+   "share": 0.225
+  },
+  {
+   "color": "#795828",
+   "share": 0.223
+  },
+  {
+   "color": "#4c3115",
+   "share": 0.196
+  },
+  {
+   "color": "#c3a979",
+   "share": 0.096
+  }
+ ],
+ "text": {
+  "band_center": null,
+  "captions": null,
+  "other_texts": [],
+  "works_without_sound": false
+ },
+ "sound": {
+  "loudness": {
+   "lufs": -19.3,
+   "peak_db": -7.2
+  },
+  "speech": {
+   "words_per_minute": 15,
+   "first_word_at": 0.0,
+   "pauses": [],
+   "pause_count": 0,
+   "speech_share": 0.55
+  },
+  "music": {
+   "gap_vs_speech_db": null,
+   "has_music_bed": null
+  },
+  "effects": {
+   "effects_detected": 6,
+   "on_cuts": 0,
+   "on_camera_moves": 1,
+   "share_of_moves_with_effect": 0.14,
+   "times": [
+    0.58,
+    2.78,
+    7.54,
+    8.64,
+    8.77,
+    10.38
+   ]
+  }
+ }
+}

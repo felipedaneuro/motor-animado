@@ -1,0 +1,137 @@
+{
+  "name": "kinetic-creme",
+  "engine": "web",
+  "summary": "Fundo creme claro, cartões brancos com sombra suave entrando um a um, tipografia escura grande e uma silhueta de cidade ao fundo: o oposto do pixel escuro, para assunto leve e de produto.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#e9e2d2",
+    "background_bottom": "#e9e1d2",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.02,
+    "cuts": "none",
+    "braking_seconds": 0.1,
+    "longest_still_seconds": 1.97,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 3,
+    "top_px": 330,
+    "font_px": 63,
+    "font": "Montserrat",
+    "color": "#fbf7f2",
+    "stroke": "#221c14",
+    "stroke_px": 9,
+    "highlight": "#ffd21f",
+    "uppercase": false
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 210,
+    "font_px": 72,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 52,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": null,
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#e9e1d1",
+    "#faf9f4",
+    "#543820",
+    "#805534",
+    "#bcb1a2"
+  ],
+  "reference": {
+    "source": "modelos/recortes/kinetic-creme.mp4",
+    "duration": 6.0,
+    "cuts": [],
+    "moves": [
+      {
+        "t": 2.07,
+        "profile": "ease_in",
+        "direction": "side"
+      },
+      {
+        "t": 2.33,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 2.83,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 3.1,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 4.0,
+        "profile": "ease_in",
+        "direction": "side"
+      },
+      {
+        "t": 4.3,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 5.63,
+        "profile": "ease_in",
+        "direction": "side"
+      },
+      {
+        "t": 5.9,
+        "profile": "linear",
+        "direction": "in"
+      }
+    ],
+    "phrases": [],
+    "words_per_minute": 0
+  }
+}

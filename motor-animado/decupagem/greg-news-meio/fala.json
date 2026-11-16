@@ -1,0 +1,359 @@
+{
+ "duration": 15.02,
+ "phrases": [
+  {
+   "text": "Ano vendo foto de pet da pessoa, que foda -se, da viagem da pessoa, que tô cagando, do almoço da pessoa, a pessoa mandando indiretinha pro ex, indiretinha pro chefe, indiretinha pra você, a pessoa te vendo textão, cagando regra sobre coisas que ela não conhece, não sabe, não faz ideia do que é, e tá falando, tá lá cagando regra.",
+   "start": 0.0,
+   "end": 12.8,
+   "words": [
+    {
+     "word": "Ano",
+     "start": 0.0,
+     "end": 0.3
+    },
+    {
+     "word": "vendo",
+     "start": 0.3,
+     "end": 0.54
+    },
+    {
+     "word": "foto",
+     "start": 0.54,
+     "end": 0.92
+    },
+    {
+     "word": "de",
+     "start": 0.92,
+     "end": 1.06
+    },
+    {
+     "word": "pet",
+     "start": 1.06,
+     "end": 1.26
+    },
+    {
+     "word": "da",
+     "start": 1.26,
+     "end": 1.4
+    },
+    {
+     "word": "pessoa,",
+     "start": 1.4,
+     "end": 1.68
+    },
+    {
+     "word": "que",
+     "start": 1.78,
+     "end": 1.8
+    },
+    {
+     "word": "foda",
+     "start": 1.8,
+     "end": 2.06
+    },
+    {
+     "word": "-se,",
+     "start": 2.06,
+     "end": 2.2
+    },
+    {
+     "word": "da",
+     "start": 2.26,
+     "end": 2.32
+    },
+    {
+     "word": "viagem",
+     "start": 2.32,
+     "end": 2.6
+    },
+    {
+     "word": "da",
+     "start": 2.6,
+     "end": 2.7
+    },
+    {
+     "word": "pessoa,",
+     "start": 2.7,
+     "end": 2.98
+    },
+    {
+     "word": "que",
+     "start": 3.14,
+     "end": 3.16
+    },
+    {
+     "word": "tô",
+     "start": 3.16,
+     "end": 3.34
+    },
+    {
+     "word": "cagando,",
+     "start": 3.34,
+     "end": 3.64
+    },
+    {
+     "word": "do",
+     "start": 3.66,
+     "end": 3.74
+    },
+    {
+     "word": "almoço",
+     "start": 3.74,
+     "end": 4.04
+    },
+    {
+     "word": "da",
+     "start": 4.04,
+     "end": 4.12
+    },
+    {
+     "word": "pessoa,",
+     "start": 4.12,
+     "end": 4.42
+    },
+    {
+     "word": "a",
+     "start": 4.7,
+     "end": 4.74
+    },
+    {
+     "word": "pessoa",
+     "start": 4.74,
+     "end": 4.94
+    },
+    {
+     "word": "mandando",
+     "start": 4.94,
+     "end": 5.2
+    },
+    {
+     "word": "indiretinha",
+     "start": 5.2,
+     "end": 5.58
+    },
+    {
+     "word": "pro",
+     "start": 5.58,
+     "end": 5.7
+    },
+    {
+     "word": "ex,",
+     "start": 5.7,
+     "end": 5.84
+    },
+    {
+     "word": "indiretinha",
+     "start": 5.94,
+     "end": 6.16
+    },
+    {
+     "word": "pro",
+     "start": 6.16,
+     "end": 6.28
+    },
+    {
+     "word": "chefe,",
+     "start": 6.28,
+     "end": 6.52
+    },
+    {
+     "word": "indiretinha",
+     "start": 6.62,
+     "end": 6.96
+    },
+    {
+     "word": "pra",
+     "start": 6.96,
+     "end": 7.06
+    },
+    {
+     "word": "você,",
+     "start": 7.06,
+     "end": 7.38
+    },
+    {
+     "word": "a",
+     "start": 7.8,
+     "end": 7.84
+    },
+    {
+     "word": "pessoa",
+     "start": 7.84,
+     "end": 8.02
+    },
+    {
+     "word": "te",
+     "start": 8.02,
+     "end": 8.08
+    },
+    {
+     "word": "vendo",
+     "start": 8.08,
+     "end": 8.2
+    },
+    {
+     "word": "textão,",
+     "start": 8.2,
+     "end": 8.68
+    },
+    {
+     "word": "cagando",
+     "start": 8.96,
+     "end": 9.28
+    },
+    {
+     "word": "regra",
+     "start": 9.28,
+     "end": 9.58
+    },
+    {
+     "word": "sobre",
+     "start": 9.58,
+     "end": 9.72
+    },
+    {
+     "word": "coisas",
+     "start": 9.72,
+     "end": 9.88
+    },
+    {
+     "word": "que",
+     "start": 9.88,
+     "end": 10.0
+    },
+    {
+     "word": "ela",
+     "start": 10.0,
+     "end": 10.02
+    },
+    {
+     "word": "não",
+     "start": 10.02,
+     "end": 10.1
+    },
+    {
+     "word": "conhece,",
+     "start": 10.1,
+     "end": 10.8
+    },
+    {
+     "word": "não",
+     "start": 10.88,
+     "end": 10.92
+    },
+    {
+     "word": "sabe,",
+     "start": 10.92,
+     "end": 11.04
+    },
+    {
+     "word": "não",
+     "start": 11.12,
+     "end": 11.18
+    },
+    {
+     "word": "faz",
+     "start": 11.18,
+     "end": 11.28
+    },
+    {
+     "word": "ideia",
+     "start": 11.28,
+     "end": 11.4
+    },
+    {
+     "word": "do",
+     "start": 11.4,
+     "end": 11.48
+    },
+    {
+     "word": "que",
+     "start": 11.48,
+     "end": 11.56
+    },
+    {
+     "word": "é,",
+     "start": 11.56,
+     "end": 11.66
+    },
+    {
+     "word": "e",
+     "start": 11.72,
+     "end": 11.78
+    },
+    {
+     "word": "tá",
+     "start": 11.78,
+     "end": 11.8
+    },
+    {
+     "word": "falando,",
+     "start": 11.8,
+     "end": 12.04
+    },
+    {
+     "word": "tá",
+     "start": 12.1,
+     "end": 12.14
+    },
+    {
+     "word": "lá",
+     "start": 12.14,
+     "end": 12.22
+    },
+    {
+     "word": "cagando",
+     "start": 12.22,
+     "end": 12.48
+    },
+    {
+     "word": "regra.",
+     "start": 12.48,
+     "end": 12.8
+    }
+   ]
+  },
+  {
+   "text": "Ou seja, o resultado disso é que...",
+   "start": 12.96,
+   "end": 14.92,
+   "words": [
+    {
+     "word": "Ou",
+     "start": 12.96,
+     "end": 13.14
+    },
+    {
+     "word": "seja,",
+     "start": 13.14,
+     "end": 13.28
+    },
+    {
+     "word": "o",
+     "start": 13.38,
+     "end": 13.4
+    },
+    {
+     "word": "resultado",
+     "start": 13.4,
+     "end": 13.64
+    },
+    {
+     "word": "disso",
+     "start": 13.64,
+     "end": 13.98
+    },
+    {
+     "word": "é",
+     "start": 13.98,
+     "end": 14.62
+    },
+    {
+     "word": "que...",
+     "start": 14.62,
+     "end": 14.92
+    }
+   ]
+  }
+ ]
+}

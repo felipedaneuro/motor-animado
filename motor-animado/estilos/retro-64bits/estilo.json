@@ -1,0 +1,182 @@
+{
+  "name": "retro-64bits",
+  "engine": "web",
+  "summary": "Estilo próprio da era 64 bits: o mesmo busto e o mesmo cenário em pixel do retro-32bits, com acabamento macio — resolução interna maior, imagem levemente embaçada, cor de 18 bits e sem contorno. Também vai por cima de outro estilo com {\"extends\": \"<estilo>\"}.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "theme": "natural",
+  "stage": {
+    "background": "#a8d4f0",
+    "background_bottom": "#eaf2e8",
+    "fog": [
+      22,
+      85
+    ],
+    "hemisphere": [
+      "#ffffff",
+      "#8a9a70",
+      1.4
+    ],
+    "sun": [
+      "#fff4e4",
+      1.9
+    ],
+    "shadows": true,
+    "flat_shading": true,
+    "fov": 40
+  },
+  "retro": {
+    "internal": [
+      540,
+      960
+    ],
+    "upscale": "linear",
+    "color_bits": 6,
+    "dither": 0.25,
+    "blur": 0.35,
+    "vertex_snap": null,
+    "smooth_normals": false,
+    "outline": null
+  },
+  "camera": {
+    "approach_seconds": 0.9,
+    "fly_seconds": 1.8,
+    "fly_arc": 1.0,
+    "easing": "smooth",
+    "idle_sway": 0.04,
+    "cuts": "none"
+  },
+  "captions": {
+    "words_per_caption": 1,
+    "top_px": 1290,
+    "font_px": 104,
+    "font": "Fredoka",
+    "font_query": "Fredoka:wght@600;700",
+    "color": "#ffffff",
+    "stroke": "#16182a",
+    "stroke_px": 14,
+    "highlight": "#ffd21f",
+    "uppercase": true
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 210,
+    "font_px": 84,
+    "background": "#ffd21f",
+    "color": "#16182a"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 56,
+    "background": "#ffffff",
+    "color": "#16182a"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.22,
+      "fly": 0.3
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          261.6,
+          329.6,
+          392.0
+        ],
+        [
+          220.0,
+          261.6,
+          329.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          196.0,
+          246.9,
+          293.7
+        ]
+      ],
+      "block_seconds": 2.4
+    },
+    "mix": {
+      "effects": 0.38,
+      "music": 0.08
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "overlay": {
+    "stage": {
+      "flat_shading": true,
+      "fog": [
+        12,
+        60
+      ]
+    },
+    "captions": {
+      "font": "Fredoka",
+      "font_query": "Fredoka:wght@600;700",
+      "font_px": 104,
+      "stroke_px": 14
+    },
+    "label": {
+      "font_px": 84
+    },
+    "cards": {
+      "font_px": 56
+    },
+    "retro": {
+      "internal": [
+        540,
+        960
+      ],
+      "upscale": "linear",
+      "color_bits": 6,
+      "dither": 0.25,
+      "blur": 0.35,
+      "vertex_snap": null,
+      "smooth_normals": false,
+      "outline": null
+    },
+    "bust": {
+      "hairStyle": "black-power",
+      "hair": "#2a1d18",
+      "skin": "#e0a173",
+      "cloth": "#23202b",
+      "band": "#f2efe6",
+      "accent": "#e9b53c",
+      "portrait": 360,
+      "bottom": 110,
+      "nome": ""
+    },
+    "pixel_world": {
+      "scenery": ""
+    }
+  },
+  "bust": {
+    "hairStyle": "black-power",
+    "hair": "#2a1d18",
+    "skin": "#e0a173",
+    "cloth": "#23202b",
+    "band": "#f2efe6",
+    "accent": "#e9b53c",
+    "portrait": 360,
+    "bottom": 110,
+    "nome": ""
+  },
+  "pixel_world": {
+    "scenery": ""
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "name": "pixel-anatomia-camadas",
+  "engine": "web",
+  "summary": "Corte anatômico em pixel art sobre fundo escuro estrelado: a pele e os tecidos em camadas horizontais de cor, um objeto (agulha, sonda, tubo) entrando no quadro de fora e a vista abrindo por dentro, com rótulo em caixa alta.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#0d1b28",
+    "background_bottom": "#d49490",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "smooth",
+    "idle_sway": 0.02,
+    "cuts": "none",
+    "braking_seconds": 0.17,
+    "longest_still_seconds": 1.5,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 1,
+    "top_px": 1270,
+    "font_px": 64,
+    "font": "Press Start 2P",
+    "color": "#ffffff",
+    "stroke": "#000000",
+    "stroke_px": 9,
+    "highlight": "#ffd21f",
+    "uppercase": true,
+    "font_query": "Press+Start+2P"
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 240,
+    "font_px": 40,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 1460,
+    "font_px": 34,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.22,
+      "fly": 0.22
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": null,
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#101d2a",
+    "#d8a29b",
+    "#66061c",
+    "#8d6f67",
+    "#a1213c"
+  ],
+  "reference": {
+    "source": "modelos/recortes/pixel-anatomia-camadas.mp4",
+    "duration": 24.02,
+    "cuts": [],
+    "moves": [
+      {
+        "t": 1.3,
+        "profile": "smooth",
+        "direction": "out"
+      },
+      {
+        "t": 3.2,
+        "profile": "smooth",
+        "direction": "in"
+      },
+      {
+        "t": 6.23,
+        "profile": "linear",
+        "direction": "side"
+      },
+      {
+        "t": 6.47,
+        "profile": "ease_in",
+        "direction": "out"
+      },
+      {
+        "t": 6.8,
+        "profile": "ease_in",
+        "direction": "side"
+      },
+      {
+        "t": 7.13,
+        "profile": "smooth",
+        "direction": "side"
+      },
+      {
+        "t": 7.53,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 9.1,
+        "profile": "smooth",
+        "direction": "in"
+      },
+      {
+        "t": 10.63,
+        "profile": "smooth",
+        "direction": "side"
+      },
+      {
+        "t": 11.2,
+        "profile": "ease_in",
+        "direction": "side"
+      },
+      {
+        "t": 12.63,
+        "profile": "smooth",
+        "direction": "out"
+      },
+      {
+        "t": 16.2,
+        "profile": "smooth",
+        "direction": "in"
+      },
+      {
+        "t": 16.5,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 17.37,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 20.5,
+        "profile": "smooth",
+        "direction": "out"
+      },
+      {
+        "t": 20.7,
+        "profile": "smooth",
+        "direction": "side"
+      },
+      {
+        "t": 21.13,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 21.93,
+        "profile": "smooth",
+        "direction": "out"
+      },
+      {
+        "t": 22.2,
+        "profile": "ease_in",
+        "direction": "out"
+      },
+      {
+        "t": 23.37,
+        "profile": "smooth",
+        "direction": "in"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 0.0,
+        "end": 0.58,
+        "words": 1
+      }
+    ],
+    "words_per_minute": 103
+  },
+  "retro": {
+    "internal": [
+      270,
+      480
+    ],
+    "upscale": "nearest",
+    "color_bits": 5,
+    "dither": 0.7,
+    "blur": 0.0,
+    "vertex_snap": null,
+    "smooth_normals": true,
+    "outline": "#0a0a14"
+  },
+  "extends": "pixel-duelo-cardio"
+}

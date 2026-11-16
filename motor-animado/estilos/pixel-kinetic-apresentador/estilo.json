@@ -1,0 +1,133 @@
+{
+  "name": "pixel-kinetic-apresentador",
+  "engine": "web",
+  "summary": "Tipografia grande com destaque amarelo sobre fundo de filme, com um busto em pixel no canto de baixo — o retrato fixo das caixas de diálogo antigas — que pisca e mexe a boca junto com a fala.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#0c0b04",
+    "background_bottom": "#121008",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.02,
+    "cuts": "measured",
+    "braking_seconds": 0.13,
+    "longest_still_seconds": 2.53,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 4,
+    "top_px": 705,
+    "font_px": 38,
+    "font": "Press Start 2P",
+    "color": "#ecdfca",
+    "stroke": "#c29d85",
+    "stroke_px": 8,
+    "highlight": "#e1ae52",
+    "uppercase": false,
+    "font_query": "Press+Start+2P"
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 240,
+    "font_px": 40,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 1460,
+    "font_px": 34,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": null,
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#0b0a03",
+    "#151209",
+    "#64543e",
+    "#ece1c5",
+    "#dfac58",
+    "#c9c4b7",
+    "#393121",
+    "#c7ad80"
+  ],
+  "reference": {
+    "source": "modelos/recortes/pixel-kinetic-apresentador.mp4",
+    "duration": 6.0,
+    "cuts": [
+      0.967,
+      5.967
+    ],
+    "moves": [
+      {
+        "t": 3.27,
+        "profile": "expo_out",
+        "direction": "side"
+      }
+    ],
+    "phrases": [],
+    "words_per_minute": 0
+  },
+  "retro": {
+    "internal": [
+      270,
+      480
+    ],
+    "upscale": "nearest",
+    "color_bits": 5,
+    "dither": 0.7,
+    "blur": 0.0,
+    "vertex_snap": null,
+    "smooth_normals": true,
+    "outline": "#0a0a14"
+  },
+  "bust": {
+    "hairStyle": "black-power",
+    "hair": "#1b1620",
+    "skin": "#e0a173",
+    "cloth": "#17151d",
+    "band": "#f2efe6",
+    "accent": "#e1ae52",
+    "portrait": 300,
+    "bottom": 150,
+    "margem": 60
+  }
+}

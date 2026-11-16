@@ -1,0 +1,18 @@
+{
+  "_sobre": "Material de estudo pesado que NÃO vem no pacote: é baixado e refeito neste computador por baixar-extras.sh. A análise escrita de cada decupagem (decupagem.md e os .json) já está no pacote e serve sem baixar nada.",
+  "decupagens": [
+    {
+      "nome": "greg-news",
+      "link": "https://www.youtube.com/watch?v=4w6AAfIxfZc",
+      "segundos": 15,
+      "tamanho": "cerca de 380 MB",
+      "sobre": "O telejornal de humor que deu origem ao estilo greg-news: vídeo de referência, quadros e folhas de contato."
+    }
+  ],
+  "sem_link": [
+    {
+      "nome": "greg-news-meio e greg-news-fim",
+      "motivo": "vieram de trechos recortados à mão do vídeo acima; só a análise escrita vem no pacote"
+    }
+  ]
+}

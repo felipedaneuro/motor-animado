@@ -1,0 +1,106 @@
+{
+  "name": "lowpoly-drone",
+  "engine": "web",
+  "summary": "3D low-poly com cara de brinquedo num mundo neutro e natural (campo, parque ou cidade de dia), com a paleta escolhida pelo tema do vídeo; o 'você' viaja por estações e uma câmera de drone suave segue o caminho dele, sem corte seco.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 60,
+    "resolution_final": "portrait-4k"
+  },
+  "theme": "natural",
+  "stage": {
+    "background": "#a8d4f0",
+    "background_bottom": "#eaf2e8",
+    "fog": [
+      35,
+      120
+    ],
+    "hemisphere": [
+      "#ffffff",
+      "#8a9a70",
+      1.25
+    ],
+    "sun": [
+      "#fff2dc",
+      2.3
+    ],
+    "shadows": true,
+    "flat_shading": true,
+    "fov": 48
+  },
+  "camera": {
+    "approach_seconds": 0.9,
+    "fly_seconds": 1.8,
+    "fly_arc": 1.6,
+    "easing": "smooth",
+    "idle_sway": 0.06,
+    "cuts": "none"
+  },
+  "captions": {
+    "words_per_caption": 1,
+    "top_px": 1270,
+    "font_px": 104,
+    "font": "Montserrat",
+    "color": "#ffffff",
+    "stroke": "#000000",
+    "stroke_px": 16,
+    "highlight": "#ffd21f",
+    "uppercase": true
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 210,
+    "font_px": 86,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 56,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.22,
+      "fly": 0.3
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          146.8,
+          174.6,
+          220.0
+        ],
+        [
+          116.5,
+          146.8,
+          174.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          130.8,
+          164.8,
+          196.0
+        ]
+      ],
+      "block_seconds": 2.8
+    },
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean"
+}

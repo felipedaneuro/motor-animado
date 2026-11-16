@@ -1,0 +1,122 @@
+{
+  "name": "pixel-menu-rpg",
+  "engine": "web",
+  "summary": "Interface de menu de videogame antigo: janela com borda dupla dourada sobre fundo roxo escuro, fonte de pixel, barra de progresso e a informação entrando linha por linha, como num RPG de 8 bits.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#090510",
+    "background_bottom": "#080410",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.02,
+    "cuts": "measured",
+    "braking_seconds": 0.23,
+    "longest_still_seconds": 1.03,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 4,
+    "top_px": 1359,
+    "font_px": 64,
+    "font": "Press Start 2P",
+    "color": "#aaa4a6",
+    "stroke": "#1a0c24",
+    "stroke_px": 9,
+    "highlight": "#ffd21f",
+    "uppercase": true,
+    "font_query": "Press+Start+2P"
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 240,
+    "font_px": 40,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 1460,
+    "font_px": 34,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": null,
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#12091c",
+    "#26143b",
+    "#4a3a64",
+    "#7c5420",
+    "#cf9b3a",
+    "#f3eecb",
+    "#97671f",
+    "#a99694"
+  ],
+  "reference": {
+    "source": "modelos/recortes/pixel-menu-rpg.mp4",
+    "duration": 6.0,
+    "cuts": [
+      0.333,
+      1.333
+    ],
+    "moves": [
+      {
+        "t": 3.83,
+        "profile": "expo_out",
+        "direction": "in"
+      }
+    ],
+    "phrases": [],
+    "words_per_minute": 0
+  },
+  "retro": {
+    "internal": [
+      270,
+      480
+    ],
+    "upscale": "nearest",
+    "color_bits": 5,
+    "dither": 0.7,
+    "blur": 0.0,
+    "vertex_snap": null,
+    "smooth_normals": true,
+    "outline": "#0a0a14"
+  }
+}

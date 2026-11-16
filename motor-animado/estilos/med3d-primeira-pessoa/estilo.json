@@ -1,0 +1,297 @@
+{
+  "name": "med3d-primeira-pessoa",
+  "engine": "web",
+  "summary": "Cena 3D em primeira pessoa, do ponto de vista de quem está atendendo: mãos no centro do quadro, ambiente de hospital em volta e legenda em caixa alta na parte de baixo.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#3f5155",
+    "background_bottom": "#428374",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.47,
+    "fly_seconds": 0.94,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.06,
+    "cuts": "measured",
+    "braking_seconds": 0.17,
+    "longest_still_seconds": 0.83,
+    "measured_curve": "referencia-curva.json"
+  },
+  "clinic": {
+    "look": "palito",
+    "parede": "",
+    "roupa": ""
+  },
+  "captions": {
+    "words_per_caption": 3,
+    "top_px": 1382,
+    "font_px": 102,
+    "font": "Montserrat",
+    "color": "#d9dddf",
+    "stroke": "#342c28",
+    "stroke_px": 14,
+    "highlight": "#ffd21f",
+    "uppercase": true
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 210,
+    "font_px": 72,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 52,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          146.8,
+          174.6,
+          220.0
+        ],
+        [
+          116.5,
+          146.8,
+          174.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          130.8,
+          164.8,
+          196.0
+        ]
+      ],
+      "block_seconds": 2.8
+    },
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#3c5e65",
+    "#173031",
+    "#7a8a85",
+    "#927b62",
+    "#88b8ac",
+    "#678791",
+    "#9e866c",
+    "#9b8b8f"
+  ],
+  "reference": {
+    "source": "modelos/recortes/med3d-primeira-pessoa.mp4",
+    "duration": 25.03,
+    "cuts": [
+      10.0,
+      11.4,
+      16.0,
+      17.733,
+      20.0,
+      20.333
+    ],
+    "moves": [
+      {
+        "t": 0.07,
+        "profile": "ease_in",
+        "direction": "side"
+      },
+      {
+        "t": 1.4,
+        "profile": "linear",
+        "direction": "side"
+      },
+      {
+        "t": 1.6,
+        "profile": "smooth",
+        "direction": "side"
+      },
+      {
+        "t": 2.53,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 2.9,
+        "profile": "smooth",
+        "direction": "out"
+      },
+      {
+        "t": 4.53,
+        "profile": "ease_in",
+        "direction": "out"
+      },
+      {
+        "t": 4.9,
+        "profile": "expo_out",
+        "direction": "out"
+      },
+      {
+        "t": 7.37,
+        "profile": "ease_in",
+        "direction": "in"
+      },
+      {
+        "t": 8.2,
+        "profile": "smooth",
+        "direction": "side"
+      },
+      {
+        "t": 8.83,
+        "profile": "expo_out",
+        "direction": "out"
+      },
+      {
+        "t": 12.47,
+        "profile": "expo_out",
+        "direction": "out"
+      },
+      {
+        "t": 13.93,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 14.3,
+        "profile": "ease_in",
+        "direction": "in"
+      },
+      {
+        "t": 14.5,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 14.93,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 15.47,
+        "profile": "ease_in",
+        "direction": "out"
+      },
+      {
+        "t": 16.3,
+        "profile": "smooth",
+        "direction": "in"
+      },
+      {
+        "t": 17.83,
+        "profile": "ease_in",
+        "direction": "in"
+      },
+      {
+        "t": 18.77,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 20.03,
+        "profile": "smooth",
+        "direction": "side"
+      },
+      {
+        "t": 20.37,
+        "profile": "linear",
+        "direction": "side"
+      },
+      {
+        "t": 20.53,
+        "profile": "ease_in",
+        "direction": "side"
+      },
+      {
+        "t": 22.33,
+        "profile": "smooth",
+        "direction": "out"
+      },
+      {
+        "t": 22.97,
+        "profile": "ease_in",
+        "direction": "in"
+      },
+      {
+        "t": 23.63,
+        "profile": "smooth",
+        "direction": "in"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 1.04,
+        "end": 2.92,
+        "words": 5
+      },
+      {
+        "start": 4.28,
+        "end": 6.0,
+        "words": 3
+      },
+      {
+        "start": 7.44,
+        "end": 10.2,
+        "words": 5
+      },
+      {
+        "start": 11.37,
+        "end": 12.44,
+        "words": 3
+      },
+      {
+        "start": 12.88,
+        "end": 15.54,
+        "words": 6
+      },
+      {
+        "start": 16.93,
+        "end": 18.82,
+        "words": 4
+      },
+      {
+        "start": 20.14,
+        "end": 22.2,
+        "words": 4
+      }
+    ],
+    "words_per_minute": 85
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "name": "med3d-hud-rpg",
+  "engine": "web",
+  "summary": "Cena 3D de hospital com uma camada de menu de videogame por cima: caixas de diagnóstico com ícone, texto em pixel e cor de destaque, como se o caso clínico fosse a tela de um jogo.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#8e7e66",
+    "background_bottom": "#cde7f6",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.02,
+    "cuts": "measured",
+    "braking_seconds": 0.17,
+    "longest_still_seconds": 2.77,
+    "measured_curve": "referencia-curva.json"
+  },
+  "clinic": {
+    "look": "pixel",
+    "parede": "",
+    "roupa": ""
+  },
+  "captions": {
+    "words_per_caption": 3,
+    "top_px": 1511,
+    "font_px": 87,
+    "font": "Montserrat",
+    "color": "#aaced8",
+    "stroke": "#252f39",
+    "stroke_px": 12,
+    "highlight": "#d6bf6b",
+    "uppercase": true
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 332,
+    "font_px": 72,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 52,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          146.8,
+          174.6,
+          220.0
+        ],
+        [
+          116.5,
+          146.8,
+          174.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          130.8,
+          164.8,
+          196.0
+        ]
+      ],
+      "block_seconds": 2.8
+    },
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#53565d",
+    "#a8c1c4",
+    "#4c3c42",
+    "#333447",
+    "#fbfcf9",
+    "#8b8f88",
+    "#686264",
+    "#b2bcb6"
+  ],
+  "reference": {
+    "source": "modelos/recortes/med3d-hud-rpg.mp4",
+    "duration": 25.03,
+    "cuts": [
+      1.3,
+      2.767,
+      4.4,
+      5.133,
+      6.133,
+      7.167,
+      9.033,
+      13.767,
+      18.6,
+      19.5,
+      20.0,
+      22.8
+    ],
+    "moves": [
+      {
+        "t": 18.4,
+        "profile": "expo_out",
+        "direction": "side"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 0.52,
+        "end": 2.72,
+        "words": 5
+      },
+      {
+        "start": 2.88,
+        "end": 7.1,
+        "words": 12
+      },
+      {
+        "start": 7.26,
+        "end": 8.94,
+        "words": 8
+      },
+      {
+        "start": 9.34,
+        "end": 11.66,
+        "words": 6
+      },
+      {
+        "start": 11.8,
+        "end": 13.72,
+        "words": 5
+      },
+      {
+        "start": 14.68,
+        "end": 21.18,
+        "words": 14
+      },
+      {
+        "start": 21.44,
+        "end": 22.2,
+        "words": 3
+      },
+      {
+        "start": 22.42,
+        "end": 24.24,
+        "words": 7
+      }
+    ],
+    "words_per_minute": 152
+  }
+}

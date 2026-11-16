@@ -1,0 +1,13 @@
+#!/bin/bash
+# Roda uma ferramenta da skill com o Python do ambiente virtual dela.
+# Uso: ferramentas/py <ferramenta>.py [opções]      (ex.: ferramentas/py decupar.py <link> --nome meu-estilo)
+# Procura o ambiente em $MOTOR_ANIMADO_VENV, depois em <skill>/.venv e em <pasta acima da skill>/.venv.
+AQUI="$(cd "$(dirname "$0")" && pwd)"
+SKILL="$(dirname "$AQUI")"
+for VENV in "$MOTOR_ANIMADO_VENV" "$SKILL/.venv" "$(dirname "$SKILL")/.venv"; do
+  if [ -n "$VENV" ] && [ -x "$VENV/bin/python" ]; then
+    exec "$VENV/bin/python" "$AQUI/$1" "${@:2}"
+  fi
+done
+echo "não achei o ambiente virtual: crie com  python3 -m venv <skill>/.venv  e rode  ferramentas/diagnostico.py" >&2
+exit 1

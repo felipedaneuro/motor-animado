@@ -1,0 +1,263 @@
+{
+  "_sobre": "Temas de cor e de mundo que qualquer estilo pode usar com \"theme\": \"<nome>\" (no estilo.json ou no estilo-ajustes.json do vídeo). Um tema novo é só mais uma entrada aqui.",
+  "natural": {
+    "about": "campo de dia, céu azul claro, verdes e terra: o padrão, serve para quase tudo",
+    "stage": {
+      "background": "#a8d4f0",
+      "background_bottom": "#eaf2e8",
+      "fog": [
+        35,
+        120
+      ],
+      "hemisphere": [
+        "#ffffff",
+        "#8a9a70",
+        1.25
+      ],
+      "sun": [
+        "#fff2dc",
+        2.3
+      ]
+    },
+    "world": {
+      "scenery": "campo",
+      "ground": "#a3c486",
+      "path": "#e6d6b2",
+      "hills": "#86a97a",
+      "foliage": [
+        "#5e9a5a",
+        "#78ad62",
+        "#4f8a58"
+      ],
+      "trunk": "#7a5a3c",
+      "rock": "#a9a49a",
+      "cloud": "#ffffff"
+    },
+    "accents": [
+      "#e07a5f",
+      "#3d8fb5",
+      "#f2cc8f",
+      "#81b29a",
+      "#9a7fb5"
+    ]
+  },
+  "saude": {
+    "about": "parque claro e limpo, menta, branco e azul calmo: corpo, remédio, hábitos",
+    "stage": {
+      "background": "#d3eaf1",
+      "background_bottom": "#f6faf9",
+      "fog": [
+        35,
+        120
+      ],
+      "hemisphere": [
+        "#ffffff",
+        "#9fb5b0",
+        1.35
+      ],
+      "sun": [
+        "#ffffff",
+        2.0
+      ]
+    },
+    "world": {
+      "scenery": "campo",
+      "ground": "#cde3d4",
+      "path": "#ffffff",
+      "hills": "#b3d2ca",
+      "foliage": [
+        "#8cc7a8",
+        "#a3d4b5",
+        "#7bb89a"
+      ],
+      "trunk": "#9c8064",
+      "rock": "#d5d8d6",
+      "cloud": "#ffffff"
+    },
+    "accents": [
+      "#2a9d8f",
+      "#e76f51",
+      "#457b9d",
+      "#f4a261",
+      "#8ab17d"
+    ],
+    "label": {
+      "background": "#2a9d8f",
+      "color": "#ffffff"
+    },
+    "captions": {
+      "highlight": "#5fe3c8"
+    }
+  },
+  "financas": {
+    "about": "cidade de pedra clara, bege e dourado, verde-dinheiro: economia, trabalho, consumo",
+    "stage": {
+      "background": "#efe0c2",
+      "background_bottom": "#fbf5ea",
+      "fog": [
+        35,
+        120
+      ],
+      "hemisphere": [
+        "#fff8ec",
+        "#9a8a68",
+        1.25
+      ],
+      "sun": [
+        "#fff0d6",
+        2.2
+      ]
+    },
+    "world": {
+      "scenery": "cidade",
+      "ground": "#d9c9a3",
+      "path": "#efe6d2",
+      "hills": "#c7b48c",
+      "buildings": [
+        "#c9b48a",
+        "#b89f74",
+        "#e2d3b0"
+      ],
+      "windows": "#fff6d8",
+      "foliage": [
+        "#6f9a5a",
+        "#83ad6a"
+      ],
+      "trunk": "#7a5a3c",
+      "rock": "#b8ab90",
+      "cloud": "#ffffff"
+    },
+    "accents": [
+      "#2d6a4f",
+      "#d4a017",
+      "#40916c",
+      "#b5651d",
+      "#264653"
+    ],
+    "label": {
+      "background": "#d4a017",
+      "color": "#111111"
+    }
+  },
+  "tecnologia": {
+    "about": "cidade cinza-azulada e limpa, azul e ciano: celular, internet, ciência",
+    "stage": {
+      "background": "#cbd7e6",
+      "background_bottom": "#eef2f7",
+      "fog": [
+        35,
+        120
+      ],
+      "hemisphere": [
+        "#f4f8ff",
+        "#7d8899",
+        1.3
+      ],
+      "sun": [
+        "#f6f9ff",
+        2.1
+      ]
+    },
+    "world": {
+      "scenery": "cidade",
+      "ground": "#b9c4d2",
+      "path": "#e4e9f0",
+      "hills": "#a5b2c3",
+      "buildings": [
+        "#9aa8ba",
+        "#b6c2d1",
+        "#7f8ea3"
+      ],
+      "windows": "#dff3ff",
+      "foliage": [
+        "#6fa58a",
+        "#82b59a"
+      ],
+      "trunk": "#6e5a48",
+      "rock": "#a7adb5",
+      "cloud": "#ffffff"
+    },
+    "accents": [
+      "#3a86ff",
+      "#00b4d8",
+      "#8338ec",
+      "#ff006e",
+      "#06d6a0"
+    ],
+    "label": {
+      "background": "#3a86ff",
+      "color": "#ffffff"
+    }
+  },
+  "infantil": {
+    "about": "campo em tons pastel, rosa, amarelo e verde-água: público infantil, escola, família",
+    "stage": {
+      "background": "#ffdfe9",
+      "background_bottom": "#fff8e7",
+      "fog": [
+        35,
+        120
+      ],
+      "hemisphere": [
+        "#ffffff",
+        "#a8b890",
+        1.3
+      ],
+      "sun": [
+        "#fff4e0",
+        2.2
+      ]
+    },
+    "world": {
+      "scenery": "campo",
+      "ground": "#c8e6a0",
+      "path": "#fff1c1",
+      "hills": "#b8e0c8",
+      "foliage": [
+        "#9ad1a0",
+        "#f7a8b8",
+        "#a0c4ff"
+      ],
+      "trunk": "#a07a5a",
+      "rock": "#e0d6cc",
+      "cloud": "#ffffff"
+    },
+    "accents": [
+      "#ff8fab",
+      "#ffd166",
+      "#06d6a0",
+      "#118ab2",
+      "#cdb4db"
+    ]
+  },
+  "noite": {
+    "about": "o visual antigo: noite psicodélica com malha neon, mandala, bolhas e estrelas",
+    "stage": {
+      "background": "#150b30",
+      "background_bottom": "#150b30",
+      "fog": [
+        28,
+        105
+      ],
+      "hemisphere": [
+        "#d6c6ff",
+        "#34265a",
+        1.3
+      ],
+      "sun": [
+        "#fff0dc",
+        2.0
+      ]
+    },
+    "world": {
+      "scenery": "noite"
+    },
+    "accents": [
+      "#ff5ad1",
+      "#5ad1ff",
+      "#ffd21f",
+      "#7dff8a",
+      "#a96bff"
+    ]
+  }
+}

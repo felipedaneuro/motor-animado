@@ -1,0 +1,189 @@
+{
+ "duration": 15.02,
+ "phrases": [
+  {
+   "text": ".",
+   "start": 0.0,
+   "end": 0.24,
+   "words": [
+    {
+     "word": ".",
+     "start": 0.0,
+     "end": 0.24
+    }
+   ]
+  },
+  {
+   "text": "Boa noite!",
+   "start": 3.98,
+   "end": 4.76,
+   "words": [
+    {
+     "word": "Boa",
+     "start": 3.98,
+     "end": 4.46
+    },
+    {
+     "word": "noite!",
+     "start": 4.46,
+     "end": 4.76
+    }
+   ]
+  },
+  {
+   "text": "Muito bom.",
+   "start": 5.82,
+   "end": 6.5,
+   "words": [
+    {
+     "word": "Muito",
+     "start": 5.82,
+     "end": 6.3
+    },
+    {
+     "word": "bom.",
+     "start": 6.3,
+     "end": 6.5
+    }
+   ]
+  },
+  {
+   "text": "Amizade.",
+   "start": 8.12,
+   "end": 8.6,
+   "words": [
+    {
+     "word": "Amizade.",
+     "start": 8.12,
+     "end": 8.6
+    }
+   ]
+  },
+  {
+   "text": "Hoje a gente vai falar de amizade.",
+   "start": 8.76,
+   "end": 10.44,
+   "words": [
+    {
+     "word": "Hoje",
+     "start": 8.76,
+     "end": 9.16
+    },
+    {
+     "word": "a",
+     "start": 9.16,
+     "end": 9.26
+    },
+    {
+     "word": "gente",
+     "start": 9.26,
+     "end": 9.36
+    },
+    {
+     "word": "vai",
+     "start": 9.36,
+     "end": 9.46
+    },
+    {
+     "word": "falar",
+     "start": 9.46,
+     "end": 9.64
+    },
+    {
+     "word": "de",
+     "start": 9.64,
+     "end": 9.82
+    },
+    {
+     "word": "amizade.",
+     "start": 9.82,
+     "end": 10.44
+    }
+   ]
+  },
+  {
+   "text": "Que, pro fundo do quintal, nem mesmo a força do tempo irá destruir.",
+   "start": 10.64,
+   "end": 14.52,
+   "words": [
+    {
+     "word": "Que,",
+     "start": 10.64,
+     "end": 10.92
+    },
+    {
+     "word": "pro",
+     "start": 10.98,
+     "end": 11.14
+    },
+    {
+     "word": "fundo",
+     "start": 11.14,
+     "end": 11.46
+    },
+    {
+     "word": "do",
+     "start": 11.46,
+     "end": 11.58
+    },
+    {
+     "word": "quintal,",
+     "start": 11.58,
+     "end": 11.9
+    },
+    {
+     "word": "nem",
+     "start": 12.28,
+     "end": 12.5
+    },
+    {
+     "word": "mesmo",
+     "start": 12.5,
+     "end": 12.88
+    },
+    {
+     "word": "a",
+     "start": 12.88,
+     "end": 13.04
+    },
+    {
+     "word": "força",
+     "start": 13.04,
+     "end": 13.32
+    },
+    {
+     "word": "do",
+     "start": 13.32,
+     "end": 13.46
+    },
+    {
+     "word": "tempo",
+     "start": 13.46,
+     "end": 13.7
+    },
+    {
+     "word": "irá",
+     "start": 13.7,
+     "end": 14.04
+    },
+    {
+     "word": "destruir.",
+     "start": 14.04,
+     "end": 14.52
+    }
+   ]
+  },
+  {
+   "text": "Sim.",
+   "start": 14.66,
+   "end": 14.92,
+   "words": [
+    {
+     "word": "Sim.",
+     "start": 14.66,
+     "end": 14.92
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "duration": 15.02,
+ "phrases": [
+  {
+   "text": "Thank you.",
+   "start": 0.0,
+   "end": 8.22,
+   "words": [
+    {
+     "word": "Thank",
+     "start": 0.0,
+     "end": 0.5
+    },
+    {
+     "word": "you.",
+     "start": 0.5,
+     "end": 8.22
+    }
+   ]
+  }
+ ]
+}

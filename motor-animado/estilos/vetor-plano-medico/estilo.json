@@ -1,0 +1,213 @@
+{
+  "name": "vetor-plano-medico",
+  "engine": "web",
+  "summary": "Vetor chapado em 2D: silhueta de perfil em cor cheia, órgão desenhado em poucas formas, fundo azul-petróleo com pontinhos e raios ou setas marcando o que acontece. Sem textura, sem sombra, sem pixel.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#2a141e",
+    "background_bottom": "#2b151f",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.47,
+    "fly_seconds": 0.94,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.02,
+    "cuts": "measured",
+    "braking_seconds": 0.33,
+    "longest_still_seconds": 2.23,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 1,
+    "top_px": 359,
+    "font_px": 25,
+    "font": "Montserrat",
+    "color": "#e7f0fa",
+    "stroke": "#071224",
+    "stroke_px": 8,
+    "highlight": "#444d62",
+    "uppercase": false
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 520,
+    "font_px": 72,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 52,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          146.8,
+          174.6,
+          220.0
+        ],
+        [
+          116.5,
+          146.8,
+          174.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          130.8,
+          164.8,
+          196.0
+        ]
+      ],
+      "block_seconds": 2.8
+    },
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#0a1526",
+    "#311924",
+    "#140d12",
+    "#93718e",
+    "#335567",
+    "#794165",
+    "#ce7c82",
+    "#b94962"
+  ],
+  "reference": {
+    "source": "modelos/recortes/vetor-plano-medico.mp4",
+    "duration": 25.03,
+    "cuts": [
+      10.0,
+      20.0
+    ],
+    "moves": [
+      {
+        "t": 0.23,
+        "profile": "ease_in",
+        "direction": "in"
+      },
+      {
+        "t": 0.67,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 1.43,
+        "profile": "smooth",
+        "direction": "in"
+      },
+      {
+        "t": 2.37,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 2.87,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 3.67,
+        "profile": "smooth",
+        "direction": "in"
+      },
+      {
+        "t": 4.73,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 5.53,
+        "profile": "expo_out",
+        "direction": "out"
+      },
+      {
+        "t": 6.2,
+        "profile": "linear",
+        "direction": "out"
+      },
+      {
+        "t": 6.5,
+        "profile": "expo_out",
+        "direction": "out"
+      },
+      {
+        "t": 7.6,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 13.0,
+        "profile": "smooth",
+        "direction": "side"
+      },
+      {
+        "t": 14.9,
+        "profile": "expo_out",
+        "direction": "out"
+      },
+      {
+        "t": 20.1,
+        "profile": "expo_out",
+        "direction": "in"
+      },
+      {
+        "t": 22.03,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 22.23,
+        "profile": "expo_out",
+        "direction": "out"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 6.2,
+        "end": 13.4,
+        "words": 3
+      }
+    ],
+    "words_per_minute": 25
+  }
+}

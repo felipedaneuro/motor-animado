@@ -1,0 +1,21 @@
+{
+  "_leia": "Copie para perfil.json na pasta dos vídeos e troque pelos seus dados. Nunca ponha chave de API aqui: ela fica no .env.",
+  "channel": "Meu canal",
+  "language": "pt",
+  "voice": {
+    "provider": "elevenlabs",
+    "voice_id": "COLE_AQUI_O_VOICE_ID",
+    "model_id": "eleven_multilingual_v2",
+    "usd_per_1000_chars": 0.20,
+    "test_voice": "Luciana"
+  },
+  "cta": "Comente a palavra e siga o canal",
+  "care_rules": [
+    "Explica o mecanismo; não faz diagnóstico nem indica tratamento.",
+    "Fecha com 'procure um médico' quando o assunto for sintoma ou doença.",
+    "Todo fato com duas fontes sérias anotadas em fontes.md."
+  ],
+  "characters": [
+    {"name": "Ana", "look": "jaleco branco, cabelo preso, óculos redondos", "colors": {"shirt": "#f2f2f2", "skin": "#c98e66", "pants": "#2b3a55"}}
+  ]
+}

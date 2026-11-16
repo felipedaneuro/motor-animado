@@ -1,0 +1,167 @@
+{
+  "name": "realista-corpo",
+  "engine": "blender",
+  "summary": "Close realista de uma parte do corpo (cabeça, braço ou perna) feito no Blender em código: pele com poros e luz que entra, fios de cabelo e pelos um por um, fundo limpo em degradê e uma câmera que chega devagar na curva medida.",
+  "sync": "beats",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "blender": {
+    "framing": "head",
+    "focus": {
+      "turn": 25,
+      "lift": -0.03
+    },
+    "pose": "standing",
+    "distance": 0.85,
+    "lens": 85,
+    "fstop": [
+      8.0,
+      11.0
+    ],
+    "camera_height": 0.04,
+    "push_percent": 0.12,
+    "push_until": 4.0,
+    "light": "soft",
+    "hdri": "assets/studio_small_09_2k.hdr",
+    "hdri_strength": 0.6,
+    "hdri_rotation": 200,
+    "background": [
+      "#3a4250",
+      "#14171c"
+    ],
+    "skin_tone": [
+      [
+        208,
+        160,
+        134
+      ],
+      [
+        192,
+        136,
+        114
+      ]
+    ],
+    "iris": "#5a3a22",
+    "hair": "short",
+    "hair_melanin": 0.9,
+    "body_hair": true,
+    "body": {
+      "gender": 1.0,
+      "age": 0.45,
+      "muscle": 0.6,
+      "weight": 0.5
+    },
+    "presets": {
+      "cabeca": {
+        "framing": "head",
+        "focus": {
+          "turn": 25,
+          "lift": -0.03
+        },
+        "distance": 0.85,
+        "lens": 85,
+        "light": "soft",
+        "denoise": false,
+        "key_size": 0.3,
+        "push_percent": 0.12
+      },
+      "braco": {
+        "framing": "limb",
+        "focus": {
+          "bone": "lowerarm_l",
+          "fraction": 0.5,
+          "turn": 90
+        },
+        "distance": 0.9,
+        "lens": 70,
+        "light": "hard",
+        "pose": "arms_down",
+        "background": [
+          "#4a98de",
+          "#96d0f4"
+        ],
+        "clothes": "none",
+        "denoise": true
+      },
+      "perna": {
+        "framing": "limb",
+        "focus": {
+          "bone": "calf_l",
+          "height": 0.33,
+          "turn": 148
+        },
+        "distance": 0.98,
+        "lens": 70,
+        "light": "hard",
+        "background": [
+          "#4a98de",
+          "#96d0f4"
+        ],
+        "clothes": "none",
+        "denoise": true
+      }
+    },
+    "clothes": "tshirt",
+    "shirt_color": "#2f4a6b",
+    "denoise": false,
+    "key_size": 0.3
+  },
+  "captions": {
+    "words_per_caption": 1,
+    "top_px": 1640,
+    "font_px": 84,
+    "font": "Montserrat",
+    "color": "#ffffff",
+    "stroke": "#000000",
+    "stroke_px": 12,
+    "highlight": "#ffd21f",
+    "uppercase": false
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 210,
+    "font_px": 64,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 52,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.0,
+      "fly": 0.0
+    },
+    "pop": {
+      "label": 0.3,
+      "card": 0.3
+    },
+    "music": null,
+    "mix": {
+      "effects": 0.5,
+      "music": 0.0
+    },
+    "lufs": -14
+  },
+  "finish": "filmed",
+  "palette": [
+    "#3a4250",
+    "#14171c",
+    "#c88e66"
+  ],
+  "reference": {
+    "source": "short 3D realista (skill shorts-3d-realistas, de terceiros): plano único, a imagem dobra em 3 s e freia no segundo 4",
+    "duration": 10.0,
+    "cuts": [],
+    "moves": [],
+    "phrases": [],
+    "words_per_minute": null
+  }
+}

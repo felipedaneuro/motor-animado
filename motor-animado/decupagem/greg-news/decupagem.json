@@ -1,0 +1,526 @@
+{
+ "name": "greg-news",
+ "source": "https://www.youtube.com/watch?v=4w6AAfIxfZc",
+ "duration": 15.02,
+ "fps": 23.976023976023978,
+ "post": {
+  "view_count": 903418,
+  "like_count": 70101,
+  "comment_count": 2600,
+  "uploader": "HBO Brasil",
+  "title": "GREG NEWS | AMIZADE"
+ },
+ "speech": {
+  "duration": 15.02,
+  "phrases": [
+   {
+    "text": ".",
+    "start": 0.0,
+    "end": 0.24,
+    "words": [
+     {
+      "word": ".",
+      "start": 0.0,
+      "end": 0.24
+     }
+    ]
+   },
+   {
+    "text": "Boa noite!",
+    "start": 3.98,
+    "end": 4.76,
+    "words": [
+     {
+      "word": "Boa",
+      "start": 3.98,
+      "end": 4.46
+     },
+     {
+      "word": "noite!",
+      "start": 4.46,
+      "end": 4.76
+     }
+    ]
+   },
+   {
+    "text": "Muito bom.",
+    "start": 5.82,
+    "end": 6.5,
+    "words": [
+     {
+      "word": "Muito",
+      "start": 5.82,
+      "end": 6.3
+     },
+     {
+      "word": "bom.",
+      "start": 6.3,
+      "end": 6.5
+     }
+    ]
+   },
+   {
+    "text": "Amizade.",
+    "start": 8.12,
+    "end": 8.6,
+    "words": [
+     {
+      "word": "Amizade.",
+      "start": 8.12,
+      "end": 8.6
+     }
+    ]
+   },
+   {
+    "text": "Hoje a gente vai falar de amizade.",
+    "start": 8.76,
+    "end": 10.44,
+    "words": [
+     {
+      "word": "Hoje",
+      "start": 8.76,
+      "end": 9.16
+     },
+     {
+      "word": "a",
+      "start": 9.16,
+      "end": 9.26
+     },
+     {
+      "word": "gente",
+      "start": 9.26,
+      "end": 9.36
+     },
+     {
+      "word": "vai",
+      "start": 9.36,
+      "end": 9.46
+     },
+     {
+      "word": "falar",
+      "start": 9.46,
+      "end": 9.64
+     },
+     {
+      "word": "de",
+      "start": 9.64,
+      "end": 9.82
+     },
+     {
+      "word": "amizade.",
+      "start": 9.82,
+      "end": 10.44
+     }
+    ]
+   },
+   {
+    "text": "Que, pro fundo do quintal, nem mesmo a força do tempo irá destruir.",
+    "start": 10.64,
+    "end": 14.52,
+    "words": [
+     {
+      "word": "Que,",
+      "start": 10.64,
+      "end": 10.92
+     },
+     {
+      "word": "pro",
+      "start": 10.98,
+      "end": 11.14
+     },
+     {
+      "word": "fundo",
+      "start": 11.14,
+      "end": 11.46
+     },
+     {
+      "word": "do",
+      "start": 11.46,
+      "end": 11.58
+     },
+     {
+      "word": "quintal,",
+      "start": 11.58,
+      "end": 11.9
+     },
+     {
+      "word": "nem",
+      "start": 12.28,
+      "end": 12.5
+     },
+     {
+      "word": "mesmo",
+      "start": 12.5,
+      "end": 12.88
+     },
+     {
+      "word": "a",
+      "start": 12.88,
+      "end": 13.04
+     },
+     {
+      "word": "força",
+      "start": 13.04,
+      "end": 13.32
+     },
+     {
+      "word": "do",
+      "start": 13.32,
+      "end": 13.46
+     },
+     {
+      "word": "tempo",
+      "start": 13.46,
+      "end": 13.7
+     },
+     {
+      "word": "irá",
+      "start": 13.7,
+      "end": 14.04
+     },
+     {
+      "word": "destruir.",
+      "start": 14.04,
+      "end": 14.52
+     }
+    ]
+   },
+   {
+    "text": "Sim.",
+    "start": 14.66,
+    "end": 14.92,
+    "words": [
+     {
+      "word": "Sim.",
+      "start": 14.66,
+      "end": 14.92
+     }
+    ]
+   }
+  ]
+ },
+ "camera": {
+  "frames": 360,
+  "fps": 23.976023976023978,
+  "duration": 15.01,
+  "cuts": [
+   5.297
+  ],
+  "cuts_per_minute": 4.0,
+  "moves": [
+   {
+    "t": 0.17,
+    "frames": 3,
+    "zoom": 0.998,
+    "direction": "side",
+    "profile": "linear",
+    "braking_frames": 0
+   },
+   {
+    "t": 0.33,
+    "frames": 8,
+    "zoom": 0.985,
+    "direction": "side",
+    "profile": "smooth",
+    "braking_frames": 4
+   },
+   {
+    "t": 5.34,
+    "frames": 16,
+    "zoom": 1.019,
+    "direction": "side",
+    "profile": "smooth",
+    "braking_frames": 9
+   },
+   {
+    "t": 6.55,
+    "frames": 14,
+    "zoom": 0.983,
+    "direction": "side",
+    "profile": "expo_out",
+    "braking_frames": 12
+   },
+   {
+    "t": 7.38,
+    "frames": 12,
+    "zoom": 1.007,
+    "direction": "side",
+    "profile": "expo_out",
+    "braking_frames": 11
+   },
+   {
+    "t": 8.09,
+    "frames": 13,
+    "zoom": 0.87,
+    "direction": "out",
+    "profile": "ease_in",
+    "braking_frames": 3
+   },
+   {
+    "t": 14.76,
+    "frames": 6,
+    "zoom": 0.969,
+    "direction": "out",
+    "profile": "smooth",
+    "braking_frames": 3
+   }
+  ],
+  "moves_per_minute": 28.0,
+  "share_pct": {
+   "still": 69,
+   "slow": 14,
+   "fast": 12
+  },
+  "median_move_frames": 12,
+  "profiles": {
+   "expo_out": 2,
+   "smooth": 3,
+   "linear": 1,
+   "ease_in": 1
+  },
+  "dominant_profile": "smooth",
+  "median_braking_frames": 4,
+  "longest_still_seconds": 3.55
+ },
+ "shots": [
+  {
+   "index": 1,
+   "start": 0.0,
+   "end": 5.3,
+   "palette": [
+    {
+     "color": "#020709",
+     "share": 0.72
+    },
+    {
+     "color": "#252320",
+     "share": 0.111
+    },
+    {
+     "color": "#60401b",
+     "share": 0.075
+    },
+    {
+     "color": "#966e31",
+     "share": 0.052
+    },
+    {
+     "color": "#3d5677",
+     "share": 0.042
+    }
+   ],
+   "gradient": {
+    "top": "#050d10",
+    "bottom": "#000306"
+   },
+   "brightness": 0.125,
+   "saturation": 0.796,
+   "frames": [
+    "tomada01-inicio.jpg",
+    "tomada01-meio.jpg",
+    "tomada01-fim.jpg"
+   ],
+   "focus_center": [
+    0.56,
+    0.38
+   ],
+   "person_height": 0.35,
+   "has_faces": false
+  },
+  {
+   "index": 2,
+   "start": 5.3,
+   "end": 15.02,
+   "palette": [
+    {
+     "color": "#232523",
+     "share": 0.314
+    },
+    {
+     "color": "#214a73",
+     "share": 0.259
+    },
+    {
+     "color": "#684924",
+     "share": 0.225
+    },
+    {
+     "color": "#e1cea0",
+     "share": 0.119
+    },
+    {
+     "color": "#a28d6f",
+     "share": 0.083
+    }
+   ],
+   "gradient": {
+    "top": "#1f2e58",
+    "bottom": "#62422e"
+   },
+   "brightness": 0.423,
+   "saturation": 0.51,
+   "frames": [
+    "tomada02-inicio.jpg",
+    "tomada02-meio.jpg",
+    "tomada02-fim.jpg"
+   ],
+   "focus_center": [
+    0.42,
+    0.36
+   ],
+   "person_height": 0.34,
+   "has_faces": true
+  }
+ ],
+ "palette": [
+  {
+   "color": "#020709",
+   "share": 0.254
+  },
+  {
+   "color": "#252320",
+   "share": 0.242
+  },
+  {
+   "color": "#214a73",
+   "share": 0.168
+  },
+  {
+   "color": "#684924",
+   "share": 0.146
+  },
+  {
+   "color": "#e1cea0",
+   "share": 0.077
+  },
+  {
+   "color": "#a28d6f",
+   "share": 0.054
+  },
+  {
+   "color": "#60401b",
+   "share": 0.026
+  },
+  {
+   "color": "#966e31",
+   "share": 0.018
+  }
+ ],
+ "text": {
+  "band_center": 0.4,
+  "captions": {
+   "words_per_caption": 1,
+   "top_px": 730,
+   "font_px": 98,
+   "color": "#fbf3e8",
+   "stroke": "#f8790a",
+   "highlight": null,
+   "uppercase": false,
+   "changes": 6,
+   "sync_offset_seconds": 0.27,
+   "examples": [
+    "COM GREGÓRIO",
+    "DUVIVIER",
+    "COM GREGÓRIO",
+    "ade",
+    "mizade",
+    "amizade"
+   ]
+  },
+  "other_texts": [
+   {
+    "text": "GREG NEWS",
+    "from": 0.167,
+    "to": 1.167,
+    "box": [
+     0.363,
+     0,
+     0.326,
+     0.079
+    ]
+   },
+   {
+    "text": "COM GREGÓRIO",
+    "from": 0.167,
+    "to": 0.5,
+    "box": [
+     0.352,
+     0.109,
+     0.238,
+     0.072
+    ]
+   },
+   {
+    "text": "DUVIVIER",
+    "from": 0.167,
+    "to": 1.167,
+    "box": [
+     0.355,
+     0.189,
+     0.178,
+     0.128
+    ]
+   },
+   {
+    "text": "16",
+    "from": 2.5,
+    "to": 2.5,
+    "box": [
+     0.059,
+     0.875,
+     0.033,
+     0.053
+    ]
+   }
+  ],
+  "works_without_sound": true
+ },
+ "sound": {
+  "loudness": {
+   "lufs": -17.5,
+   "peak_db": -0.5
+  },
+  "speech": {
+   "words_per_minute": 109,
+   "first_word_at": 0.0,
+   "pauses": [
+    {
+     "at": 0.24,
+     "seconds": 3.74
+    },
+    {
+     "at": 4.76,
+     "seconds": 1.06
+    },
+    {
+     "at": 6.5,
+     "seconds": 1.62
+    },
+    {
+     "at": 11.9,
+     "seconds": 0.38
+    }
+   ],
+   "pause_count": 4,
+   "speech_share": 0.99
+  },
+  "music": {
+   "gap_vs_speech_db": 3.0,
+   "has_music_bed": true
+  },
+  "effects": {
+   "effects_detected": 6,
+   "on_cuts": 0,
+   "on_camera_moves": 2,
+   "share_of_moves_with_effect": 0.29,
+   "times": [
+    0.11,
+    0.5,
+    0.77,
+    1.3,
+    6.13,
+    7.82
+   ]
+  }
+ }
+}

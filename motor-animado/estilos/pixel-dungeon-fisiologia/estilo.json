@@ -1,0 +1,177 @@
+{
+  "name": "pixel-dungeon-fisiologia",
+  "engine": "web",
+  "summary": "Pixel art de jogo de plataforma: a via bioquímica vira um cenário de masmorra, cada etapa é um bloco ou uma peça que cai no lugar, com título em duas cores no alto e assinatura no rodapé.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#05040c",
+    "background_bottom": "#e07a85",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#8a8070",
+      1.2
+    ],
+    "sun": [
+      "#fff0dc",
+      2.2
+    ],
+    "shadows": true,
+    "flat_shading": false,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "smooth",
+    "idle_sway": 0.02,
+    "cuts": "measured",
+    "braking_seconds": 0.07,
+    "longest_still_seconds": 3.53,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 2,
+    "top_px": 301,
+    "font_px": 64,
+    "font": "Press Start 2P",
+    "color": "#e6c150",
+    "stroke": "#030312",
+    "stroke_px": 9,
+    "highlight": "#f75c5e",
+    "uppercase": true,
+    "font_query": "Press+Start+2P"
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 240,
+    "font_px": 40,
+    "background": "#ffd21f",
+    "color": "#111111"
+  },
+  "cards": {
+    "top_px": 1460,
+    "font_px": 34,
+    "background": "#ffffff",
+    "color": "#111111"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.22,
+      "fly": 0.22
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          146.8,
+          174.6,
+          220.0
+        ],
+        [
+          116.5,
+          146.8,
+          174.6
+        ],
+        [
+          174.6,
+          220.0,
+          261.6
+        ],
+        [
+          130.8,
+          164.8,
+          196.0
+        ]
+      ],
+      "block_seconds": 2.8
+    },
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#160918",
+    "#e28288",
+    "#f0cb6e",
+    "#0f0916",
+    "#9e2a40",
+    "#a54141",
+    "#4d6087",
+    "#4c5683"
+  ],
+  "reference": {
+    "source": "modelos/recortes/pixel-dungeon-fisiologia.mp4",
+    "duration": 25.03,
+    "cuts": [
+      20.0
+    ],
+    "moves": [
+      {
+        "t": 11.53,
+        "profile": "linear",
+        "direction": "out"
+      },
+      {
+        "t": 15.97,
+        "profile": "linear",
+        "direction": "out"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 0.0,
+        "end": 2.06,
+        "words": 5
+      },
+      {
+        "start": 2.24,
+        "end": 6.62,
+        "words": 13
+      },
+      {
+        "start": 6.86,
+        "end": 10.04,
+        "words": 12
+      },
+      {
+        "start": 10.7,
+        "end": 15.56,
+        "words": 11
+      },
+      {
+        "start": 16.08,
+        "end": 23.28,
+        "words": 16
+      }
+    ],
+    "words_per_minute": 147
+  },
+  "retro": {
+    "internal": [
+      270,
+      480
+    ],
+    "upscale": "nearest",
+    "color_bits": 5,
+    "dither": 0.7,
+    "blur": 0.0,
+    "vertex_snap": null,
+    "smooth_normals": true,
+    "outline": "#0a0a14"
+  },
+  "extends": "pixel-duelo-cardio"
+}
