@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { MOTOR } from "./projetos.mjs";
-import { audienceLabel, isMedical, medicalSceneNotes, medicalScriptNotes, niche, nicheOptions, rhythmWarnings, specialtyFiles,
+import { NO_AUDIENCE_TAG, audienceLabel, isMedical, medicalSceneNotes, medicalScriptNotes, niche, nicheOptions, rhythmWarnings, specialtyFiles,
   spokenWords, validAudience, validSpecialty } from "./nicho.mjs";
 import { externalPrompt, scenePrompt, scriptPrompt } from "./instrucoes.mjs";
 
@@ -75,10 +75,13 @@ test("leigo: sem conduta nem dose, e o guia da especialidade no pedido", () => {
   assert.equal(audienceLabel(state), "Leigo");
 });
 
-test("saúde: diretriz citada, etiqueta na tela e a regra genérica fora do pedido", () => {
+test("saúde: diretriz citada, nenhuma etiqueta de público e a regra genérica fora do pedido", () => {
   const state = project({ publicoAlvo: "saude", especialidade: "cardiologia", publico: "residentes" });
   const prompt = scriptPrompt(state);
-  assert.ok(prompt.includes("Conteúdo para profissionais de saúde"));
+  assert.ok(!prompt.includes("Conteúdo para profissionais de saúde"));
+  assert.ok(prompt.includes(NO_AUDIENCE_TAG));
+  assert.ok(scenePrompt(state).includes(NO_AUDIENCE_TAG));
+  assert.ok(Object.values(niche().publicos).every((audience) => !("etiqueta" in audience)));
   assert.ok(prompt.includes("diretriz vigente"));
   assert.ok(prompt.includes("raciocinio-cirurgico.md"));
   assert.ok(!prompt.includes(GENERIC_HEALTH_RULE));

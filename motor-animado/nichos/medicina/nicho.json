@@ -16,7 +16,6 @@
         "Nada de susto gratuito: cada alerta vem com o que fazer.",
         "Caso ou personagem é fictício e dito como tal."
       ],
-      "etiqueta": "",
       "fechamento": "O sinal de alerta certo do tema e onde procurar ajuda (na emergência, SAMU 192)."
     },
     "saude": {
@@ -33,7 +32,6 @@
         "Caso clínico é fictício e dito como tal; nada de paciente real identificável.",
         "Toda afirmação sobre conduta entra em avisos para a revisão do médico responsável."
       ],
-      "etiqueta": "Conteúdo para profissionais de saúde",
       "fechamento": "A referência para estudar (a diretriz ou a revisão principal) ou uma pergunta de desafio."
     }
   },

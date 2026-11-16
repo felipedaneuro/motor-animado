@@ -41,8 +41,10 @@ export function specialtyFiles(specialtyId) {
   return { specialty, guide, reasoning, sheets };
 }
 
+// o público só muda o texto e a profundidade: o vídeo nunca diz na tela para quem ele é (a pessoa achou feio)
+export const NO_AUDIENCE_TAG = "Nenhuma etiqueta de público na tela: nada de \"conteúdo para profissionais\", \"para leigos\" ou \"para estudantes\".";
+
 function audienceBlock(audience) {
-  const tag = audience.etiqueta ? `\n- Na tela: a etiqueta "${audience.etiqueta}" pequena, no começo do vídeo.` : "";
   return `Público-alvo: ${audience.rotulo}. Estas regras valem sobre as regras de cuidado do perfil quando as duas divergirem:
 - Linguagem: ${audience.linguagem}
 - Profundidade: ${audience.profundidade}
@@ -50,7 +52,8 @@ function audienceBlock(audience) {
   frase: o que não cabe vira duas frases. A profundidade vem da sequência de frases curtas, não de frases longas.
 - Gancho: ${audience.gancho}
 - Regras:
-${bullets(audience.regras)}${tag}
+${bullets(audience.regras)}
+- Na tela: ${NO_AUDIENCE_TAG}
 - Fechamento: ${audience.fechamento}`;
 }
 
@@ -94,7 +97,6 @@ export function rhythmWarnings(state, phrases) {
 export function medicalSceneNotes(state) {
   if (!isMedical(state)) return "";
   const audience = niche().publicos[state.publicoAlvo], files = specialtyFiles(state.especialidade);
-  const tag = audience.etiqueta ? `\n  - a etiqueta "${audience.etiqueta}" aparece pequena no começo do vídeo.` : "";
   return `
 Edição médica (${files.specialty.rotulo}, público: ${audience.rotulo}). Antes de desenhar, leia:
 ${readingBlock(files)}
@@ -102,6 +104,7 @@ ${readingBlock(files)}
   - a cena de cada etapa do raciocínio (o campo "raciocinio" do ./painel-roteiro.json diz a etapa de cada frase);
   - a estrutura anatômica certa, na vista e no lado pedidos; lesão de um hemisfério mostra o déficit do lado oposto;
   - exames (TC, RM, ECG, raio X) redesenhados no traço do estilo, em convenção radiológica, nunca a imagem de um exame real;
-  - nada de sangue realista, campo cirúrgico real ou rosto em célula e órgão.${tag}
+  - nada de sangue realista, campo cirúrgico real ou rosto em célula e órgão;
+  - ${NO_AUDIENCE_TAG}
 `;
 }
