@@ -61,6 +61,11 @@ Volume total e produção diária: [CONFERIR antes de citar número].
   abertura do ligamento amarelo (e laminotomia quando preciso) → afastamento cuidadoso da raiz → retirada do
   fragmento → revisão da raiz livre → fechamento.
 
+## Peças prontas do motor
+Tomografia, angiotomografia, angiografia e cérebro de perfil já existem em pixel (`exames.js` e `cerebro-perfil.js`,
+ver `referencias/cena-web.md`). Use-as em vez de desenhar à mão: o lado, a convenção radiológica e o ponto da
+oclusão já estão certos e testados.
+
 ## Erros comuns de desenho
 - Camadas fora de ordem ou dura-máter solta do osso.
 - Hematoma epidural em crescente ou subdural em lente.

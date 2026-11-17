@@ -69,6 +69,11 @@ neurologia percorre o neuroeixo como um mapa e para no nível certo.
 - **RM**: diga a sequência quando o achado depende dela (difusão para isquemia aguda, FLAIR para lesões de substância branca).
 - **Exame é sempre redesenhado** no traço do estilo: nada de print de exame real.
 
+## Peças prontas do motor
+Tomografia, angiotomografia, angiografia e cérebro de perfil já existem em pixel (`exames.js` e `cerebro-perfil.js`,
+ver `referencias/cena-web.md`). Use-as em vez de desenhar à mão: o lado, a convenção radiológica e o ponto da
+oclusão já estão certos e testados.
+
 ## Erros comuns de desenho
 - Lesão no hemisfério esquerdo com déficit desenhado no lado esquerdo do corpo.
 - Giros sem sulco central reconhecível; cérebro "de desenho animado" sem lobos.

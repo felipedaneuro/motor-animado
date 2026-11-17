@@ -46,6 +46,11 @@ Trombólise intravenosa e trombectomia mecânica têm janelas e critérios defin
 Ministério da Saúde). **Cite a diretriz e o ano; não escreva janela, remédio ou dose de memória.** Toda frase de
 conduta vai para os avisos, para a revisão do médico responsável.
 
+## Peças prontas do motor
+Tomografia, angiotomografia, angiografia e cérebro de perfil já existem em pixel (`exames.js` e `cerebro-perfil.js`,
+ver `referencias/cena-web.md`). Use-as em vez de desenhar à mão: o lado, a convenção radiológica e o ponto da
+oclusão já estão certos e testados.
+
 ## O desenho
 - **Trombectomia**: o cateter entra pela artéria femoral ou radial, sobe pela aorta, entra na carótida ou na vertebral
   até a artéria ocluída; o stent retriever se abre **dentro** do trombo e é puxado junto com ele, ou o trombo é

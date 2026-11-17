@@ -47,6 +47,11 @@ e ovário, placenta. Para cada um, a página de partida está em [mapa-do-site.m
 - **Saúde:** explique o mecanismo. Não dê diagnóstico, não indique tratamento nem dose, e diga quando procurar ajuda.
   No Brasil: SAMU 192.
 
+## Peças prontas de exame e de cérebro em pixel
+`motores/web/js/exames.js` (tomografia axial com hematomas, HSA, isquemia por território e ACM hiperdensa;
+angiotomografia com oclusão marcada; angiografia antes e depois) e `motores/web/js/cerebro-perfil.js` (cérebro de
+perfil com lobos, sulcos e territórios). Como usar: `referencias/cena-web.md`, seção "Exames e cérebro em pixel".
+
 ## Modelo de ficha nova
 ```markdown
 # <Órgão>

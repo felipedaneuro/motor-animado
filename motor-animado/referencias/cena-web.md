@@ -45,3 +45,30 @@ O `plano.js` não importa three.js, de propósito: assim o Node lê os tempos e 
 
 ## Visual retrô (por cima de qualquer cena)
 Com uma seção `"retro"` no estilo (os estilos `retro-32bits` e `retro-64bits`), o palco renderiza a cena em baixa resolução e passa por `retro.js`: sombreado suave ou facetado, cor de 15 a 18 bits, pontilhado, ampliação com ou sem filtro, embaçado, vértices presos na grade e contorno de 1 pixel (`outline`). Não precisa mudar nada no `cena.js`. Peças com textura (o personagem plano) não são suavizadas.
+
+## Exames e cérebro em pixel (vídeos de neuro e neurovascular)
+Peças prontas em `./cena/js/motor/exames.js` e `./cena/js/motor/cerebro-perfil.js`, desenhadas numa camada SVG por cima
+da cena (`createSvgLayer` de `pixelsvg.js`). Não redesenhe tomografia, angiografia ou cérebro de perfil à mão: use estas.
+Todas seguem a convenção radiológica (o lado direito do paciente à esquerda da tela) e recebem o lado do PACIENTE.
+
+```js
+import { createSvgLayer, progress } from "./motor/pixelsvg.js";
+import { axialCT, ctAngiography, angiographyCompare, pulseAt } from "./motor/exames.js";
+import { brainProfile } from "./motor/cerebro-perfil.js";
+const draw = createSvgLayer(root, { label: "exames" });
+const box = { x: 210, y: 700, width: 660, height: 780 };          // onde a peça fica na tela 1080x1920
+// dentro do draw(t) da cena, uma por frase:
+draw(axialCT({ box, findings: [{ type: "epidural", side: "D", amount: progress(t, T.lente, T.lente + 0.6) }] }));
+draw(ctAngiography({ box, occlusion: { artery: "M1", side: "E" }, arrowAmount: progress(t, T.oclusao, T.oclusao + 0.3), pulse: pulseAt(t, T.oclusao) }));
+draw(angiographyCompare({ box: { x: 60, y: 700, width: 960, height: 760 }, side: "E" }));
+draw(brainProfile({ box: { x: 120, y: 700, width: 840, height: 640 }, side: "E", infarct: { territory: "acm", core: 0.6, penumbra: progress(t, a, b) } }));
+```
+
+- `axialCT`: `level` "ventricular" ou "basal"; achados `epidural`, `subdural`, `intraparenquimatosa`, `hsa`, `isquemia`
+  (com `territory` "acm", "aca" ou "acp") e `acm-hiperdensa` (só no basal). `amount` de 0 a 1 faz o achado crescer.
+- `ctAngiography`: oclusão em `ICA`, `M1`, `M2`, `A1`, `P1` ou `basilar`, com seta e quadrado que pulsa no ponto exato.
+- `angiography` / `angiographyCompare`: angiografia de frente, vasos escuros no fundo cinza (como na subtração).
+- `brainProfile`: `side` "E" mostra o hemisfério esquerdo (frente à esquerda da tela); `lobes`, `lobeLabels`, `highlight`
+  e `infarct` (núcleo roxo e penumbra âmbar). Para estilos em 3D, o cérebro continua sendo `detailedBrain` de anatomia.js.
+- Tudo é função de t: o mesmo quadro sai sempre igual. O pulso é de 1 por segundo (o limite é 1,5).
+- Para ver todas as variações: `motores/web/vitrine-exames.html` (servida por um servidor local; `?painel=N` mostra uma).

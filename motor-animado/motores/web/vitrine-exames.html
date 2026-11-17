@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitrine dos exames</title>
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; padding: 16px; background: #05070f; color: #dfe6f5; font: 15px/1.4 Arial, sans-serif; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p { margin: 0 0 16px; color: #9aa6bd; }
+  .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+  figure { margin: 0; }
+  figcaption { font-size: 13px; color: #b9c3d6; margin-top: 6px; }
+  .quadro { width: 100%; aspect-ratio: 1080 / 1920; background: #0a0f1e; border: 1px solid #1d2540; }
+  .fonte { font-family: 'Press Start 2P'; font-size: 22px; line-height: 2; margin: 24px 0; padding: 16px; border: 1px solid #1d2540; }
+</style>
+</head>
+<body>
+<h1>Vitrine dos exames e do cérebro de perfil</h1>
+<p>Cada quadro é a tela do vídeo (1080x1920). Convenção radiológica: o lado direito do paciente (D) à esquerda da tela.</p>
+<div class="grade" id="grade"></div>
+<div class="fonte" id="fonte">OCLUÍDA TAMBÉM ARTÉRIA ÁÉÍÓÚ ÂÊÔ ÃÕ Ç<br>ocluída também artéria áéíóú âêô ãõ ç</div>
+<script type="module">
+import { axialCT, ctAngiography, angiographyCompare } from "./js/exames.js";
+import { brainProfile } from "./js/cerebro-perfil.js";
+import { label } from "./js/pixelsvg.js";
+
+const scan = { x: 210, y: 600, width: 660, height: 780 };
+const wide = { x: 120, y: 700, width: 840, height: 640 };
+const PANELS = [
+  ["TC normal, nível ventricular", axialCT({ box: scan })],
+  ["TC basal normal", axialCT({ box: scan, level: "basal" })],
+  ["Epidural à direita (lente)", axialCT({ box: scan, findings: [{ type: "epidural", side: "D" }] })],
+  ["Subdural à esquerda (crescente)", axialCT({ box: scan, findings: [{ type: "subdural", side: "E" }] })],
+  ["Intraparenquimatosa à direita", axialCT({ box: scan, findings: [{ type: "intraparenquimatosa", side: "D" }] })],
+  ["Hemorragia subaracnóidea (basal)", axialCT({ box: scan, level: "basal", findings: [{ type: "hsa" }] })],
+  ["Isquemia ACM esquerda estabelecida", axialCT({ box: scan, findings: [{ type: "isquemia", side: "E", territory: "acm" }] })],
+  ["Isquemia ACA direita, ACP esquerda", axialCT({ box: scan, findings: [{ type: "isquemia", side: "D", territory: "aca" }, { type: "isquemia", side: "E", territory: "acp" }] })],
+  ["ACM hiperdensa à esquerda", axialCT({ box: scan, level: "basal", findings: [{ type: "acm-hiperdensa", side: "E" }] })],
+  ["Angio-TC normal", ctAngiography({ box: scan })],
+  ["Angio-TC: oclusão M1 E", ctAngiography({ box: scan, occlusion: { artery: "M1", side: "E" } })],
+  ["Angio-TC: oclusão da basilar", ctAngiography({ box: scan, occlusion: { artery: "basilar", side: "E" } })],
+  ["Angio-TC: oclusão da carótida D", ctAngiography({ box: scan, occlusion: { artery: "ICA", side: "D" } })],
+  ["Angiografia antes e depois (E)", angiographyCompare({ box: { x: 60, y: 700, width: 960, height: 760 }, side: "E" })],
+  ["Perfil E: infarto ACM", brainProfile({ box: wide, side: "E", infarct: { territory: "acm", core: 0.6, penumbra: 0.8 } })],
+  ["Perfil D: lobos e nomes", brainProfile({ box: wide, side: "D", lobes: true, lobeLabels: true })],
+  ["Perfil E: território ACA", brainProfile({ box: wide, side: "E", highlight: "aca" })],
+  ["Perfil E: território ACP", brainProfile({ box: wide, side: "E", highlight: "acp" })],
+  ["Perfil E: território ACM", brainProfile({ box: wide, side: "E", highlight: "acm" })],
+];
+const grid = document.getElementById("grade");
+// ?painel=N mostra só o quadro N (de 1 em diante) em tamanho grande, para conferir de perto
+const only = Number(new URLSearchParams(location.search).get("painel")) || 0;
+if (only) grid.style.gridTemplateColumns = "minmax(0, 360px)";
+for (const [title, markup] of only ? [PANELS[only - 1]] : PANELS) {
+  const figure = document.createElement("figure");
+  figure.innerHTML = `<svg class="quadro" viewBox="0 0 1080 1920" shape-rendering="crispEdges">${markup}${label(title, 540, 300, { size: 44 })}</svg><figcaption>${title}</figcaption>`;
+  grid.appendChild(figure);
+}
+</script>
+</body>
+</html>
