@@ -40,25 +40,25 @@
   "captions": {
     "words_per_caption": 2,
     "top_px": 301,
-    "font_px": 64,
-    "font": "Press Start 2P",
+    "font_px": 108,
+    "font": "Jersey 10",
     "color": "#e6c150",
     "stroke": "#030312",
     "stroke_px": 9,
     "highlight": "#f75c5e",
     "uppercase": true,
-    "font_query": "Press+Start+2P"
+    "font_fallback": "VT323"
   },
   "label": {
     "mode": "top",
     "top_px": 240,
-    "font_px": 40,
+    "font_px": 68,
     "background": "#ffd21f",
     "color": "#111111"
   },
   "cards": {
     "top_px": 1460,
-    "font_px": 34,
+    "font_px": 58,
     "background": "#ffffff",
     "color": "#111111"
   },

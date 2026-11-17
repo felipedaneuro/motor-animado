@@ -54,25 +54,25 @@
   "captions": {
     "words_per_caption": 1,
     "top_px": 1290,
-    "font_px": 60,
-    "font": "Press Start 2P",
-    "font_query": "Press+Start+2P",
+    "font_px": 102,
+    "font": "Jersey 10",
     "color": "#ffffff",
     "stroke": "#16182a",
     "stroke_px": 12,
     "highlight": "#ffd21f",
-    "uppercase": true
+    "uppercase": true,
+    "font_fallback": "VT323"
   },
   "label": {
     "mode": "top",
     "top_px": 210,
-    "font_px": 54,
+    "font_px": 92,
     "background": "#ffd21f",
     "color": "#16182a"
   },
   "cards": {
     "top_px": 470,
-    "font_px": 34,
+    "font_px": 58,
     "background": "#ffffff",
     "color": "#16182a"
   },
@@ -126,17 +126,17 @@
       ]
     },
     "captions": {
-      "font": "Press Start 2P",
-      "font_query": "Press+Start+2P",
-      "font_px": 60,
+      "font": "Jersey 10",
+      "font_px": 102,
       "stroke_px": 12,
-      "uppercase": true
+      "uppercase": true,
+      "font_fallback": "VT323"
     },
     "label": {
-      "font_px": 54
+      "font_px": 92
     },
     "cards": {
-      "font_px": 34
+      "font_px": 58
     },
     "retro": {
       "internal": [

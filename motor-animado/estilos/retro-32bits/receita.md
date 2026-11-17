@@ -29,7 +29,7 @@ camadas pintadas, não modelados em low-poly. As cores saem do tema (`natural`, 
   `estrela`, `aviso`, `gota`, desenhados em grade de 16 por 16 (`ICONS`); ou um desenho seu, com `pixelTile`.
   Tamanho útil: 0,55 a 0,65 m a uns 4 m da câmera — maior que isso toma o quadro inteiro, que é vertical e estreito.
 - Para um fundo liso, com o apresentador falando com a câmera: `studio(cena, style)`.
-- Legenda em fonte de pixel (Press Start 2P, 60 px).
+- Legenda em fonte de pixel (Jersey 10, 102 px; reserva VT323). A Press Start 2P saiu em 16/11/2026: desenhava as maiúsculas acentuadas (Í, É) do tamanho de minúscula.
 
 ## Como usar
 - Sozinho: `montar.py ... --estilo retro-32bits` (vem o exemplo do Doutor Cérebro: 6 frases, 3 hábitos).

@@ -7,12 +7,15 @@
 import * as THREE from "three";
 import { normalizeWord, pop, clamp } from "./nucleo.js";
 
+// a fonte do estilo e, se o estilo.json pedir (captions.font_fallback), a reserva para quando a primeira faltar
+export const fontStack = (c) => [c.font, c.font_fallback].filter(Boolean).map((name) => `"${name}"`).concat('"Arial Black"', "sans-serif").join(", ");
+
 function applyStyleVariables(root, style) {
   const c = style.captions, l = style.label, k = style.cards, tk = style.ticker;
   const vars = {
     "--caption-top": `${c.top_px}px`, "--caption-size": `${c.font_px}px`, "--caption-color": c.color,
     "--caption-stroke": c.stroke, "--caption-stroke-width": `${c.stroke_px}px`, "--caption-highlight": c.highlight,
-    "--caption-transform": c.uppercase ? "uppercase" : "none", "--font": `"${c.font}", "Arial Black", sans-serif`,
+    "--caption-transform": c.uppercase ? "uppercase" : "none", "--font": fontStack(c),
     "--label-top": `${l.top_px}px`, "--label-background": l.background, "--label-color": l.color, "--label-size": `${l.font_px}px`,
     "--label-stroke": l.stroke || "#111111",
     "--card-background": k.background, "--card-color": k.color, "--card-size": `${k.font_px}px`,

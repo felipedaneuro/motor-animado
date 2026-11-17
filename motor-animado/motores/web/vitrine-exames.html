@@ -14,14 +14,16 @@
   figure { margin: 0; }
   figcaption { font-size: 13px; color: #b9c3d6; margin-top: 6px; }
   .quadro { width: 100%; aspect-ratio: 1080 / 1920; background: #0a0f1e; border: 1px solid #1d2540; }
-  .fonte { font-family: 'Press Start 2P'; font-size: 22px; line-height: 2; margin: 24px 0; padding: 16px; border: 1px solid #1d2540; }
+  .fonte { font-family: 'Jersey 10', 'VT323', sans-serif; font-size: 38px; line-height: 1.4; margin: 24px 0; padding: 16px; border: 1px solid #1d2540; }
+  .fonte small { display: block; font: 13px Arial, sans-serif; color: #9aa6bd; margin-bottom: 8px; }
+  .reserva { font-family: 'VT323', sans-serif; }
 </style>
 </head>
 <body>
 <h1>Vitrine dos exames e do cérebro de perfil</h1>
 <p>Cada quadro é a tela do vídeo (1080x1920). Convenção radiológica: o lado direito do paciente (D) à esquerda da tela.</p>
 <div class="grade" id="grade"></div>
-<div class="fonte" id="fonte">OCLUÍDA TAMBÉM ARTÉRIA ÁÉÍÓÚ ÂÊÔ ÃÕ Ç<br>ocluída também artéria áéíóú âêô ãõ ç</div>
+<div class="fonte" id="fonte"><small>Fonte dos estilos pixel: Jersey 10 (e a reserva VT323, na última linha)</small>OCLUÍDA TAMBÉM ARTÉRIA ÁÉÍÓÚ ÂÊÔ ÃÕ Ç<br>ocluída também artéria áéíóú âêô ãõ ç<br><span class="reserva">OCLUÍDA TAMBÉM ARTÉRIA ÁÉÍÓÚ ÂÊÔ ÃÕ Ç</span></div>
 <script type="module">
 import { axialCT, ctAngiography, angiographyCompare } from "./js/exames.js";
 import { brainProfile } from "./js/cerebro-perfil.js";

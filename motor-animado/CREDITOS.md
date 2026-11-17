@@ -17,7 +17,7 @@ Os personagens dos canais de origem ficaram de fora; o exemplo usa uma personage
 |---|---|---|
 | three.js 0.181.2 (`motores/web/vendor/three/`) | MIT (`vendor/three/LICENSE`) | a cena 3D do motor web |
 | GSAP 3.14.2 (`motores/web/vendor/gsap.min.js`) | licença padrão GSAP (uso gratuito) | a linha do tempo exigida pelo HyperFrames |
-| Montserrat, Fredoka, Press Start 2P (`motores/web/vendor/fonts/`) | SIL Open Font License 1.1 | legendas, etiquetas e cards |
+| Montserrat, Fredoka, Press Start 2P, Jersey 10, VT323 (`motores/web/vendor/fonts/`, licenças em `OFL-*.txt`) | SIL Open Font License 1.1 | legendas, etiquetas e cards |
 | HyperFrames (npx, não incluído) | do autor | o render do motor web |
 | Blender e MPFB (não incluídos) | GPL | o motor realista |
 | Céu HDR "Studio Small 09" (`motores/blender/assets/`) | CC0, Poly Haven | a luz do motor Blender |
