@@ -1,0 +1,211 @@
+{
+  "name": "8bits-jornada-avatar0",
+  "engine": "web",
+  "summary": "Jornada narrativa em pixel art 2D com avatar original, vila em camadas e interface de RPG em pergaminho.",
+  "sync": "voice",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps_final": 30,
+    "resolution_final": "portrait"
+  },
+  "stage": {
+    "background": "#1d4994",
+    "background_bottom": "#7e93a6",
+    "fog": null,
+    "hemisphere": [
+      "#ffffff",
+      "#ffffff",
+      1
+    ],
+    "sun": [
+      "#ffffff",
+      0
+    ],
+    "shadows": false,
+    "flat_shading": true,
+    "fov": 40
+  },
+  "camera": {
+    "approach_seconds": 0.3,
+    "fly_seconds": 0.6,
+    "fly_arc": 0.8,
+    "easing": "expoOut",
+    "idle_sway": 0.02,
+    "cuts": "measured",
+    "braking_seconds": 0.1,
+    "longest_still_seconds": 7.5,
+    "measured_curve": "referencia-curva.json"
+  },
+  "captions": {
+    "words_per_caption": 6,
+    "top_px": 1708,
+    "font_px": 35,
+    "font": "Montserrat",
+    "color": "#dff1b8",
+    "stroke": "#4b270a",
+    "stroke_px": 8,
+    "highlight": "#d7b382",
+    "uppercase": false
+  },
+  "label": {
+    "mode": "top",
+    "top_px": 495,
+    "font_px": 72,
+    "background": "#335054",
+    "color": "#e1c7a1",
+    "variant": "text"
+  },
+  "cards": {
+    "top_px": 470,
+    "font_px": 52,
+    "background": "#e1c7a1",
+    "color": "#2b241e"
+  },
+  "sound": {
+    "whoosh": {
+      "approach": 0.22,
+      "fly": 0.22
+    },
+    "pop": {
+      "label": 0.5,
+      "card": 0.35
+    },
+    "music": {
+      "chords": [
+        [
+          146.8,
+          174.6,
+          220
+        ],
+        [
+          116.5,
+          146.8,
+          174.6
+        ],
+        [
+          174.6,
+          220,
+          261.6
+        ],
+        [
+          130.8,
+          164.8,
+          196
+        ]
+      ],
+      "block_seconds": 2.8
+    },
+    "mix": {
+      "effects": 0.35,
+      "music": 0.07
+    },
+    "lufs": -14
+  },
+  "finish": "clean",
+  "palette": [
+    "#e1c7a1",
+    "#2b3723",
+    "#8bb4d6",
+    "#b09972",
+    "#915d2d",
+    "#335054",
+    "#25539d",
+    "#4981c5"
+  ],
+  "reference": {
+    "source": "/Users/feribeiro/Documents/1 Projetos/1.31 Projeto IA/Animação Explicativa/motor-animado-painel-1.1.0/videos/trombectomia-mecanica-no-avc-como-o-sten/referencia-estilo/referencia-1794878071208.mp4",
+    "duration": 38.37,
+    "cuts": [
+      9.8,
+      14.767,
+      18.367,
+      36.767
+    ],
+    "moves": [
+      {
+        "t": 4.2,
+        "profile": "expo_out",
+        "direction": "out"
+      },
+      {
+        "t": 14.83,
+        "profile": "expo_out",
+        "direction": "side"
+      },
+      {
+        "t": 28,
+        "profile": "linear",
+        "direction": "side"
+      }
+    ],
+    "phrases": [
+      {
+        "start": 0,
+        "end": 1.4,
+        "words": 5
+      },
+      {
+        "start": 1.62,
+        "end": 6.02,
+        "words": 12
+      },
+      {
+        "start": 6.58,
+        "end": 11.02,
+        "words": 13
+      },
+      {
+        "start": 11.26,
+        "end": 14.26,
+        "words": 10
+      },
+      {
+        "start": 14.78,
+        "end": 15.64,
+        "words": 3
+      },
+      {
+        "start": 15.84,
+        "end": 16.9,
+        "words": 4
+      },
+      {
+        "start": 17,
+        "end": 18.04,
+        "words": 3
+      },
+      {
+        "start": 18.42,
+        "end": 23.02,
+        "words": 10
+      },
+      {
+        "start": 23.26,
+        "end": 27.52,
+        "words": 10
+      },
+      {
+        "start": 27.52,
+        "end": 28.68,
+        "words": 3
+      },
+      {
+        "start": 28.98,
+        "end": 32.56,
+        "words": 11
+      },
+      {
+        "start": 32.76,
+        "end": 34.1,
+        "words": 4
+      },
+      {
+        "start": 34.32,
+        "end": 36.38,
+        "words": 7
+      }
+    ],
+    "words_per_minute": 157
+  }
+}

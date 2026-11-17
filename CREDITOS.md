@@ -22,7 +22,7 @@ licença de cada um permite.
 | O quê | Licença |
 |---|---|
 | three.js (em `motor-animado/motores/web/vendor/three`) | MIT |
-| Fontes Montserrat, Fredoka e Press Start 2P (`vendor/fonts`) | SIL Open Font License |
+| Fontes Montserrat, Fredoka, Press Start 2P, Jersey 10 e VT323 (`vendor/fonts`) | SIL Open Font License |
 | Músicas de `motor-animado/musicas`, se houver | CC0 |
 | Vozes de amostra em `painel/vozes` | geradas por síntese neste projeto, livres para uso |
 

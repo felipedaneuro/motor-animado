@@ -1,0 +1,7 @@
+# Exemplo fictício e original do estilo 8bits-jornada-avatar0, seis frases.
+[curious] Eu sou Nara, e você decide o próximo capítulo.
+[thoughtful] Uma carta me trouxe de volta à vila.
+[serious] O centro comunitário precisa abrir as portas novamente.
+[concerned] Mas os recursos não bastam para toda a reforma.
+[curious] Posso preparar o mutirão ou conversar com os moradores.
+[hopeful] Comente A ou B para escolher o próximo passo.

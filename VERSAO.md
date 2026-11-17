@@ -1,25 +1,28 @@
 # Versão
 
-**Motor Animado · Painel 1.1.0** — 15 de novembro de 2026.
+**Motor Animado · Painel 1.2.0** — 16 de novembro de 2026 (Edição Médica).
 
 | Parte | Versão |
 |---|---|
-| painel | 1.1.0 (5 passos, temas, agentes de IA, ElevenLabs, outros motores com aba de estilos) |
+| painel | 1.2.0 (5 passos, público e especialidade, aba Projetos, temas, agentes de IA, ElevenLabs, outros motores) |
 | motor-animado (a skill) | ver `motor-animado/VERSAO.md` |
 
 ## O que esta versão faz
 
 - Da frase ao vídeo vertical, em cinco passos, numa página local.
-- 23 estilos prontos (low-poly, pixel art, duelo de dois painéis, corte anatômico, saga em capítulos, holograma, palito, telejornal, cena 3D clínica, realista no Blender).
+- 24 estilos prontos (low-poly, pixel art, duelo de dois painéis, corte anatômico, saga em capítulos, jornada de RPG, holograma, palito, telejornal, cena 3D clínica, realista no Blender).
+- Edição médica: roteiro por público (leigo ou profissionais de saúde) e por especialidade, com o raciocínio clínico e cirúrgico, e exames e cérebro desenhados em pixel na convenção radiológica.
+- Aba Projetos: abrir, gerar novamente, duplicar e excluir (para a lixeira do painel) qualquer projeto já feito.
 - Temas de cor que você cria, importa (de arquivo ou de uma imagem) e exporta.
 - Agentes de IA à escolha, por passo: Claude Code, Codex (ChatGPT) e Gemini CLI.
 - Vozes: do Mac (teste), Chatterbox (grátis, gerada aqui) e ElevenLabs (paga, com o custo na tela).
 - Outros motores de animação, quando instalados: anidoodle, animação em canvas, Manim e Huashu.
 - Conferência automática de cada vídeo: cortes, quadros pretos, risco de pisca e volume em −14 LUFS.
 
-## 1.2.0 — Edição Médica (em preparação)
+## 1.2.0 — Edição Médica (16 de novembro de 2026)
 
-Em desenvolvimento no branch `feature/edicao-medica`, ainda sem merge na `main` (16 de novembro de 2026).
+Versão de minor (1.1 → 1.2): tudo o que entrou é novo e os projetos e estilos da 1.1 continuam funcionando. A única
+mudança que aparece num estilo antigo é a fonte dos estilos pixel.
 
 - **Público-alvo obrigatório na tela Ideia**: "Leigo" ou "Estudantes e profissionais de saúde". O público muda a
   linguagem, a profundidade e as regras do roteiro: para leigo, só o mecanismo, sem conduta nem dose, fechando com o
@@ -49,7 +52,14 @@ Em desenvolvimento no branch `feature/edicao-medica`, ainda sem merge na `main` 
   Projeto trabalhando não pode ser duplicado nem excluído.
 - **Testes**: `node --test painel/nicho.test.mjs painel/projetos.test.mjs testes/exames.test.mjs testes/fontes.test.mjs`
   (32 testes; os da aba Projetos rodam numa pasta temporária, apontada por `PAINEL_VIDEOS`).
-- Vídeo de teste: trombectomia mecânica no AVC, para profissionais de saúde, no estilo `pixel-arteria-stent`.
+- **Estilo novo `8bits-jornada-avatar0`** (24º): jornada narrativa em pixel art 2D, com avatar próprio, vila em
+  camadas e interface de RPG em pergaminho (ficha do personagem, carta, janela de missão, escolha A/B). Criado no
+  painel a partir de um vídeo de referência; a fórmula vem da referência, os desenhos e a história do exemplo são
+  originais. Corrigido antes de entrar no pacote: a camada da cena ficava atrás do canvas 3D e o exemplo saía só com
+  o céu e a legenda. Capa nova em `painel/previas/`.
+- **Arquivos de versão e LEIA-ME** atualizados com o público, a especialidade e a aba Projetos.
+- Vídeo de teste: trombectomia mecânica no AVC, para profissionais de saúde, no estilo `pixel-arteria-stent`, refeito
+  com as peças de exame e a fonte nova (`video-v3-final.mp4`, 69 s, voz da ElevenLabs, −14,3 LUFS).
 
 ## 1.1.0
 

@@ -1,6 +1,6 @@
 # Versões
 
-## 1.2 (em preparação, branch `feature/edicao-medica`)
+## 1.2 (2026-11-16)
 
 - **Nicho médico** em `nichos/medicina/`: `nicho.json` (públicos `leigo` e `saude`, com limite de palavras por frase
   e regra de gancho; especialidades geral, neurologia, neurocirurgia, neurovascular, cardiologia e ortopedia),
@@ -15,6 +15,8 @@
   degraus, seta, mancha, quadrado e texto. Usada pelas duas peças acima.
 - **Fonte**: Jersey 10 nos estilos `pixel-*` e `retro-32bits`, com VT323 de reserva (`captions.font_fallback`, lida
   por `fontStack` em `textos.js`); tamanhos de legenda, etiqueta e card multiplicados por 1,7.
+- **Estilo novo `8bits-jornada-avatar0`** (são 24): jornada em pixel art 2D com avatar, vila e interface de RPG em
+  pergaminho (`createJourney` no kit). A camada SVG do kit agora entra depois do canvas 3D (antes ficava escondida).
 - Documentação: seção "Exames e cérebro em pixel" em `referencias/cena-web.md`; README de anatomia e guias de
   neurologia, neurocirurgia e neurovascular mandam usar as peças prontas; `referencias/roteiro.md` cita a regra
   do público.

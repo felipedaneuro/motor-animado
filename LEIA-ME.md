@@ -35,7 +35,10 @@ Depois abra **http://127.0.0.1:4747** no navegador. No Mac, dá para abrir com d
 
 ## Os cinco passos
 
-1. **Ideia** — uma frase, o objetivo, a duração e o público.
+1. **Ideia** — uma frase, o objetivo, a duração, para quem é o roteiro (leigo, ou estudantes e profissionais de saúde)
+   e a especialidade (geral, neurologia, neurocirurgia, neurovascular, cardiologia ou ortopedia). O público muda a
+   linguagem, a profundidade e as regras de cuidado; a especialidade diz ao agente que guia de anatomia e fisiologia
+   seguir e como o médico raciocina naquele tema.
 2. **Roteiro** — o agente pesquisa, confere cada número em duas fontes, escreve o roteiro e as fontes, e sugere três
    estilos. Você edita o texto na tela e vê os avisos do que precisa da sua revisão.
 3. **Estilo** — galeria de estilos com prévia, tema de cores, apresentador, legenda e música. Dá para criar temas novos
@@ -45,12 +48,19 @@ Depois abra **http://127.0.0.1:4747** no navegador. No Mac, dá para abrir com d
 5. **Voz e render** — voz do Mac, Chatterbox (grátis, gerada aqui) ou ElevenLabs (paga, com o custo na tela); rascunho
    ou render final; conferência automática de cortes, quadros pretos, pisca e volume; o vídeo toca na própria página.
 
+## Os projetos já feitos
+
+O botão **Projetos**, no topo, mostra todos os vídeos feitos no painel, cada um num cartão com capa, etapa, público,
+especialidade, vídeos e espaço no disco. Dali dá para **abrir**, **gerar novamente** (um projeto novo com a mesma
+ideia e as mesmas escolhas; o original fica como está), **duplicar** (copia o trabalho sem os vídeos renderizados) ou
+**excluir** (a pasta vai para `videos/_lixeira`, de onde dá para recuperar).
+
 ## O que vem na caixa
 
 | Pasta | O que é |
 |---|---|
 | `painel/` | o painel: servidor, telas e a ligação com os agentes de IA |
-| `motor-animado/` | o motor que desenha e renderiza os vídeos, com 9 estilos prontos e as ferramentas de voz, som e conferência |
+| `motor-animado/` | o motor que desenha e renderiza os vídeos, com 24 estilos prontos, as peças de exame em pixel e as ferramentas de voz, som e conferência |
 | `videos/` | onde cada projeto que você fizer é guardado |
 
 Para o pacote não pesar centenas de megabytes, os **vídeos de referência** usados no estudo dos estilos não vêm junto:
