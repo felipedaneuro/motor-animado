@@ -13,6 +13,7 @@ import { MAX_IMAGE_BYTES, phrasesOf, referenceTarget, references, removeReferenc
   validPhrase } from "./ilustracoes.mjs";
 import { engineNames, engineSheet, engineStatus } from "./motores.mjs";
 import { nicheOptions, validAudience, validSpecialty } from "./nicho.mjs";
+import { duplicateProject, ideaOf, projectCards, trashProject } from "./gestao-projetos.mjs";
 import { adjust, buildScenes, detail, isRunning, newStyle, prepare, preview, produce, render, revoice, stop, voice,
   writeScript } from "./passos.mjs";
 import { deleteTheme, saveTheme } from "./temas.mjs";
@@ -37,6 +38,15 @@ function trusted(req) {
 
 const json = (res, data, status = 200) => { res.writeHead(status, { "Content-Type": TYPES[".json"] }); res.end(JSON.stringify(data)); };
 const fail = (res, message, status = 400) => json(res, { erro: message }, status);
+
+// cria o projeto e já começa o roteiro (o último trabalho fica guardado para "Tentar de novo")
+function startProject(fields, note = "") {
+  const state = createProject(fields);
+  log(state.id, note || `projeto criado: ${state.frase}`, "passo");
+  writeScript(state.id);
+  updateProject(state.id, { ultimoTrabalho: { acao: "gerar-roteiro", corpo: {} } });
+  return state.id;
+}
 
 // o que falta no pedido de projeto novo: a ideia e o público-alvo são obrigatórios; a especialidade, se vier, precisa existir
 function projectProblem(body) {
@@ -116,6 +126,14 @@ const ACTIONS = {
   "limpar-erro": (id) => { updateProject(id, { erro: null }); return { ok: true }; },
   retomar: (id, body) => resume(id, body),
   "gerar-roteiro": (id) => { writeScript(id); return { ok: true }; },
+  // a aba Projetos: um projeto novo com a mesma ideia e as mesmas escolhas (o original fica intacto), uma cópia sem os
+  // vídeos renderizados, e a lixeira do painel (só com a confirmação da pessoa)
+  "gerar-de-novo": (id) => ({ id: startProject(ideaOf(id), `projeto criado de novo, com a mesma ideia de "${loadProject(id).titulo}"`) }),
+  duplicar: (id) => ({ id: duplicateProject(id) }),
+  excluir: (id, body) => {
+    if (body.confirmado !== true) throw new Error("excluir precisa da sua confirmação");
+    return { lixeira: trashProject(id) };
+  },
   estilo: (id, body) => {
     // "externo:<motor>" ou "externo:<motor>:<ficha do motor>" (o Huashu tem uma ficha por estilo de desenho)
     const external = String(body.estilo || "").startsWith("externo:") && engineNames().includes(body.estilo.slice(8).split(":")[0]);
@@ -267,19 +285,17 @@ async function api(req, res, parts, query) {
   if (parts[0] === "nicho") return json(res, nicheOptions());
   if (parts[0] === "temas") return themes(req, res, parts[1]);
   if (parts[0] === "config" || parts[0] === "elevenlabs") return settings(req, res, parts);
+  if (parts[0] === "acervo") return json(res, projectCards());
   if (parts[0] !== "projetos") return fail(res, "rota desconhecida", 404);
   if (parts.length === 1 && req.method === "GET") return json(res, listProjects());
   if (parts.length === 1 && req.method === "POST") {
     const body = await readBody(req);
     const problem = projectProblem(body);
     if (problem) return fail(res, problem);
-    const state = createProject({ frase: String(body.frase).trim().slice(0, 300), objetivo: body.objetivo || "curiosidade",
+    const id = startProject({ frase: String(body.frase).trim().slice(0, 300), objetivo: body.objetivo || "curiosidade",
       duracao: Number(body.duracao) || 60, publico: String(body.publico || "").trim().slice(0, 200),
       publicoAlvo: body.publicoAlvo, especialidade: body.especialidade || "geral" });
-    log(state.id, `projeto criado: ${state.frase}`, "passo");
-    writeScript(state.id);
-    updateProject(state.id, { ultimoTrabalho: { acao: "gerar-roteiro", corpo: {} } });
-    return json(res, { id: state.id });
+    return json(res, { id });
   }
   const [, id, action] = parts;
   if (!validId(id)) return fail(res, "projeto não encontrado", 404);

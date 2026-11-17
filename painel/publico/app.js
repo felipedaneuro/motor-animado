@@ -2,6 +2,7 @@
 import { draftFrom, editorView, exportTheme, importFile, redrawSketch, setField as setThemeField } from "/temas.js";
 import { $, api, app, busy, esc, sendFile } from "/comum.js";
 import { SCRIPT_ACTIONS, onScriptChange, onScriptInput, viewScript as scriptView } from "/roteiro.js";
+import { projectActions, viewProjects } from "/acervo.js";
 const STEPS = [["ideia", "Ideia"], ["roteiro", "Roteiro"], ["estilo", "Estilo"], ["cenas", "Cenas"], ["voz", "Voz e render"]];
 const ORDER = ["ideia", "roteiro", "estilo", "cenas", "voz", "pronto"];
 const VOICES = [["mac", "Voz de teste do Mac", "grátis, robótica: serve para conferir o ritmo"],
@@ -381,7 +382,7 @@ function viewSettings() {
   <div class="cartao"><h2>Os agentes</h2>${agentNotes()}</div>${elevenCard()}`;
 }
 
-const VIEWS = { ideia: viewIdea, roteiro: viewScript, estilo: viewStyle, "motor-estilos": viewEngineStyles, cenas: viewScenes, voz: viewVoice, ajustes: viewSettings };
+const VIEWS = { ideia: viewIdea, roteiro: viewScript, estilo: viewStyle, "motor-estilos": viewEngineStyles, cenas: viewScenes, voz: viewVoice, ajustes: viewSettings, acervo: viewProjects };
 
 // ---------- trabalho rodando, travado ou que parou com erro ----------
 const JOB_NAMES = { "gerar-roteiro": "o roteiro", cenas: "as cenas", ajuste: "o ajuste", voz: "a gravação da voz", render: "o render",
@@ -417,8 +418,9 @@ function statusBox(p) {
 }
 
 function draw() {
-  const view = app.view === "ajustes" || app.project ? app.view : "ideia";
-  $("#conteudo").innerHTML = (view === "ajustes" ? "" : statusBox(app.project)) + VIEWS[view]();
+  const standalone = ["ajustes", "acervo"].includes(app.view);   // telas que não dependem de um projeto aberto
+  const view = standalone || app.project ? app.view : "ideia";
+  $("#conteudo").innerHTML = (standalone ? "" : statusBox(app.project)) + VIEWS[view]();
   $("#projetos").innerHTML = `<option value="">Projetos</option>` + app.projects.map((p) => `<option value="${p.id}" ${p.id === app.project?.id ? "selected" : ""}>${esc(p.titulo)}</option>`).join("");
   drawSteps();
   drawActivity();
@@ -573,6 +575,7 @@ app.settings = await api("config");
     if (confirmado) await api(`projetos/${app.project.id}/produzir`, { motor: externalParts().motor, voz, confirmado });
   },
 };
+Object.assign(ACTIONS, projectActions(open, draw));   // a aba Projetos (acervo.js)
 
 // a voz paga pede a confirmação com o custo antes de gravar
 async function revoiceRequest(motor, arquivo, final) {

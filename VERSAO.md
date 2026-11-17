@@ -42,7 +42,13 @@ Em desenvolvimento no branch `feature/edicao-medica`, ainda sem merge na `main` 
   conferir em `motor-animado/motores/web/vitrine-exames.html`.
 - **Fonte pixel nova**: os 10 estilos que usavam a Press Start 2P (que desenhava Í e É do tamanho de minúscula)
   passam a usar a **Jersey 10**, com a **VT323** de reserva, as duas guardadas no pacote.
-- **Testes**: `node --test painel/nicho.test.mjs testes/exames.test.mjs testes/fontes.test.mjs` (26 testes).
+- **Aba Projetos** (botão no topo, ao lado de Ajustes): um cartão por projeto, com capa, data, estilo, etapa, público,
+  especialidade, vídeos e espaço no disco, e os botões **Abrir**, **Gerar novamente** (um projeto novo com a mesma
+  ideia e as mesmas escolhas; o original fica como está), **Duplicar** (copia roteiro, fontes, cenas e voz, sem os
+  vídeos renderizados) e **Excluir** (com confirmação; a pasta vai para `videos/_lixeira`, de onde dá para recuperar).
+  Projeto trabalhando não pode ser duplicado nem excluído.
+- **Testes**: `node --test painel/nicho.test.mjs painel/projetos.test.mjs testes/exames.test.mjs testes/fontes.test.mjs`
+  (32 testes; os da aba Projetos rodam numa pasta temporária, apontada por `PAINEL_VIDEOS`).
 - Vídeo de teste: trombectomia mecânica no AVC, para profissionais de saúde, no estilo `pixel-arteria-stent`.
 
 ## 1.1.0

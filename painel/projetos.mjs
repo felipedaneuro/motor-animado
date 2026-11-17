@@ -4,7 +4,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-export const VIDEOS = path.join(ROOT, "videos");
+// PAINEL_VIDEOS troca a pasta dos projetos (os testes usam uma pasta temporária e nunca tocam nos projetos de verdade)
+export const VIDEOS = process.env.PAINEL_VIDEOS ? path.resolve(process.env.PAINEL_VIDEOS) : path.join(ROOT, "videos");
 export const MOTOR = path.join(ROOT, "motor-animado");
 
 const listeners = new Map();   // id -> Set de funções que recebem cada evento
@@ -21,10 +22,16 @@ export const slugify = (text) => text.normalize("NFD").replace(/[̀-ͯ]/g, "").t
 // só nomes de pasta simples: nada de "..", barras ou caminhos
 export const validId = (id) => /^[a-z0-9][a-z0-9-]{0,60}$/.test(id) && fs.existsSync(stateFile(id));
 
+// um nome de pasta livre a partir de uma base: base, base-2, base-3...
+export function freeId(base) {
+  const root = base.slice(0, 54).replace(/-$/, "") || "video";
+  let id = root;
+  for (let n = 2; fs.existsSync(projectDir(id)); n++) id = `${root}-${n}`;
+  return id;
+}
+
 export function createProject({ frase, objetivo, duracao, publico, publicoAlvo = null, especialidade = null }) {
-  const base = slugify(frase) || "video";
-  let id = base;
-  for (let n = 2; fs.existsSync(projectDir(id)); n++) id = `${base}-${n}`;
+  const id = freeId(slugify(frase) || "video");
   fs.mkdirSync(projectDir(id), { recursive: true });
   const state = { id, frase, objetivo, duracao, publico, publicoAlvo, especialidade, criadoEm: new Date().toISOString(), passo: "ideia", ocupado: null,
     estilo: null, ajustes: {}, sugestoes: [], avisos: [], titulo: frase, videos: [] };

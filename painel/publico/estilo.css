@@ -166,3 +166,13 @@ table select, table input { min-width: 150px; }
 .troca-voz { margin: 8px 0; padding: 10px; border: 1px solid var(--linha); border-radius: 10px; background: var(--painel-2); }
 .troca-voz select { width: auto; max-width: 100%; }
 .salvar-video { display: inline-block; margin: 0 0 8px; text-decoration: none; }
+
+/* a aba Projetos */
+.projetos-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.projeto-cartao { background: var(--painel); border: 1px solid var(--linha); border-radius: var(--raio); overflow: hidden; display: flex; flex-direction: column; }
+.projeto-cartao img, .projeto-cartao .sem-previa { width: 100%; aspect-ratio: 9 / 10; object-fit: cover; object-position: center 40%; display: block; }
+.projeto-cartao .sem-previa { display: grid; place-items: center; background: repeating-linear-gradient(135deg, #2c2621 0 12px, #332c26 12px 24px); color: var(--suave); font: 12px var(--mono); }
+.projeto-corpo { padding: 14px; display: grid; gap: 8px; }
+.projeto-corpo h2 { margin: 0; }
+.projeto-corpo p { margin: 0; }
+.botao.fantasma.perigo { background: none; color: var(--alerta); border-color: var(--alerta); }
