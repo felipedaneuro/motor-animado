@@ -1,5 +1,29 @@
 # Versões
 
+## 1.2 (em preparação, branch `feature/edicao-medica`)
+
+- **Nicho médico** em `nichos/medicina/`: `nicho.json` (públicos `leigo` e `saude`, com limite de palavras por frase
+  e regra de gancho; especialidades geral, neurologia, neurocirurgia, neurovascular, cardiologia e ortopedia),
+  `raciocinio-clinico.md`, `raciocinio-cirurgico.md` e um guia por especialidade em `especialidades/`.
+- **Peças de exame em pixel** (`motores/web/js/exames.js`): `axialCT` (níveis ventricular e basal; achados epidural,
+  subdural, intraparenquimatosa, hsa, isquemia por território e acm-hiperdensa), `ctAngiography` (oclusão em ICA,
+  M1, M2, A1, P1 ou basilar, com seta e quadrado que pulsa a 1 por segundo), `angiography` e `angiographyCompare`.
+  Convenção radiológica em todas: o lado direito do paciente à esquerda da tela.
+- **Cérebro de perfil em pixel** (`motores/web/js/cerebro-perfil.js`): lobos, sulcos, cerebelo, tronco, territórios
+  das cerebrais anterior, média e posterior, núcleo e penumbra animados; vista esquerda ou direita.
+- **Base de desenho em pixel** (`motores/web/js/pixelsvg.js`): camada SVG, área pintada célula a célula, traço em
+  degraus, seta, mancha, quadrado e texto. Usada pelas duas peças acima.
+- **Fonte**: Jersey 10 nos estilos `pixel-*` e `retro-32bits`, com VT323 de reserva (`captions.font_fallback`, lida
+  por `fontStack` em `textos.js`); tamanhos de legenda, etiqueta e card multiplicados por 1,7.
+- Documentação: seção "Exames e cérebro em pixel" em `referencias/cena-web.md`; README de anatomia e guias de
+  neurologia, neurocirurgia e neurovascular mandam usar as peças prontas; `referencias/roteiro.md` cita a regra
+  do público.
+
+### Testado
+`testes/exames.test.mjs` (lado, convenção radiológica, ponto da oclusão, orientação do cérebro) e
+`testes/fontes.test.mjs`; as peças conferidas na vitrine; um quadro real do `retro-32bits` com a Jersey 10; o vídeo
+da trombectomia remontado com as peças novas.
+
 ## 1.1 (2026-11-15)
 
 - **Quinze estilos novos** (são 23 no total): catorze decupados de vídeos de referência — `pixel-duelo-cardio`,

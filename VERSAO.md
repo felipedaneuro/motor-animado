@@ -17,6 +17,34 @@
 - Outros motores de animação, quando instalados: anidoodle, animação em canvas, Manim e Huashu.
 - Conferência automática de cada vídeo: cortes, quadros pretos, risco de pisca e volume em −14 LUFS.
 
+## 1.2.0 — Edição Médica (em preparação)
+
+Em desenvolvimento no branch `feature/edicao-medica`, ainda sem merge na `main` (16 de novembro de 2026).
+
+- **Público-alvo obrigatório na tela Ideia**: "Leigo" ou "Estudantes e profissionais de saúde". O público muda a
+  linguagem, a profundidade e as regras do roteiro: para leigo, só o mecanismo, sem conduta nem dose, fechando com o
+  sinal de alerta e o SAMU 192; para o público de saúde, terminologia técnica, fisiopatologia completa, o raciocínio
+  (diferenciais e o exame que separa) e conduta ou dose só como estão na diretriz citada. A regra do público vale sobre
+  as regras de cuidado do `perfil.json`. O campo de texto antigo virou "Detalhe do público (opcional)".
+- **Especialidade** na tela Ideia: Geral, Neurologia, Neurocirurgia, Neurovascular, Cardiologia e Ortopedia. Cada
+  uma tem um guia em `motor-animado/nichos/medicina/especialidades/` (anatomia que precisa estar exata, fisiologia,
+  convenção de imagem, erros comuns de desenho, sinais de alerta, diretrizes e o estilo que combina com cada tema).
+  Os itens marcados **[CONFERIR]** aguardam a revisão do médico responsável.
+- **Raciocínio clínico e cirúrgico**: o roteiro segue as etapas do raciocínio (queixa, síndrome, topografia,
+  mecanismo, diferencial, exame, conduta, alerta; ou indicação, anatomia, acesso, tempos, gesto, complicações,
+  depois) e cada etapa vira um tipo de cena fixo. O `painel-roteiro.json` ganha o campo `raciocinio`.
+- **Frases curtas e gancho**: no máximo 10 palavras por frase para leigo e 12 para o público de saúde, e a primeira
+  frase prende a atenção. Depois de cada roteiro, o painel conta as palavras sem IA e põe nos avisos as frases longas.
+- **Nenhuma etiqueta de público na tela** ("conteúdo para profissionais", "para leigos", "para estudantes").
+- **Peças de exame e cérebro em pixel** no motor: tomografia axial (hematoma epidural e subdural, hemorragia
+  intraparenquimatosa, HSA, isquemia por território, ACM hiperdensa), angiotomografia com a oclusão marcada,
+  angiografia antes e depois e cérebro de perfil com lobos e territórios, todos na convenção radiológica. Vitrine para
+  conferir em `motor-animado/motores/web/vitrine-exames.html`.
+- **Fonte pixel nova**: os 10 estilos que usavam a Press Start 2P (que desenhava Í e É do tamanho de minúscula)
+  passam a usar a **Jersey 10**, com a **VT323** de reserva, as duas guardadas no pacote.
+- **Testes**: `node --test painel/nicho.test.mjs testes/exames.test.mjs testes/fontes.test.mjs` (26 testes).
+- Vídeo de teste: trombectomia mecânica no AVC, para profissionais de saúde, no estilo `pixel-arteria-stent`.
+
 ## 1.1.0
 
 - **14 estilos novos**, decupados de catorze vídeos de referência (10 s do começo, 10 s do meio, 5 s do fim):
@@ -75,3 +103,5 @@
 - A prévia com ajustes existe nos estilos `lowpoly-drone`, `retro-32bits` e `retro-64bits`.
 - O estilo `greg-news` ainda tem partes marcadas como `[OLHAR]` na receita.
 - O motor Blender (`realista-corpo`) precisa do Blender instalado e não foi testado de ponta a ponta.
+- Edição Médica (1.2.0): os itens [CONFERIR] dos guias de especialidade ainda não foram revisados por um médico, e
+  as capas dos 10 estilos que trocaram de fonte ainda mostram a Press Start 2P.
